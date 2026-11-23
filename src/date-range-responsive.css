@@ -1,0 +1,37 @@
+/* Final responsive placement for the portaled booking overlays. Kept separate so
+   these viewport rules always win over the desktop booking-card positioning. */
+.booking-card.date-menu-open {
+  z-index: 1200 !important;
+}
+
+.booking-card.date-menu-open .date-range-menu {
+  z-index: 1201 !important;
+}
+
+@media (max-width: 600px) {
+  body > .date-range-menu {
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    width: 100% !important;
+    height: min(570px, 68svh) !important;
+    min-height: 520px !important;
+    margin: 0 !important;
+    padding-top: 18px !important;
+    overflow: hidden !important;
+    border: 1px solid #e1b9c9 !important;
+    border-width: 1px 0 0 !important;
+    border-radius: 24px 24px 0 0 !important;
+    background: #fff !important;
+    box-shadow: 0 -24px 70px rgba(47, 7, 25, .2), 0 0 0 100vmax rgba(47, 7, 25, .34) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(100%) !important;
+  }
+
+  body > .date-range-menu.is-open {
+    z-index: 10020 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+  }
+}

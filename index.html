@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Find bright rooms, friendly faces and your new favorite stay with Fave" />
+    <meta name="theme-color" content="#8b254f" />
+    <link rel="icon" href="/assets/images/fave-logo-magenta.png" />
+    <title>fave — your favorite way to stay</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">skip to the fun</a>
+    <section class="entrance entrance--logo-only" aria-label="Welcome to fave" data-autoplay="idle">
+      <div class="entrance__stage">
+        <div class="entrance__atmosphere" aria-hidden="true"><span></span><span></span></div>
+        <div class="entrance__grain" aria-hidden="true"></div>
+        <div class="entrance__border" aria-hidden="true"></div>
+        <div class="entrance__mark" aria-hidden="true"><span class="pattern-disc pattern-disc--p9"></span></div>
+        <button class="entrance__playback" type="button" aria-label="Pause automatic intro">pause intro <span aria-hidden="true">Ⅱ</span></button>
+        <a class="entrance__skip" href="#top">skip intro <span aria-hidden="true">↘</span></a>
+        <div class="entrance__welcome">
+          <div class="entrance__logo-mask">
+            <span class="entrance__letter" style="--letter-left:0%;--letter-right:0%;--letter-delay:.08s"><img src="/assets/images/fave-logo-white.png" alt="fave" /></span>
+          </div>
+          <p>welcome to your favorite stay</p>
+        </div>
+        <span class="entrance__side entrance__side--left" aria-hidden="true">bright stays</span>
+        <span class="entrance__side entrance__side--right" aria-hidden="true">good vibes</span>
+        <div class="entrance__portal" aria-hidden="true"><span class="entrance__portal-light"></span></div>
+      </div>
+    </section>
+    <header class="site-header" id="site-header">
+      <a class="brand" href="#top" aria-label="Fave home"><img class="brand__white" src="/assets/images/fave-logo-white.png" alt="fave" /><img class="brand__color" src="/assets/images/fave-logo-magenta.png" alt="" /></a>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="hotels.html"><span>hotel</span></a><a href="offers.html"><span>offers</span></a><a href="meetings.html"><span>meetings</span></a><a href="weddings.html"><span>weddings</span></a><a href="news.html"><span>news</span></a><span class="desktop-nav__membership" aria-label="Archipelago Membership"><img src="/assets/images/membership/archi-membership-logo.svg" alt="" /></span></nav>
+      <div class="header-actions">
+        <a class="header-cta" href="#booking"><span>book now</span><b>↗</b></a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+      </div>
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <span class="mobile-nav__pattern mobile-nav__pattern--one pattern-disc pattern-disc--p2" aria-hidden="true"></span><span class="mobile-nav__pattern mobile-nav__pattern--two pattern-disc pattern-disc--p3" aria-hidden="true"></span>
+        <div class="mobile-nav__top"><div class="mobile-language" aria-label="Language"><span class="mobile-language__active">EN</span><span class="mobile-language__alternate">/ ID</span></div></div>
+        <div class="mobile-nav__menu-view">
+          <div class="mobile-nav__links"><a href="hotels.html"><small>01</small><span>hotels</span></a><a href="offers.html"><small>02</small><span>offers</span></a><a href="meetings.html"><small>03</small><span>meetings</span></a><a href="weddings.html"><small>04</small><span>weddings</span></a><a href="news.html"><small>05</small><span>news</span></a></div>
+          <a class="mobile-nav__membership" href="#app"><img class="mobile-nav__membership-logo" src="/assets/images/membership/archi-membership-logo.svg" alt="Archipelago Membership" /><span><strong>Archipelago Membership</strong><small>Member rates and rewards</small></span><b aria-hidden="true">→</b></a>
+          <button class="mobile-nav__book" type="button" data-sidebar-reserve>Book Now <span>↗</span></button>
+        </div>
+        <div class="mobile-nav__socials" aria-label="Fave social media"><a href="#" aria-label="Facebook"><img src="/assets/images/footer-elements/facebook.png" alt="" /></a><a href="#" aria-label="Instagram"><img src="/assets/images/footer-elements/instagram.png" alt="" /></a><a href="#" aria-label="TikTok"><img src="/assets/images/footer-elements/tiktok.png" alt="" /></a><a href="#" aria-label="X"><img src="/assets/images/footer-elements/x.png" alt="" /></a><a href="#" aria-label="YouTube"><img src="/assets/images/footer-elements/youtube.png" alt="" /></a></div>
+      </nav>
+    </header>
+    <a class="mobile-floating-book" href="#booking" aria-label="Book Now"><span>Book Now</span><b aria-hidden="true">↗</b></a>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__noise"></div>
+        <div class="hero-pattern hero-pattern--left-large" data-parallax="-.025" aria-hidden="true"><span class="pattern-disc pattern-disc--p13"></span></div>
+        <div class="hero-pattern hero-pattern--left-small-b" data-parallax="-.012" aria-hidden="true"><span class="pattern-disc pattern-disc--p6"></span></div>
+        <div class="hero-pattern hero-pattern--right-large" data-parallax=".035" aria-hidden="true"><span class="pattern-disc pattern-disc--p2"></span></div>
+        <div class="hero-pattern hero-pattern--right-small-b" data-parallax=".022" aria-hidden="true"><span class="pattern-disc pattern-disc--p9"></span></div>
+        <div class="hero__content">
+          <div class="hero__copy">
+            <h1 id="hero-title" class="line-reveal" aria-label="we’re all about good vibes"><span><i>we’re all about</i></span><span><i><em>g<span class="hero-title-o hero-title-o--one" aria-hidden="true"></span><span class="hero-title-o hero-title-o--two" aria-hidden="true"></span>d vibes</em></i></span></h1>
+          </div>
+
+          <form class="booking-card" id="booking" aria-label="Find a hotel">
+            <div class="booking-field booking-field--destination">
+              <label for="destination">where to</label>
+              <button class="destination-trigger" id="destination" type="button" aria-expanded="false" aria-controls="destination-menu"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s7-5.3 7-12a7 7 0 1 0-14 0c0 6.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg><span>pick a favorite place</span><svg class="field-chevron iconify iconify--lucide" data-icon="lucide:chevron-down" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <div class="destination-menu" id="destination-menu" role="listbox" aria-label="Destinations">
+                <div class="destination-search" role="search"><label for="destination-search-input">find a city or hotel</label><div><input id="destination-search-input" type="search" placeholder="Search city" autocomplete="off" /><button class="destination-search__button" type="button" aria-label="Search destinations">⌕</button></div></div>
+                <div class="destination-options">
+                  <button type="button" role="option" data-value="jakarta"><strong>jakarta</strong><small>12 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="bali"><strong>bali</strong><small>9 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="malang"><strong>malang</strong><small>4 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="yogyakarta"><strong>yogyakarta</strong><small>7 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="bandung"><strong>bandung</strong><small>6 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="surabaya"><strong>surabaya</strong><small>5 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="semarang"><strong>semarang</strong><small>4 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="sidoarjo"><strong>sidoarjo</strong><small>3 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="solo"><strong>solo</strong><small>3 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="makassar"><strong>makassar</strong><small>5 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="medan"><strong>medan</strong><small>4 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="balikpapan"><strong>balikpapan</strong><small>3 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="banjarmasin"><strong>banjarmasin</strong><small>2 hotels to stay</small></button>
+                  <button type="button" role="option" data-value="palembang"><strong>palembang</strong><small>3 hotels to stay</small></button>
+                </div>
+                <p class="destination-empty" hidden>No matching Fave hotel yet.</p>
+              </div>
+            </div>
+            <div class="booking-field booking-field--date"><label for="checkin-trigger">check in</label><div class="date-control"><input id="checkin" name="checkin" type="hidden" required /><button class="date-trigger" id="checkin-trigger" type="button" data-date-role="start" aria-expanded="false" aria-controls="date-range-menu"><svg class="date-trigger__icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3v3M18 3v3M4 9h16M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>20/10/2026</span></button></div></div>
+            <div class="booking-field booking-field--date booking-field--checkout"><label for="checkout-trigger">check out</label><div class="date-control"><input id="checkout" name="checkout" type="hidden" required /><button class="date-trigger" id="checkout-trigger" type="button" data-date-role="end" aria-expanded="false" aria-controls="date-range-menu"><svg class="date-trigger__icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3v3M18 3v3M4 9h16M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>21/10/2026</span></button></div></div>
+            <div class="date-range-menu" id="date-range-menu" role="dialog" aria-modal="false" aria-label="Select check-in and check-out dates">
+              <div class="date-range-menu__handle" aria-hidden="true"></div>
+              <header class="date-range-summary"><strong id="date-range-label">20 OCT 2026 - 21 OCT 2026</strong><span id="date-range-nights">1 Night</span></header>
+              <div class="calendar-months">
+                <section class="calendar-month-panel calendar-month-panel--primary">
+                  <div class="calendar-nav"><button type="button" data-calendar-nav="prev" aria-label="Previous month">‹</button><strong id="calendar-month">October 2026</strong><span aria-hidden="true"></span></div>
+                  <div class="calendar-weekdays" aria-hidden="true"><span>SU</span><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span></div>
+                  <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="October 2026"></div>
+                </section>
+                <section class="calendar-month-panel calendar-month-panel--secondary" aria-label="Following month">
+                  <div class="calendar-nav"><span aria-hidden="true"></span><strong id="calendar-month-next">November 2026</strong><button type="button" data-calendar-nav="next" aria-label="Next month">›</button></div>
+                  <div class="calendar-weekdays" aria-hidden="true"><span>SU</span><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span></div>
+                  <div class="calendar-grid" id="calendar-grid-next" role="grid" aria-label="November 2026"></div>
+                </section>
+              </div>
+              <footer class="calendar-footer"><i aria-hidden="true"></i><span>Lowest Price in IDR</span></footer>
+            </div>
+            <div class="booking-field booking-field--guests"><label>who’s coming</label><button class="guest-trigger" type="button" aria-expanded="false" aria-controls="guest-menu"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 2.7-7 6-7s6 3 6 7M16 4a3 3 0 0 1 0 6M17 13c2.4.5 4 3 4 6"/></svg><span><b id="guest-count">2</b> guests · <b id="room-count">1</b> room</span><svg class="field-chevron iconify iconify--lucide" data-icon="lucide:chevron-down" aria-hidden="true" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <div class="guest-menu" id="guest-menu"><div><span><strong>guests</strong><small>ages 12 and up</small></span><div class="stepper"><button type="button" data-action="guest-down">−</button><output id="guest-output">2</output><button type="button" data-action="guest-up">+</button></div></div><div><span><strong>rooms</strong><small>up to 4 guests each</small></span><div class="stepper"><button type="button" data-action="room-down">−</button><output id="room-output">1</output><button type="button" data-action="room-up">+</button></div></div></div>
+            </div>
+            <button class="search-button" type="submit"><span>Book Now</span><b class="button-arrow">↗</b></button>
+          </form>
+
+          <div class="hero-gallery" aria-label="A moving gallery of Fave moments">
+            <div class="hero-gallery__track">
+              <figure class="gallery-card gallery-card--portrait"><img src="/assets/images/fave-moments/classic-twin-room.png" alt="Classic twin room at Fave" /></figure>
+              <figure class="gallery-card gallery-card--portrait"><img src="/assets/images/fave-moments/cozy-standard-room.png" alt="Cozy standard room at Fave" /></figure>
+              <figure class="gallery-card gallery-card--wide"><img src="/assets/images/fave-moments/deluxe-ocean-suite.png" alt="Deluxe ocean suite at Fave" /></figure>
+              <figure class="gallery-card gallery-card--square"><img src="/assets/images/fave-moments/executive-corner.png" alt="Executive corner room at Fave" /></figure>
+              <figure class="gallery-card gallery-card--portrait gallery-card--room"><img src="/assets/images/fave-moments/family-suite.png" alt="Family suite at Fave" /></figure>
+              <figure class="gallery-card gallery-card--slim gallery-card--friends"><img src="/assets/images/fave-moments/garden-terrace-suite.png" alt="Garden terrace suite at Fave" /></figure>
+              <figure class="gallery-card gallery-card--portrait"><img src="/assets/images/fave-moments/panoramic-view-suite.png" alt="Panoramic view suite at Fave" /></figure>
+              <figure class="gallery-card gallery-card--wide"><img src="/assets/images/fave-moments/premium-king-room.png" alt="Premium king room at Fave" /></figure>
+              <figure class="gallery-card gallery-card--square"><img src="/assets/images/fave-moments/skyline-penthouse.png" alt="Skyline penthouse at Fave" /></figure>
+              <figure class="gallery-card gallery-card--slim"><img src="/assets/images/fave-moments/superior-sea-view.png" alt="Superior sea-view room at Fave" /></figure>
+              <figure class="gallery-card gallery-card--portrait" aria-hidden="true"><img src="/assets/images/fave-moments/classic-twin-room.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--portrait" aria-hidden="true"><img src="/assets/images/fave-moments/cozy-standard-room.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--wide" aria-hidden="true"><img src="/assets/images/fave-moments/deluxe-ocean-suite.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--square" aria-hidden="true"><img src="/assets/images/fave-moments/executive-corner.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--portrait gallery-card--room" aria-hidden="true"><img src="/assets/images/fave-moments/family-suite.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--slim gallery-card--friends" aria-hidden="true"><img src="/assets/images/fave-moments/garden-terrace-suite.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--portrait" aria-hidden="true"><img src="/assets/images/fave-moments/panoramic-view-suite.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--wide" aria-hidden="true"><img src="/assets/images/fave-moments/premium-king-room.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--square" aria-hidden="true"><img src="/assets/images/fave-moments/skyline-penthouse.png" alt="" /></figure>
+              <figure class="gallery-card gallery-card--slim" aria-hidden="true"><img src="/assets/images/fave-moments/superior-sea-view.png" alt="" /></figure>
+            </div>
+          </div>
+          <div class="hero-peel" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="city-section" id="feeling" aria-labelledby="city-title">
+        <div class="city-scene">
+          <span class="pattern-disc pattern-disc--p8 city-backdrop-pattern" aria-hidden="true"></span>
+          <header class="city-heading">
+            <h2 id="city-title">lorem ipsum<br />dolor sit amet</h2>
+            <p>Lorem ipsum dolor sit amet.<br />Consectetur adipiscing elit.</p>
+            <a class="city-more" href="#hotels">More City <span aria-hidden="true">↗</span></a>
+          </header>
+          <div class="city-stack" aria-label="Explore cities with Fave Hotels"></div>
+        </div>
+      </section>
+
+      <section class="places-scroll deals-showcase is-drag-carousel" id="hotels" aria-labelledby="places-title">
+        <div class="section-bridge section-bridge--places" aria-hidden="true">
+          <span class="bridge-fold bridge-fold--pink"></span>
+          <span class="pattern-disc pattern-disc--p2 bridge-pattern bridge-pattern--places"></span>
+          <figure class="bridge-photo-fragment"><img src="/assets/images/rooftop-pool.png" alt="" /></figure>
+        </div>
+        <div class="places-scroll__sticky">
+          <span class="pattern-disc pattern-disc--p13 places-pattern places-pattern--large" data-parallax="-.045" aria-hidden="true"></span>
+          <span class="pattern-disc pattern-disc--p6 places-pattern places-pattern--small" data-parallax=".065" aria-hidden="true"></span>
+          <div class="places-heading shell"><div><h2 id="places-title">lorem ipsum<br /><em>dolor sit amet</em></h2></div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p></div>
+          <div class="places-track" id="places-track">
+            <article class="place-card deal-card deal-flip deal-flip--city" data-deal="city break" tabindex="0">
+              <div class="deal-flip__inner">
+                <div class="deal-face deal-face--front">
+                  <span class="deal-face__dot" aria-hidden="true"></span>
+                  <figure><img src="/assets/images/deals/teachers-appreciation.png" alt="Teacher’s Appreciation Discount" /></figure>
+                  <div class="deal-face__copy"><span class="deal-face__badge">lorem ipsum</span><h3>Lorem ipsum dolor sit amet</h3><p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><a href="#booking" aria-label="View the Teacher’s Appreciation Discount">↗</a></div>
+                </div>
+                <div class="deal-face deal-face--back"><span class="deal-face__eyebrow">lorem ipsum</span><strong>dolor sit.<br />amet elit.</strong><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p><a href="#booking">view deal <b>↗</b></a></div>
+              </div>
+            </article>
+            <article class="place-card deal-card deal-flip deal-flip--late" data-deal="late checkout" tabindex="0">
+              <div class="deal-flip__inner">
+                <div class="deal-face deal-face--front">
+                  <span class="deal-face__dot" aria-hidden="true"></span>
+                  <figure><img src="/assets/images/deals/nurses-appreciation.png" alt="Nurses Appreciation Discount" /></figure>
+                  <div class="deal-face__copy"><span class="deal-face__badge">lorem ipsum</span><h3>Consectetur adipiscing elit</h3><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p><a href="#booking" aria-label="View the Nurses Appreciation Discount">↗</a></div>
+                </div>
+                <div class="deal-face deal-face--back"><span class="deal-face__eyebrow">dolor sit amet</span><strong>lorem ipsum.<br />dolor sit.</strong><p>Duis aute irure dolor in reprehenderit in voluptate velit esse.</p><a href="#booking">view deal <b>↗</b></a></div>
+              </div>
+            </article>
+            <article class="place-card deal-card deal-flip deal-flip--pool" data-deal="pool day" tabindex="0">
+              <div class="deal-flip__inner">
+                <div class="deal-face deal-face--front">
+                  <span class="deal-face__dot" aria-hidden="true"></span>
+                  <figure><img src="/assets/images/deals/festive-fnb-package.png" alt="Archipelago Festive F&amp;B Package" /></figure>
+                  <div class="deal-face__copy"><span class="deal-face__badge">dolor sit amet</span><h3>Sed do eiusmod tempor</h3><p>Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p><a href="#booking" aria-label="View the Archipelago Festive F&amp;B Package">↗</a></div>
+                </div>
+                <div class="deal-face deal-face--back"><span class="deal-face__eyebrow">consectetur elit</span><strong>magna aliqua.<br />enim minim.</strong><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p><a href="#booking">view deal <b>↗</b></a></div>
+              </div>
+            </article>
+            <article class="place-card deal-card deal-flip deal-flip--breakfast" data-deal="breakfast fave" tabindex="0">
+              <div class="deal-flip__inner">
+                <div class="deal-face deal-face--front">
+                  <span class="deal-face__dot" aria-hidden="true"></span>
+                  <figure><img src="/assets/images/deals/60-seconds-to-tokyo.png" alt="60 Seconds to Tokyo" /></figure>
+                  <div class="deal-face__copy"><span class="deal-face__badge">magna aliqua</span><h3>Ut enim ad minim veniam</h3><p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><a href="#booking" aria-label="View 60 Seconds to Tokyo">↗</a></div>
+                </div>
+                <div class="deal-face deal-face--back"><span class="deal-face__eyebrow">quis nostrud</span><strong>lorem dolor.<br />ipsum amet.</strong><p>Laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p><a href="#booking">view deal <b>↗</b></a></div>
+              </div>
+            </article>
+          </div>
+          <div class="places-counter"><span>lorem ipsum</span><i></i><b id="places-percent">00</b></div>
+        </div>
+      </section>
+
+      <section class="offers section news-editorial" id="offers" aria-labelledby="fave-news-title">
+        <span class="pattern-disc pattern-disc--p9 news-editorial__pattern news-editorial__pattern--top" aria-hidden="true"></span>
+        <span class="pattern-disc pattern-disc--p3 news-editorial__pattern news-editorial__pattern--bottom" aria-hidden="true"></span>
+        <div class="shell news-editorial__inner">
+          <header class="news-editorial__heading">
+            <div><h2 id="fave-news-title">lorem ipsum<br /><em>dolor sit amet</em></h2></div>
+            <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p><a href="#booking">explore all stories <b>↗</b></a></div>
+          </header>
+
+          <div class="news-editorial__grid">
+            <article class="news-feature">
+              <a class="news-feature__media" href="#booking" aria-label="Read make room for a little weekend adventure">
+                <img src="/assets/images/arrival-friends.png" alt="Friends arriving together at a Fave hotel" />
+                <div class="news-feature__glass">
+                  <span class="news-category">lorem ipsum</span>
+                  <h3>lorem ipsum dolor sit amet consectetur</h3>
+                  <div class="news-meta"><time datetime="2026-06-24">24 June 2026</time></div>
+                  <b class="news-arrow" aria-hidden="true">→</b>
+                </div>
+              </a>
+            </article>
+
+            <div class="news-editorial__supporting">
+              <article class="news-mini news-mini--pool">
+                <a href="#booking" aria-label="Explore a brighter kind of poolside afternoon"><img src="/assets/images/rooftop-pool.png" alt="Sunny rooftop swimming pool" /><div><span>dolor sit amet</span><h3>consectetur adipiscing elit sed do</h3><small><time datetime="2026-06-18">18 June 2026</time></small></div><b aria-hidden="true">→</b></a>
+              </article>
+              <article class="news-mini news-mini--room">
+                <a href="#booking" aria-label="Explore slow mornings and your next city break"><img src="/assets/images/hero-room.png" alt="Bright and comfortable Fave guest room" /><div><span>consectetur elit</span><h3>eiusmod tempor incididunt ut labore</h3><small><time datetime="2026-06-12">12 June 2026</time></small></div><b aria-hidden="true">→</b></a>
+              </article>
+              <article class="news-mini news-mini--cafe">
+                <a href="#booking" aria-label="Explore a colorful cafe stop worth slowing down for"><img src="/assets/images/lime-cafe.png" alt="Bright and colorful Fave cafe interior" /><div><span>adipiscing elit</span><h3>magna aliqua ut enim ad minim</h3><small><time datetime="2026-06-06">6 June 2026</time></small></div><b aria-hidden="true">→</b></a>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="expand-story reels-section" id="moments" aria-labelledby="expand-title">
+        <div class="reels-section__sticky">
+          <header class="reels-heading shell">
+            <div><h2 id="expand-title">lorem ipsum,<br /><em>dolor sit amet</em></h2></div>
+            <a href="https://www.instagram.com/favehotels/" target="_blank" rel="noreferrer">watch @favehotels <span>↗</span></a>
+          </header>
+          <div class="reels-stage coverflow-stage" id="expand-frame">
+            <div class="coverflow" data-coverflow tabindex="0" aria-label="Fave Instagram Reels carousel">
+              <div class="coverflow__viewport">
+                <article class="coverflow-card" data-coverflow-card data-index="0">
+                  <video class="reel-video" data-src="assets/reels/fave-reel-01.mp4" muted loop playsinline preload="none" poster="/assets/images/fave-lobby.png" aria-label="Fave Hotels Instagram Reel 1"></video>
+                </article>
+                <article class="coverflow-card" data-coverflow-card data-index="1">
+                  <video class="reel-video" data-src="assets/reels/fave-reel-02.mp4" muted loop playsinline preload="none" poster="/assets/images/rooftop-pool.png" aria-label="Fave Hotels Instagram Reel 2"></video>
+                </article>
+                <article class="coverflow-card is-active" data-coverflow-card data-index="2">
+                  <video class="reel-video" data-src="assets/reels/fave-reel-03.mp4" muted loop playsinline preload="none" poster="/assets/images/arrival-friends.png" aria-label="Fave Hotels Instagram Reel 3"></video>
+                </article>
+                <article class="coverflow-card" data-coverflow-card data-index="3">
+                  <video class="reel-video" data-src="assets/reels/fave-reel-04.mp4" muted loop playsinline preload="none" poster="/assets/images/lime-cafe.png" aria-label="Fave Hotels Instagram Reel 4"></video>
+                </article>
+                <article class="coverflow-card" data-coverflow-card data-index="4">
+                  <video class="reel-video" data-src="assets/reels/fave-reel-05.mp4" muted loop playsinline preload="none" poster="/assets/images/hero-room.png" aria-label="Fave Hotels Instagram Reel 5"></video>
+                </article>
+              </div>
+              <button class="coverflow__arrow coverflow__arrow--prev" type="button" aria-label="Previous Reel">←</button>
+              <button class="coverflow__arrow coverflow__arrow--next" type="button" aria-label="Next Reel">→</button>
+              <div class="coverflow__footer"><span class="coverflow__count" aria-live="polite">03 / 05</span><div class="coverflow__dots" aria-label="Choose a Reel"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="app-section" id="app">
+        <div class="section-bridge section-bridge--app" aria-hidden="true">
+          <span class="app-transition-shape"></span>
+          <span class="pattern-disc pattern-disc--p3 bridge-pattern bridge-pattern--app"></span>
+        </div>
+        <span class="pattern-disc pattern-disc--p2 app-pattern app-pattern--main" data-parallax="-.035" aria-hidden="true"></span>
+        <span class="pattern-disc pattern-disc--p8 app-pattern app-pattern--accent" data-parallax=".08" aria-hidden="true"></span>
+        <div class="app-confetti" aria-hidden="true"><span>✦</span><span>+</span><span>○</span><span>⌁</span><span>♡</span></div>
+        <div class="shell app-section__inner"><div class="app-copy"><h2 class="line-reveal"><span><i>lorem ipsum</i></span><span><i>dolor sit amet</i></span></h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p><div class="store-buttons"><a href="#" aria-label="Download Archipelago Hotels on the App Store"><svg class="store-icon store-icon--apple" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.7 12.9c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9-.7 0-1.8-.9-3-.8-1.5 0-2.9.9-3.7 2.2-1.6 2.8-.4 6.9 1.1 9.1.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3.1-.7s1.9.7 3.1.7c1.3 0 2.1-1.1 2.8-2.2.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.7-1-2.7-3.5ZM14.4 6.1c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3Z" /></svg><span><small>download on the</small>App Store</span></a><a href="#" aria-label="Get Archipelago Hotels on Google Play"><svg class="store-icon store-icon--play" viewBox="0 0 24 24" aria-hidden="true"><path fill="#34a853" d="M4 3.1v17.8L13.8 12 4 3.1Z"/><path fill="#4285f4" d="M4.7 2.5 15.4 9l-1.6 3L4.7 2.5Z"/><path fill="#fbbc04" d="m13.8 12 1.6 3L4.7 21.5 13.8 12Z"/><path fill="#ea4335" d="m15.4 9 3.8 2.3c.7.4.7 1 0 1.4L15.4 15l-1.6-3 1.6-3Z"/></svg><span><small>get it on</small>Google Play</span></a></div></div>
+          <div class="phone-wrap phone-wrap--splash" data-parallax=".035"><img class="membership-splash-phone" src="/assets/images/membership/membership-splash-phone.png" alt="Archipelago Membership app splash screen on a 3D phone" /></div>
+          <div class="store-buttons store-buttons--mobile"><a href="#" aria-label="Download Archipelago Hotels on the App Store"><span>App Store</span></a><a href="#" aria-label="Get Archipelago Hotels on Google Play"><span>Google Play</span></a></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer footer-reference" id="footer">
+      <section class="footer-reference__dark">
+        <div class="footer-reference__contact shell">
+          <div><span>◇ &nbsp;get in touch</span><h2>Let's plan your stay</h2><p>Speak directly with our reservations team — no call centers, no hold music.</p></div>
+          <a class="footer-reference__availability" href="#booking">check availability <b>→</b></a>
+        </div>
+        <div class="footer-reference__primary shell">
+          <div class="footer-reference__identity">
+            <img class="footer-reference__wordmark" src="/assets/images/footer-elements/fave-brand.svg" alt="fave" />
+            <div class="footer-reference__socials" aria-label="Social media">
+              <a href="#" aria-label="Facebook"><img src="/assets/images/footer-elements/facebook.png" alt="" /></a><a href="#" aria-label="Instagram"><img src="/assets/images/footer-elements/instagram.png" alt="" /></a><a href="#" aria-label="TikTok"><img src="/assets/images/footer-elements/tiktok.png" alt="" /></a><a href="#" aria-label="X"><img src="/assets/images/footer-elements/x.png" alt="" /></a><a href="#" aria-label="YouTube"><img src="/assets/images/footer-elements/youtube.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="footer-reference__nav" aria-label="Footer navigation">
+            <nav><strong>stay</strong><a href="#feeling">Hotels</a><a href="#booking">Meetings</a><a href="#booking">Weddings</a></nav>
+            <nav><strong>explore</strong><a href="#offers">News</a><a href="#offers">Articles</a><a href="#hotels">Offers</a></nav>
+            <nav><strong>reach us</strong><a href="mailto:hello@favehotels.com">Contact</a></nav>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-reference__brands" aria-label="Archipelago hotel brands">
+        <img src="/assets/images/footer-brands/aston.png" alt="ASTON" />
+        <img src="/assets/images/footer-brands/huxley.png" alt="Huxley" />
+        <img src="/assets/images/footer-brands/park-lane.png" alt="Park Lane" />
+        <img src="/assets/images/footer-brands/alana.png" alt="The Alana" />
+        <img src="/assets/images/footer-brands/kamuela.png" alt="Kamuela" />
+        <img src="/assets/images/footer-brands/avanika.png" alt="Avanika" />
+        <img src="/assets/images/footer-brands/harper.png" alt="Harper" />
+        <img src="/assets/images/footer-brands/quest.png" alt="Quest Hotels" />
+        <img src="/assets/images/footer-brands/four-corners.svg" alt="Four Corners" />
+        <img src="/assets/images/footer-brands/collection.png" alt="Archipelago Collection" />
+        <img src="/assets/images/footer-brands/neo.png" alt="Hotel NEO" />
+        <img src="/assets/images/footer-brands/fave.png" alt="favehotel" />
+        <img src="/assets/images/footer-brands/fave.png" alt="favehotel" />
+      </div>
+
+      <section class="footer-reference__corporate">
+        <div class="shell">
+          <div class="footer-reference__corporate-title"><span>ARCHIPELAGO</span></div>
+          <div class="footer-reference__corporate-grid">
+            <nav><a href="#">E-commerce &amp; Global Distribution</a><a href="#">Technology</a><a href="#">Legal</a></nav>
+            <nav><a href="#">Architecture &amp; Interior Design</a><a href="#">Careers</a><a href="#">Condotels</a></nav>
+            <nav><a href="#">Good Governance</a><a href="#">Franchise Plus</a></nav>
+            <div class="footer-reference__certifications">
+              <figure><img src="/assets/images/footer-achievements/top-member.png" alt="Top Member 2025" /><figcaption>Top Member 2025</figcaption></figure>
+              <figure><img src="/assets/images/footer-achievements/iso-9001.png" alt="ISO 9001" /><figcaption>Hospitality Management Company</figcaption></figure>
+              <figure><img src="/assets/images/footer-achievements/iso-45001.png" alt="ISO 45001" /><figcaption>Occupational Health and Safety Management System</figcaption></figure>
+              <figure><img src="/assets/images/footer-achievements/iso-14001.png" alt="ISO 14001" /><figcaption>Environmental Management System</figcaption></figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer-reference__legal shell"><span>Copyright <span id="year"></span> © Archipelago</span><div><a href="#">LLMs.txt</a><a href="#top">Back to top ↑</a></div></div>
+    </footer>
+    <div class="pattern-disc pattern-disc--p2 cursor-pattern-companion" aria-hidden="true"></div><div class="toast" role="status" aria-live="polite"><span class="toast__icon">✓</span><span id="toast-message">lorem ipsum dolor sit amet</span></div>
+  </body>
+</html>

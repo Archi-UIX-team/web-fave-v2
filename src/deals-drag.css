@@ -1,0 +1,117 @@
+.deals-showcase.is-drag-carousel {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: clamp(64px, 7vw, 104px) 0 clamp(68px, 8vw, 112px);
+  overflow: clip;
+  background-color: var(--pink-soft);
+  background-image: radial-gradient(circle, rgba(78, 16, 42, .2) 1.2px, transparent 1.45px) !important;
+  background-position: 0 0 !important;
+  background-size: 16px 16px !important;
+}
+
+.deals-showcase.is-drag-carousel .places-scroll__sticky {
+  position: relative !important;
+  inset: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible;
+  background: transparent !important;
+}
+
+.deals-showcase.is-drag-carousel .places-scroll__sticky::before {
+  display: none !important;
+}
+
+.deals-showcase.is-drag-carousel .places-heading {
+  height: auto !important;
+  min-height: 0 !important;
+  margin-bottom: clamp(24px, 3vw, 42px);
+  padding-top: 0 !important;
+}
+
+.deals-showcase.is-drag-carousel .places-track {
+  position: relative !important;
+  inset: auto !important;
+  width: min(1240px, calc(100% - 72px));
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex;
+  align-items: stretch;
+  gap: 18px;
+  margin-inline: auto;
+  padding: 34px 24px 40px;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transform: none !important;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: max(24px, calc((100vw - 1280px) / 2));
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+  background: transparent;
+}
+
+.deals-showcase.is-drag-carousel .places-track::-webkit-scrollbar {
+  display: none;
+}
+
+.deals-showcase.is-drag-carousel .places-track.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.deals-showcase.is-drag-carousel .deal-flip {
+  flex: 0 0 350px;
+  width: 350px !important;
+  height: 410px !important;
+  min-height: 410px !important;
+  scroll-snap-align: start;
+  filter: none;
+}
+
+.deals-showcase.is-drag-carousel .deal-face {
+  box-shadow: 0 18px 46px rgba(78, 16, 42, .11) !important;
+}
+
+.deals-showcase.is-drag-carousel .deal-flip:hover,
+.deals-showcase.is-drag-carousel .deal-flip:focus-visible,
+.deals-showcase.is-drag-carousel .deal-flip:focus-within {
+  filter: drop-shadow(0 18px 22px rgba(78, 16, 42, .12));
+}
+
+.deals-showcase.is-drag-carousel .places-counter {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .deals-showcase.is-drag-carousel {
+    padding-block: 54px 72px;
+  }
+
+  .deals-showcase.is-drag-carousel .deal-flip {
+    flex-basis: min(350px, 84vw);
+    width: min(350px, 84vw) !important;
+  }
+
+  .deals-showcase.is-drag-carousel .places-track {
+    width: calc(100% - 32px);
+    padding-inline: 16px;
+  }
+}
+
+/* More breathing room between section titles and their visual frames. */
+.city-heading {
+  margin-bottom: clamp(68px, 9vh, 102px) !important;
+}
+
+.reels-stage {
+  top: clamp(272px, 34vh, 330px) !important;
+}
+
+@media (max-width: 900px) {
+  .city-heading { margin-bottom: 55px !important; }
+  .reels-stage { top: 330px !important; }
+}

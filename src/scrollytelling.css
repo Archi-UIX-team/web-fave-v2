@@ -1,0 +1,41 @@
+:root { --canvas-width: min(100vw, 1440px); }
+
+/* A single centered canvas: large screens become an intentional dark stage. */
+@media (min-width: 1441px) {
+  body { background: #111114; }
+  .entrance, main, .footer { width: min(100%, 1440px); margin-inline: auto; box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 24px 90px rgba(0,0,0,.22); }
+  .hero-gallery { width: calc(var(--canvas-width) - 34px); }
+  .places-track { left: max(32px, calc((var(--canvas-width) - 1280px) / 2)); }
+  .entrance__portal-media > img { width: var(--canvas-width); }
+}
+
+/* A quiet progress spine makes the page feel navigable without competing with copy. */
+.scroll-spine { position: fixed; z-index: 150; right: max(18px, calc((100vw - var(--canvas-width)) / 2 + 20px)); bottom: 24px; display: grid; grid-template-columns: auto 2px auto; align-items: end; gap: 9px; color: rgba(255,255,255,.74); mix-blend-mode: difference; pointer-events: none; font: 700 9px/1 var(--body); letter-spacing: .13em; }
+.scroll-spine i { position: relative; width: 2px; height: 58px; overflow: hidden; background: rgba(255,255,255,.25); }
+.scroll-spine i b { position: absolute; inset: 0; transform-origin: bottom; background: #5bdcff; }
+.scroll-spine__label { writing-mode: vertical-rl; transform: rotate(180deg); }
+.scroll-spine__count { color: #5bdcff; }
+
+/* City gives way to a deliberately centered circular botanical world. */
+@media (min-width: 601px) and (prefers-reduced-motion: no-preference) {
+  .fave-introduction { height: 250svh; min-height: 1800px; padding: 0; background: var(--fave-deep); }
+  .fave-introduction::before { content: ''; position: absolute; z-index: 0; inset: 0; clip-path: circle(var(--about-circle, 22vmax) at 50% 50%); background: radial-gradient(circle at 50% 35%, #fff7eb 0 34%, #f4d3df 79%, #d86a9a 100%); }
+  .fave-introduction__copy,
+  .fave-introduction__flowers { position: fixed; }
+  .fave-introduction__copy { top: 50%; left: 50%; translate: -50% calc(-50% + var(--about-copy-y,0px)); opacity: var(--about-copy-opacity,0); clip-path: circle(var(--about-circle, 22vmax) at 50% 50%); }
+  .fave-introduction__flowers { clip-path: circle(var(--about-circle, 22vmax) at 50% 50%); }
+  .fave-introduction__flowers--left { left: max(-8%, calc((100vw - var(--canvas-width)) / 2 - 8%)); }
+  .fave-introduction__flowers--right { right: max(-5%, calc((100vw - var(--canvas-width)) / 2 - 5%)); }
+  .fave-introduction.is-in-view .fave-introduction__copy,
+  .fave-introduction.is-in-view .fave-introduction__flowers { position: fixed; }
+}
+
+/* Mood nodes take a breath, scatter, then settle as the horizontal track takes over. */
+.places-scroll { background: radial-gradient(circle at 50% 45%, rgba(91,220,255,calc(var(--mood-energy,0) * .24)), transparent 38%), var(--pink-soft); transition: background .2s linear; }
+.place-card { translate: 0 var(--node-drift-y,0px); rotate: var(--node-turn,0deg); transition: translate .22s ease-out, rotate .22s ease-out; }
+.place-card--end { translate: 0 var(--ending-lift,0px); transform: scale(var(--ending-scale,1)); transform-origin: center bottom; }
+
+@media (max-width: 600px), (prefers-reduced-motion: reduce) {
+  .scroll-spine { display: none; }
+  .place-card, .place-card--end { translate: none; rotate: none; transform: none; }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+tmp/
+
+# Large handoff bundles and reference docs (too big for GitHub)
+*.zip
+*.pdf
+
+# Local logs and settings
+*.log
+.claude/settings.local.json

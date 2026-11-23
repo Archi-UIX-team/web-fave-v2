@@ -1,0 +1,26 @@
+.fave-introduction { position:relative; isolation:isolate; overflow:clip; min-height:850px; display:grid; place-items:center; padding:150px 8vw; background:var(--cream); color:var(--fave-deep); }
+.fave-introduction__copy { position:relative; z-index:2; width:min(780px,72%); margin:auto; text-align:center; }
+.fave-introduction__eyebrow { display:block; margin-bottom:32px; font-size:12px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; }
+.fave-introduction h2 { margin:0; font:600 clamp(46px,5.4vw,84px)/1.17 var(--headline); letter-spacing:-.055em; }
+.fave-introduction h2 em { font-style:normal; color:var(--fave-hot); }
+.fave-introduction p { max-width:390px; margin:38px auto 28px; font-size:17px; line-height:1.7; }
+.fave-introduction a { display:inline-flex; align-items:center; gap:24px; padding:12px 0; border-bottom:1px solid var(--fave); color:var(--fave); font-size:14px; font-weight:800; }
+.fave-introduction a span { transition:translate .3s; }
+.fave-introduction a:hover span { translate:4px -4px; }
+.fave-introduction__flowers { position:absolute; z-index:1; pointer-events:none; translate:0 var(--flower-drift,0px); }
+.fave-introduction__flowers picture,.fave-introduction__flowers img { width:100%; height:auto; aspect-ratio:540 / 594; display:block; }
+.fave-introduction__flowers--left { width:clamp(430px,51vw,790px); left:-8%; top:-12%; transform:scaleX(-1); }
+.fave-introduction__flowers--right { width:clamp(310px,34vw,530px); right:-5%; bottom:-31%; transform:rotate(-6deg); }
+.fave-introduction + .story-scroll .section-bridge--story { display:none; }
+.fave-introduction + .story-scroll::before { top:-22px; height:24px; }
+@media(max-width:800px) {
+  .fave-introduction { min-height:730px; padding:170px 25px 150px; }
+  .fave-introduction__copy { width:100%; }
+  .fave-introduction h2 { font-size:clamp(38px,8vw,60px); }
+  .fave-introduction p { max-width:310px; font-size:15px; }
+  .fave-introduction__flowers--left { width:390px; left:-42px; top:-78px; }
+  .fave-introduction__flowers--right { width:305px; right:-72px; bottom:-190px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .fave-introduction__flowers { translate:none; }
+}
