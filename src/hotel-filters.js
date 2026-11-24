@@ -44,6 +44,9 @@ function initSelectMenu(scope, wrap) {
   const label = btn.querySelector("[data-cdd-label]");
   const menu = wrap.querySelector(".fx-cdd__menu");
   const proper = wrap.hasAttribute("data-cdd-proper");
+  // option ids are built from the menu id, so every menu needs a unique one
+  if (!menu.id) menu.id = `cdd-menu-${document.querySelectorAll(".fx-cdd__menu[id^='cdd-menu-']").length + 1}`;
+  btn.setAttribute("aria-controls", menu.id);
   const fallback = select.options[0].value;
   menu.innerHTML = [...select.options].map((o, i) => `<li class="fx-cdd__opt${proper && o.value !== fallback ? " fx-proper" : ""}" role="option" id="${menu.id}-opt-${i}" data-value="${o.value}" aria-selected="${o.selected}"><span>${o.textContent}</span><svg class="fx-ico" aria-hidden="true"><use href="#i-check"/></svg></li>`).join("");
   const opts = [...menu.children];
