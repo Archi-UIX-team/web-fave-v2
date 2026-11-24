@@ -1,8 +1,96 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Offers — fave</title><script type="module" src="/src/inner-pages.js"></script></head><body class="page-offers">
-<header class="site-header is-scrolled" id="site-header"><a class="brand" href="index.html" aria-label="Fave home"><img class="brand__white" src="/assets/images/fave-logo-white.png" alt="fave"><img class="brand__color" src="/assets/images/fave-logo-magenta.png" alt=""></a><nav class="desktop-nav" aria-label="Main navigation"><a href="hotels.html"><span>hotel</span></a><a href="offers.html"><span>offers</span></a><a href="meetings.html"><span>meetings</span></a><a href="weddings.html"><span>weddings</span></a><a href="news.html"><span>news</span></a><span class="desktop-nav__membership" aria-label="Archipelago Membership"><img src="/assets/images/membership/archi-membership-logo.svg" alt=""></span></nav><div class="header-actions"><a class="header-cta" href="index.html#booking"><span>book now</span><b>↗</b></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button></div><nav class="page-mobile-nav" aria-label="Mobile navigation"><a href="hotels.html">hotel</a><a href="offers.html">offers</a><a href="meetings.html">meetings</a><a href="weddings.html">weddings</a><a href="news.html">news</a><a class="page-book" href="index.html#booking">book now</a></nav></header>
-<main class="inner-main"><div class="page-shell"><header class="page-heading-row"><div class="page-heading-copy"><h1>steals &amp; deals</h1></div><div class="search-panel" role="search"><input data-page-search type="search" placeholder="search offer, city, or hotel" aria-label="Search offers"><select data-page-filter aria-label="Offer category"><option value="all">All offers</option><option value="stay">Stay</option><option value="dining">Dining</option><option value="seasonal">Seasonal</option></select><button data-search-button type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg><span>Search</span></button></div></header><section class="card-grid" aria-label="Offers">
-<article class="content-card reveal-card" data-search-card data-category="stay"><div class="content-card__image"><img src="/assets/images/deals/teachers-appreciation.png" alt="Teacher appreciation offer"></div><div class="content-card__body"><p class="eyebrow">145 hotels</p><h2>Teacher's Appreciation Discount</h2><p>Enjoy an exclusive discount at selected Archipelago Hotels for your next bright getaway.</p><div class="card-meta"><a class="circle-arrow" href="#">Learn More</a></div></div></article>
-<article class="content-card reveal-card" data-search-card data-category="stay"><div class="content-card__image"><img src="/assets/images/deals/nurses-appreciation.png" alt="Nurses appreciation offer"></div><div class="content-card__body"><p class="eyebrow">144 hotels</p><h2>Nurses Appreciation Discount</h2><p>A well-deserved stay with comfort, relaxation, and special direct-booking benefits.</p><div class="card-meta"><a class="circle-arrow" href="#">Learn More</a></div></div></article>
-<article class="content-card reveal-card" data-search-card data-category="seasonal"><div class="content-card__image"><img src="/assets/images/deals/festive-fnb-package.png" alt="Festive dining offer"></div><div class="content-card__body"><p class="eyebrow">fave festive</p><h2>Festive Deals for Bright Celebrations</h2><p>Share cheerful moments with seasonal rooms, dining experiences, and playful extras.</p><div class="card-meta"><a class="circle-arrow" href="#">Learn More</a></div></div></article>
-<article class="content-card reveal-card" data-search-card data-category="dining"><div class="content-card__image"><img src="/assets/images/deals/60-seconds-to-tokyo.png" alt="Tokyo street food offer"></div><div class="content-card__body"><p class="eyebrow">141 hotels</p><h2>60 Seconds to Tokyo</h2><p>Tokyo-inspired dishes crafted with authentic flavors and a cheerful culinary twist.</p><div class="card-meta"><a class="circle-arrow" href="#">Learn More</a></div></div></article>
-</section></div></main><footer class="page-footer"><div class="page-footer__inner"><img src="/assets/images/fave-logo-white.png" alt="fave"><nav><a href="hotels.html">Hotels</a><a href="offers.html">Offers</a><a href="news.html">News</a></nav><small>Copyright 2026 © Archipelago</small></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>offers — fave</title>
+  <meta name="description" content="Current favehotels offers, promo codes and direct-booking deals across Indonesia.">
+  <link rel="icon" href="/assets/images/fave-logo-magenta.png">
+  <script type="module" src="/src/fave-pages.js"></script>
+</head>
+<body data-page="offers" id="top">
+<!--#include header-->
+<main class="fx-page" data-filter-scope data-f-noun="offers">
+  <div class="fx-pattern-top" aria-hidden="true">
+    <img class="fx-disc fx-disc--a" src="/assets/images/fave-patterns/pattern-2.png" alt="">
+    <img class="fx-disc fx-disc--b" src="/assets/images/fave-patterns/pattern-5.png" alt="">
+    <img class="fx-disc fx-disc--c" src="/assets/images/fave-patterns/pattern-7.png" alt="">
+    <img class="fx-disc fx-disc--d" src="/assets/images/fave-patterns/pattern-1.png" alt="">
+    <img class="fx-disc fx-disc--e" src="/assets/images/fave-patterns/pattern-3.png" alt="">
+    <img class="fx-disc fx-disc--f" src="/assets/images/fave-patterns/pattern-8.png" alt="">
+  </div>
+
+  <section class="fx-hero" aria-labelledby="offers-title">
+    <nav class="fx-crumbs" aria-label="Breadcrumb" data-r><a href="index.html">home</a><span aria-hidden="true">/</span><span aria-current="page">offers</span></nav>
+    <p class="fx-eyebrow" data-r>current offers</p>
+    <h1 class="fx-h1" id="offers-title" data-r style="--d:80ms">offers &amp; packages</h1>
+    <p class="fx-lead" data-r style="--d:140ms">current campaigns, promo codes and direct-booking deals across favehotels and archipelago hotels in indonesia.</p>
+    <label class="fx-search" data-r style="--d:200ms;max-width:640px"><span class="visually-hidden">Search offers</span><svg class="fx-ico" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="search an offer, hotel or city" data-f-search></label>
+  </section>
+
+  <section class="fx-sec" aria-label="Filter offers">
+    <div class="fx-filterbar" data-r>
+      <div class="fx-chips" data-f-chips="category" role="group" aria-label="Offer type">
+        <button class="fx-chip is-on" type="button" data-value="all" aria-pressed="true">all <small>9</small></button>
+        <button class="fx-chip" type="button" data-value="room" aria-pressed="false">room offers <small>5</small></button>
+        <button class="fx-chip" type="button" data-value="dining" aria-pressed="false">dining offers <small>2</small></button>
+        <button class="fx-chip" type="button" data-value="ending" aria-pressed="false">ending soon <small>3</small></button>
+        <button class="fx-chip" type="button" data-value="member" aria-pressed="false">member only <small>2</small></button>
+      </div>
+      <div class="fx-chips">
+        <p class="fx-count" data-f-count aria-live="polite"></p>
+        <label class="fx-select"><span class="visually-hidden">Sort offers</span><select data-f-sort><option value="default">sort: latest</option><option value="ends">sort: ending soon</option><option value="name">sort: name</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
+      </div>
+    </div>
+
+    <article class="fx-feat" data-r>
+      <div class="fx-media" data-r="clip"><img src="/assets/images/deals/festive-fnb-package.png" alt="Festive food and beverage package" loading="lazy"></div>
+      <div class="fx-feat__body">
+        <p class="fx-eyebrow">60+ hotels</p>
+        <span class="fx-tag">room offers</span>
+        <h2 class="fx-feat__title">festive delights</h2>
+        <p class="fx-lead">save up to 30% on december stays at favehotels. enjoy christmas dining, new year's eve packages and festive treats for the whole family.</p>
+        <div class="fx-feat__facts">
+          <div><p class="fx-fact__l">discount</p><p class="fx-fact__v">up to 30% off</p></div>
+          <div><p class="fx-fact__l">hotels</p><p class="fx-fact__v">60+</p></div>
+          <div><p class="fx-fact__l">stay in</p><p class="fx-fact__v">december 2026</p></div>
+        </div>
+        <a class="fx-btn fx-btn--secondary" href="#" style="align-self:flex-start">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </article>
+  </section>
+
+  <section class="fx-sec fx-car" data-car aria-labelledby="brand-title">
+    <div class="fx-shead" data-r>
+      <div class="fx-titles"><p class="fx-eyebrow">beyond one brand</p><h2 class="fx-title" id="brand-title">the best of brand promotions</h2></div>
+      <div class="fx-car__nav"><span data-car-count>1 / 2</span><button class="fx-btn fx-btn--icon" type="button" aria-label="Previous offers" data-car-prev><svg class="fx-ico" aria-hidden="true"><use href="#i-arrow-left"/></svg></button><button class="fx-btn fx-btn--icon" type="button" aria-label="Next offers" data-car-next><svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+    </div>
+    <div class="fx-car__track" data-car-track>
+      <article class="fx-ocard" data-r><div class="fx-media"><span class="fx-tag">room offers</span><img src="/assets/images/deals/teachers-appreciation.png" alt="Teacher's appreciation discount" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago hotels · book by 31 dec 2026</p><h3 class="fx-ocard__title">teacher's appreciation discount</h3><p class="fx-ocard__desc">a thank-you for the people who teach us. teachers save on room rates at participating favehotels across indonesia.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-r style="--d:80ms"><div class="fx-media"><span class="fx-tag">member only</span><img src="/assets/images/deals/nurses-appreciation.png" alt="Nurses appreciation discount" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago hotels · book by 31 dec 2026</p><h3 class="fx-ocard__title">nurses appreciation discount</h3><p class="fx-ocard__desc">rest well, you've earned it. special room rates for nurses and healthcare workers with a valid id.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-r style="--d:160ms"><div class="fx-media"><span class="fx-tag">dining offers</span><img src="/assets/images/deals/60-seconds-to-tokyo.png" alt="60 seconds to Tokyo dining offer" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">66 hotels · 1 oct - 31 dec 2026</p><h3 class="fx-ocard__title">60 seconds to tokyo</h3><p class="fx-ocard__desc">enjoy tokyo-inspired dishes crafted with authentic flavours and a delightful culinary touch.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-r><div class="fx-media"><span class="fx-tag">dining offers</span><img src="/assets/images/deals/festive-fnb-package.png" alt="Festive food and beverage package" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago hotels · december 2026</p><h3 class="fx-ocard__title">festive f&amp;b package</h3><p class="fx-ocard__desc">christmas eve dinners, new year's eve countdowns and festive hampers to share.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-r style="--d:80ms"><div class="fx-media"><span class="fx-tag">room offers</span><img src="/assets/images/fave-pool-welcome.webp" alt="Poolside welcome" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago hotels · book by 15 jan 2027</p><h3 class="fx-ocard__title">smart pick promo</h3><p class="fx-ocard__desc">book early, pay less. lock in our best flexible rate up to 60 days ahead.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-r style="--d:160ms"><div class="fx-media"><span class="fx-tag">member only</span><img src="/assets/images/arrival-friends.png" alt="Friends arriving at a favehotel" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago members · all year</p><h3 class="fx-ocard__title">member rates &amp; rewards</h3><p class="fx-ocard__desc">join archipelago membership for member-only rates and points on every stay.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+    </div>
+  </section>
+
+  <section class="fx-sec" aria-labelledby="hotel-offers-title">
+    <div class="fx-titles" data-r><p class="fx-eyebrow">at your chosen hotel</p><h2 class="fx-title" id="hotel-offers-title">exclusive hotel offers</h2></div>
+    <div class="fx-ogrid" data-f-list>
+      <article class="fx-ocard" data-item data-r data-category="room ending" data-ends="20261215" data-name="a magical night"><div class="fx-media"><span class="fx-tag fx-tag--solid">ending soon</span><img src="/assets/images/fave-moments/cropped/panoramic-view-suite.jpg" alt="A magical night offer" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel kuta kartika plaza · book by 15 dec 2026</p><h3 class="fx-ocard__title">a magical night</h3><p class="fx-ocard__desc">a new year's eve celebration with festive dinner and live music by the pool, from check-in to countdown.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:80ms" data-category="room" data-ends="20261231" data-name="wellness package"><div class="fx-media"><span class="fx-tag">room offers</span><img src="/assets/images/fave-moments/cropped/garden-terrace-suite.jpg" alt="Wellness package" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel sunset seminyak · book by 31 dec 2026</p><h3 class="fx-ocard__title">wellness package</h3><p class="fx-ocard__desc">enjoy a refreshing overnight stay with a relaxing massage, designed to help you unwind and recharge.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:160ms" data-category="room" data-ends="20261231" data-name="little wonder"><div class="fx-media"><span class="fx-tag">room offers</span><img src="/assets/images/fave-moments/cropped/family-suite.jpg" alt="Little wonder family stay" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel malioboro · book by 31 dec 2026</p><h3 class="fx-ocard__title">little wonder</h3><p class="fx-ocard__desc">explore your city with the little wonder family stay package, including breakfast for two adults and two kids.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r data-category="dining ending" data-ends="20261210" data-name="breakfast for two"><div class="fx-media"><span class="fx-tag fx-tag--solid">ending soon</span><img src="/assets/images/breakfast.png" alt="Breakfast for two" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel braga · book by 10 dec 2026</p><h3 class="fx-ocard__title">breakfast for two</h3><p class="fx-ocard__desc">start bright: room with breakfast for two at the cafe, plus free coffee refills all morning.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:80ms" data-category="member" data-ends="20270131" data-name="bca card holder promo"><div class="fx-media"><span class="fx-tag">member only</span><img src="/assets/images/fave-moments/cropped/superior-sea-view.jpg" alt="Card holder promo" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">64 hotels · code: bcapromo</p><h3 class="fx-ocard__title">bca card holder promo</h3><p class="fx-ocard__desc">enjoy a special discount of 15% on rooms and 10% on food &amp; beverage at favehotels for bca credit card holders.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:160ms" data-category="room" data-ends="20261130" data-name="november blissful getaway"><div class="fx-media"><span class="fx-tag">room offers</span><img src="/assets/images/fave-moments/cropped/deluxe-ocean-suite.jpg" alt="Blissful getaway" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel langko · book by 30 nov 2026</p><h3 class="fx-ocard__title">november blissful getaway</h3><p class="fx-ocard__desc">two nights for the price of one-and-a-half, with late check-out and a welcome drink.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r data-category="room ending" data-ends="20261208" data-name="you need a break"><div class="fx-media"><span class="fx-tag fx-tag--solid">ending soon</span><img src="/assets/images/fave-moments/cropped/premium-king-room.jpg" alt="You need a break offer" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel kemang · book by 8 dec 2026</p><h3 class="fx-ocard__title">you need a break</h3><p class="fx-ocard__desc">a weekday city break with 20% off, breakfast included and free parking.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:80ms" data-category="dining" data-ends="20261231" data-name="season of joy"><div class="fx-media"><span class="fx-tag">dining offers</span><img src="/assets/images/lime-cafe.png" alt="Season of joy dining" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">favehotel diponegoro · until 31 dec 2026</p><h3 class="fx-ocard__title">season of joy</h3><p class="fx-ocard__desc">festive set menus and sweet treats at the fave cafe, all month long.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+      <article class="fx-ocard" data-item data-r style="--d:160ms" data-category="member" data-ends="20270228" data-name="stay longer save more"><div class="fx-media"><span class="fx-tag">member only</span><img src="/assets/images/hero-room.png" alt="Stay longer save more" loading="lazy"></div><div class="fx-ocard__body"><p class="fx-ocard__meta">archipelago members · book by 28 feb 2027</p><h3 class="fx-ocard__title">stay longer, save more</h3><p class="fx-ocard__desc">stay three nights or more and save up to 25%, with member points on every night.</p><a class="fx-link" href="#">view offer <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></article>
+    </div>
+    <p class="fx-empty" data-f-empty hidden>no offers match your search. try another word or filter.</p>
+  </section>
+</main>
+<!--#include footer-->
+</body>
+</html>

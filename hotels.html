@@ -1,11 +1,164 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hotels — fave</title><script type="module" src="/src/inner-pages.js"></script></head><body class="page-hotels">
-<header class="site-header is-scrolled" id="site-header"><a class="brand" href="index.html" aria-label="Fave home"><img class="brand__white" src="/assets/images/fave-logo-white.png" alt="fave"><img class="brand__color" src="/assets/images/fave-logo-magenta.png" alt=""></a><nav class="desktop-nav" aria-label="Main navigation"><a href="hotels.html"><span>hotel</span></a><a href="offers.html"><span>offers</span></a><a href="meetings.html"><span>meetings</span></a><a href="weddings.html"><span>weddings</span></a><a href="news.html"><span>news</span></a><span class="desktop-nav__membership" aria-label="Archipelago Membership"><img src="/assets/images/membership/archi-membership-logo.svg" alt=""></span></nav><div class="header-actions"><a class="header-cta" href="index.html#booking"><span>book now</span><b>↗</b></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button></div><nav class="page-mobile-nav" aria-label="Mobile navigation"><a href="hotels.html">hotel</a><a href="offers.html">offers</a><a href="meetings.html">meetings</a><a href="weddings.html">weddings</a><a href="news.html">news</a><a class="page-book" href="index.html#booking">book now</a></nav></header>
-<main class="inner-main"><div class="page-shell"><header class="page-heading-row"><div class="page-heading-copy"><h1>find your fave stay</h1></div><div class="tabs hotel-scope-tabs" role="group" aria-label="Hotel view"><button class="is-active" type="button" data-hotel-tab="indonesia">Indonesia</button><button type="button" data-hotel-tab="upcoming">Upcoming</button></div></header>
-<section class="card-grid" aria-label="Hotel cities">
-<a class="city-card reveal-card" data-search-card data-city="jakarta" href="#"><img src="/assets/images/cities/favehotel-jakarta.png" alt="favehotel in Jakarta"><div class="city-card__copy"><h2>Jakarta</h2><p>21 hotels to stay</p></div></a>
-<a class="city-card reveal-card" data-search-card data-city="bali" href="#"><img src="/assets/images/cities/favehotel-bali.png" alt="favehotel in Bali"><div class="city-card__copy"><h2>Bali</h2><p>9 hotels to stay</p></div></a>
-<a class="city-card reveal-card" data-search-card data-city="malang" href="#"><img src="/assets/images/cities/favehotel-malang.png" alt="favehotel in Malang"><div class="city-card__copy"><h2>Malang</h2><p>4 hotels to stay</p></div></a>
-<a class="city-card reveal-card" data-search-card data-city="yogyakarta" href="#"><img src="/assets/images/cities/favehotel-yogyakarta.png" alt="favehotel in Yogyakarta"><div class="city-card__copy"><h2>Yogyakarta</h2><p>8 hotels to stay</p></div></a>
-<a class="city-card reveal-card" data-search-card data-city="jakarta" href="#"><img src="/assets/images/fave-lobby.png" alt="favehotel lobby"><div class="city-card__copy"><h2>Bandung</h2><p>6 hotels to stay</p></div></a>
-<a class="city-card reveal-card" data-search-card data-city="bali" href="#"><img src="/assets/images/rooftop-pool.png" alt="favehotel rooftop"><div class="city-card__copy"><h2>Surabaya</h2><p>5 hotels to stay</p></div></a>
-</section></div></main><footer class="page-footer"><div class="page-footer__inner"><img src="/assets/images/fave-logo-white.png" alt="fave"><nav><a href="hotels.html">Hotels</a><a href="offers.html">Offers</a><a href="news.html">News</a></nav><small>Copyright 2026 © Archipelago</small></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>hotels — fave</title>
+  <meta name="description" content="Find your fave: compare favehotels across Indonesia and Malaysia, filter by city and check rates in one place.">
+  <link rel="icon" href="/assets/images/fave-logo-magenta.png">
+  <script type="module" src="/src/fave-pages.js"></script>
+</head>
+<body data-page="hotels" id="top">
+<!--#include header-->
+<main class="fx-page">
+  <div class="fx-pattern-top" aria-hidden="true">
+    <img class="fx-disc fx-disc--a" src="/assets/images/fave-patterns/pattern-1.png" alt="">
+    <img class="fx-disc fx-disc--b" src="/assets/images/fave-patterns/pattern-3.png" alt="">
+    <img class="fx-disc fx-disc--c" src="/assets/images/fave-patterns/pattern-6.png" alt="">
+    <img class="fx-disc fx-disc--d" src="/assets/images/fave-patterns/pattern-8.png" alt="">
+    <img class="fx-disc fx-disc--e" src="/assets/images/fave-patterns/pattern-9.png" alt="">
+    <img class="fx-disc fx-disc--f" src="/assets/images/fave-patterns/pattern-4.png" alt="">
+  </div>
+
+  <section class="fx-hero" aria-labelledby="hotels-title">
+    <nav class="fx-crumbs" aria-label="Breadcrumb" data-r><a href="index.html">home</a><span aria-hidden="true">/</span><span aria-current="page">hotels</span></nav>
+    <p class="fx-eyebrow" data-r>our hotels</p>
+    <h1 class="fx-h1" id="hotels-title" data-r style="--d:80ms">find your fave</h1>
+    <p class="fx-lead" data-r style="--d:140ms">60+ favehotels across 40 cities in indonesia and malaysia. compare, filter and check rates in one place.</p>
+    <form class="fx-bar" action="index.html#booking" data-r style="--d:200ms">
+      <label class="fx-fld"><span class="fx-fld__l">destination</span><span class="fx-fld__v"><select name="destination"><option>bali, indonesia</option><option>jakarta, indonesia</option><option>bandung, indonesia</option><option>yogyakarta, indonesia</option><option>surabaya, indonesia</option><option>malang, indonesia</option></select></span></label>
+      <label class="fx-fld"><span class="fx-fld__l">check-in</span><span class="fx-fld__v"><input type="date" name="checkin" value="2026-12-04"></span></label>
+      <label class="fx-fld"><span class="fx-fld__l">check-out</span><span class="fx-fld__v"><input type="date" name="checkout" value="2026-12-06"></span></label>
+      <label class="fx-fld"><span class="fx-fld__l">guests</span><span class="fx-fld__v"><select name="guests"><option>2 adults, 1 room</option><option>1 adult, 1 room</option><option>2 adults, 1 child, 1 room</option><option>4 adults, 2 rooms</option></select></span></label>
+      <button class="fx-btn fx-btn--secondary" type="submit">book now</button>
+    </form>
+  </section>
+
+  <section class="fx-sec" aria-labelledby="views-title">
+    <div class="fx-titles" data-r><p class="fx-eyebrow">choose your vibe</p><h2 class="fx-title" id="views-title">pick your view</h2></div>
+    <div class="fx-vrow">
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:0ms"><div class="fx-media" data-r="clip"><img src="/assets/images/cities/jakarta.jpg" alt="City skyline view" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">city</span><span class="fx-label__s">32 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:80ms"><div class="fx-media" data-r="clip" style="--d:80ms"><img src="/assets/images/fave-moments/cropped/garden-terrace-suite.jpg" alt="Garden terrace view" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">garden</span><span class="fx-label__s">11 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:160ms"><div class="fx-media" data-r="clip" style="--d:160ms"><img src="/assets/images/cities/malang.jpg" alt="Mountain view near Malang" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">mountain</span><span class="fx-label__s">7 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:240ms"><div class="fx-media" data-r="clip" style="--d:240ms"><img src="/assets/images/cities/bali.png" alt="Beach view in Bali" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">beach</span><span class="fx-label__s">6 hotels</span></div></a>
+    </div>
+  </section>
+
+  <section class="fx-sec" aria-labelledby="rooms-title">
+    <div class="fx-rooms">
+      <div class="fx-titles" data-r><p class="fx-eyebrow">room features</p><h2 class="fx-title" id="rooms-title">hotels by room features</h2><p class="fx-lead">find a fave that fits how you travel, from family trips to a quick city break.</p></div>
+      <div class="fx-rgrid">
+        <a class="fx-tile" href="#all-hotels" data-r><div class="fx-media" data-r="clip"><img src="/assets/images/fave-moments/cropped/superior-sea-view.jpg" alt="Room with a balcony" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">balcony / terrace</span><span class="fx-label__s">9 hotels</span></div></a>
+        <a class="fx-tile" href="#all-hotels" data-r style="--d:80ms"><div class="fx-media" data-r="clip" style="--d:80ms"><img src="/assets/images/fave-moments/cropped/family-suite.jpg" alt="Family room" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">family room</span><span class="fx-label__s">18 hotels</span></div></a>
+        <a class="fx-tile" href="#all-hotels" data-r><div class="fx-media" data-r="clip"><img src="/assets/images/fave-moments/cropped/deluxe-ocean-suite.jpg" alt="Deluxe room with bathtub" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">bathtub</span><span class="fx-label__s">5 hotels</span></div></a>
+        <a class="fx-tile" href="#all-hotels" data-r style="--d:80ms"><div class="fx-media" data-r="clip" style="--d:80ms"><img src="/assets/images/rooftop-pool.png" alt="Rooftop swimming pool" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">swimming pool</span><span class="fx-label__s">21 hotels</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="fx-sec" aria-labelledby="dest-title">
+    <div class="fx-shead" data-r>
+      <div class="fx-titles"><p class="fx-eyebrow">popular destinations</p><h2 class="fx-title" id="dest-title">where to next?</h2></div>
+      <a class="fx-btn fx-btn--outline" href="#all-hotels">see all cities</a>
+    </div>
+    <div class="fx-crow">
+      <a class="fx-tile" href="#all-hotels" data-r><div class="fx-media" data-r="clip"><img src="/assets/images/cities/favehotel-bali.png" alt="favehotel in Bali" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">bali</span><span class="fx-label__s">9 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:60ms"><div class="fx-media" data-r="clip" style="--d:60ms"><img src="/assets/images/cities/favehotel-jakarta.png" alt="favehotel in Jakarta" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">jakarta</span><span class="fx-label__s">21 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:120ms"><div class="fx-media" data-r="clip" style="--d:120ms"><img src="/assets/images/cities/favehotel-yogyakarta.png" alt="favehotel in Yogyakarta" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">yogyakarta</span><span class="fx-label__s">8 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:180ms"><div class="fx-media" data-r="clip" style="--d:180ms"><img src="/assets/images/cities/favehotel-malang.png" alt="favehotel in Malang" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">malang</span><span class="fx-label__s">4 hotels</span></div></a>
+      <a class="fx-tile" href="#all-hotels" data-r style="--d:240ms"><div class="fx-media" data-r="clip" style="--d:240ms"><img src="/assets/images/fave-lobby.png" alt="favehotel lobby in Bandung" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">bandung</span><span class="fx-label__s">6 hotels</span></div></a>
+    </div>
+  </section>
+
+  <section class="fx-sec" id="all-hotels" aria-labelledby="all-title" data-filter-scope data-f-limit="8" data-f-noun="hotels">
+    <div class="fx-shead" data-r>
+      <div class="fx-titles"><p class="fx-eyebrow">all hotels</p><h2 class="fx-title" id="all-title">choose your stay</h2></div>
+      <p class="fx-count" data-f-count aria-live="polite"></p>
+    </div>
+    <div class="fx-filters" data-r>
+      <div class="fx-filterbar">
+        <div class="fx-chips">
+          <div class="fx-chips" data-f-chips="region" role="group" aria-label="Region">
+            <button class="fx-chip is-on" type="button" data-value="all" aria-pressed="true">all regions</button>
+            <button class="fx-chip" type="button" data-value="java" aria-pressed="false">java</button>
+            <button class="fx-chip" type="button" data-value="bali-nusa" aria-pressed="false">bali &amp; nusa tenggara</button>
+            <button class="fx-chip" type="button" data-value="sumatra" aria-pressed="false">sumatra</button>
+            <button class="fx-chip" type="button" data-value="kalimantan-sulawesi" aria-pressed="false">kalimantan &amp; sulawesi</button>
+          </div>
+          <span class="fx-cdiv" aria-hidden="true"></span>
+          <label class="fx-select"><span class="visually-hidden">City</span><select data-f-select="city"><option value="all">all cities</option><option value="jakarta">jakarta</option><option value="bandung">bandung</option><option value="yogyakarta">yogyakarta</option><option value="surabaya">surabaya</option><option value="semarang">semarang</option><option value="malang">malang</option><option value="cikarang">cikarang</option><option value="bali">bali</option><option value="lombok">lombok</option><option value="medan">medan</option><option value="padang">padang</option><option value="palembang">palembang</option><option value="banjarmasin">banjarmasin</option><option value="makassar">makassar</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
+        </div>
+        <label class="fx-search"><span class="visually-hidden">Search hotels</span><svg class="fx-ico" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="search hotel name or area" data-f-search></label>
+      </div>
+      <div class="fx-rates"><p>lowest rates for fri, 4 dec - sun, 6 dec</p><label class="fx-select fx-select--plain"><span class="visually-hidden">Sort hotels</span><select data-f-sort><option value="default">sort by: recommended</option><option value="price">sort by: lowest price</option><option value="name">sort by: name</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label></div>
+    </div>
+    <div class="fx-hgrid" data-f-list>
+      <article class="fx-hcard" data-item data-r data-region="bali-nusa" data-city="bali" data-price="545000" data-name="kuta kartika plaza"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/premium-king-room.jpg" alt="Room at favehotel Kuta Kartika Plaza" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">kuta, bali</p><h3 class="fx-hcard__name">favehotel kuta kartika plaza</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 545,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:60ms" data-region="bali-nusa" data-city="bali" data-price="610000" data-name="sunset seminyak"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/superior-sea-view.jpg" alt="Room at favehotel Sunset Seminyak" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">seminyak, bali</p><h3 class="fx-hcard__name">favehotel sunset seminyak</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 610,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:120ms" data-region="java" data-city="bandung" data-price="498000" data-name="braga"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/classic-twin-room.jpg" alt="Room at favehotel Braga" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">bandung</p><h3 class="fx-hcard__name">favehotel braga</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 498,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:180ms" data-region="java" data-city="yogyakarta" data-price="455000" data-name="malioboro"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/cozy-standard-room.jpg" alt="Room at favehotel Malioboro" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">yogyakarta</p><h3 class="fx-hcard__name">favehotel malioboro</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 455,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r data-region="java" data-city="jakarta" data-price="520000" data-name="kemang"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/executive-corner.jpg" alt="Room at favehotel Kemang" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">south jakarta</p><h3 class="fx-hcard__name">favehotel kemang</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 520,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:60ms" data-region="java" data-city="surabaya" data-price="430000" data-name="diponegoro"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/skyline-penthouse.jpg" alt="Room at favehotel Diponegoro" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">surabaya</p><h3 class="fx-hcard__name">favehotel diponegoro</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 430,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:120ms" data-region="bali-nusa" data-city="lombok" data-price="470000" data-name="langko"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/garden-terrace-suite.jpg" alt="Room at favehotel Langko" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">mataram, lombok</p><h3 class="fx-hcard__name">favehotel langko</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 470,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:180ms" data-region="sumatra" data-city="medan" data-price="410000" data-name="s. parman"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/panoramic-view-suite.jpg" alt="Room at favehotel S. Parman" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">medan</p><h3 class="fx-hcard__name">favehotel s. parman</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 410,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r data-region="java" data-city="semarang" data-price="395000" data-name="pamularsih"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/family-suite.jpg" alt="Room at favehotel Pamularsih" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">semarang</p><h3 class="fx-hcard__name">favehotel pamularsih</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 395,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:60ms" data-region="java" data-city="malang" data-price="420000" data-name="malang"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/deluxe-ocean-suite.jpg" alt="Room at favehotel Malang" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">malang</p><h3 class="fx-hcard__name">favehotel malang</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 420,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:120ms" data-region="sumatra" data-city="padang" data-price="405000" data-name="olo padang"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/classic-twin-room.jpg" alt="Room at favehotel Olo Padang" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">padang</p><h3 class="fx-hcard__name">favehotel olo padang</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 405,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:180ms" data-region="sumatra" data-city="palembang" data-price="399000" data-name="palembang"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/cozy-standard-room.jpg" alt="Room at favehotel Palembang" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">palembang</p><h3 class="fx-hcard__name">favehotel palembang</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 399,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r data-region="kalimantan-sulawesi" data-city="banjarmasin" data-price="415000" data-name="ahmad yani"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/premium-king-room.jpg" alt="Room at favehotel Ahmad Yani" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">banjarmasin, kalimantan</p><h3 class="fx-hcard__name">favehotel ahmad yani</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 415,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:60ms" data-region="kalimantan-sulawesi" data-city="makassar" data-price="440000" data-name="daeng tompo"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/executive-corner.jpg" alt="Room at favehotel Daeng Tompo" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">makassar, sulawesi</p><h3 class="fx-hcard__name">favehotel daeng tompo</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 440,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:120ms" data-region="java" data-city="jakarta" data-price="465000" data-name="tanah abang cideng"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/skyline-penthouse.jpg" alt="Room at favehotel Tanah Abang Cideng" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">central jakarta</p><h3 class="fx-hcard__name">favehotel tanah abang cideng</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 465,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+      <article class="fx-hcard" data-item data-r style="--d:180ms" data-region="java" data-city="cikarang" data-price="480000" data-name="jababeka cikarang"><div class="fx-media"><img src="/assets/images/fave-moments/cropped/superior-sea-view.jpg" alt="Room at favehotel Jababeka Cikarang" loading="lazy"></div><div class="fx-hcard__body"><p class="fx-hcard__loc">cikarang</p><h3 class="fx-hcard__name">favehotel jababeka cikarang</h3><div class="fx-price"><span class="fx-price__from">from</span><span class="fx-price__now"><span class="fx-price__amt">idr 480,000</span><span class="fx-price__night">/ night</span></span></div></div><div class="fx-hcard__actions"><a class="fx-btn fx-btn--outline" href="#">details</a><a class="fx-btn fx-btn--secondary" href="index.html#booking">book now</a></div></article>
+    </div>
+    <p class="fx-empty" data-f-empty hidden>no hotels match these filters. try another city or region.</p>
+    <div class="fx-more">
+      <button class="fx-btn fx-btn--ghost" type="button" data-f-more>show more hotels</button>
+      <div class="fx-progress" aria-hidden="true"><i data-f-progress></i></div>
+      <p class="fx-label__s" data-f-more-label></p>
+    </div>
+  </section>
+
+  <section class="fx-sec" aria-labelledby="up-title">
+    <div class="fx-titles" data-r><p class="fx-eyebrow">our expansion</p><h2 class="fx-title" id="up-title">upcoming hotels</h2><p class="fx-lead">new favehotels are on the way, bringing bright and easy stays to more cities.</p></div>
+    <div class="fx-ucols" data-r>
+      <div class="fx-ucol">
+        <h3 class="fx-subtitle">indonesia</h3>
+        <div class="fx-ugrid">
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">sumatra</span><span class="fx-ugroup__c">2 hotels</span></div><div class="fx-ugroup__l"><p>favehotel pekanbaru</p><p>favehotel bukittinggi</p></div></div>
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">dki jakarta</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel kelapa gading</p></div></div>
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">jawa barat</span><span class="fx-ugroup__c">2 hotels</span></div><div class="fx-ugroup__l"><p>favehotel bogor</p><p>favehotel cirebon</p></div></div>
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">jawa timur</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel kediri</p></div></div>
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">kalimantan</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel balikpapan</p></div></div>
+          <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">sulawesi</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel kendari</p></div></div>
+        </div>
+      </div>
+      <span class="fx-uline" aria-hidden="true"></span>
+      <div class="fx-ucol">
+        <h3 class="fx-subtitle">overseas</h3>
+        <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">kuala lumpur, malaysia</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel kuala lumpur</p></div></div>
+        <div class="fx-ugroup"><div class="fx-ugroup__h"><span class="fx-ugroup__n">penang, malaysia</span><span class="fx-ugroup__c">1 hotel</span></div><div class="fx-ugroup__l"><p>favehotel penang</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fx-sec fx-regions" aria-labelledby="region-title">
+    <div class="fx-titles" data-r><p class="fx-eyebrow">explore the map</p><h2 class="fx-title" id="region-title">browse by region</h2></div>
+    <div class="fx-rcols" data-r>
+      <div class="fx-region" data-acc>
+        <button class="fx-region__head" type="button" data-acc-head aria-expanded="true"><span>indonesia</span><svg class="fx-ico fx-ico--minus" aria-hidden="true"><use href="#i-minus"/></svg><svg class="fx-ico fx-ico--plus" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        <a class="fx-region__item" href="#all-hotels">bali &amp; nusa tenggara<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="fx-region__item" href="#all-hotels">java<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="fx-region__item" href="#all-hotels">sumatra<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="fx-region__item" href="#all-hotels">kalimantan<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="fx-region__item" href="#all-hotels">sulawesi<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="fx-region" data-acc>
+        <button class="fx-region__head" type="button" data-acc-head aria-expanded="true"><span>overseas</span><svg class="fx-ico fx-ico--minus" aria-hidden="true"><use href="#i-minus"/></svg><svg class="fx-ico fx-ico--plus" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        <a class="fx-region__item" href="#all-hotels">malaysia<svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+</main>
+<!--#include footer-->
+</body>
+</html>

@@ -1,0 +1,172 @@
+/*
+  Fave design system tokens.
+  Source: Figma "Variables" (Fave mode) - Scale, Letter Spacing, Radius,
+  Typeface, plus the Fave colour palette (violet / green / grey).
+
+  The Figma Semantic collection still pointed the fave column at the Aston
+  navy/cream swatches. As agreed, the same semantic slots are kept but
+  mapped to the Fave palette: Primary = violet, Secondary = green,
+  Neutral = grey.
+*/
+@import "@fontsource/comfortaa/400.css";
+@import "@fontsource/comfortaa/600.css";
+@import "@fontsource/comfortaa/700.css";
+@import "@fontsource/nunito/400.css";
+@import "@fontsource/nunito/500.css";
+@import "@fontsource/nunito/600.css";
+@import "@fontsource/nunito/700.css";
+@import "@fontsource/nunito/800.css";
+
+:root {
+  /* ---------- Primitive: colour ---------- */
+  --violet-50: #f1e8ed;
+  --violet-100: #d5b8c6;
+  --violet-200: #c096aa;
+  --violet-300: #a36684;
+  --violet-400: #91496c;
+  --violet-500: #761b47;
+  --violet-600: #6b1941;
+  --violet-700: #541332;
+  --violet-800: #410f27;
+  --violet-900: #320b1e;
+
+  --green-50: #f8fae6;
+  --green-100: #e8efaf;
+  --green-200: #dde78a;
+  --green-300: #cddb54;
+  --green-400: #c3d533;
+  --green-500: #b4ca00;
+  --green-600: #a4b800;
+  --green-700: #7e8f00;
+  --green-800: #636f00;
+  --green-900: #4c5500;
+
+  --grey-50: #f4f4f5;
+  --grey-100: #dededf;
+  --grey-200: #cdced0;
+  --grey-300: #b7b8ba;
+  --grey-400: #a9aaad;
+  --grey-500: #939598;
+  --grey-600: #86888a;
+  --grey-700: #686a6c;
+  --grey-800: #515254;
+  --grey-900: #3e3f40;
+
+  --neutral-0: #ffffff;
+  --success-500: #22a04b;
+  --error-500: #d93a3a;
+  --warning-500: #e8a317;
+
+  /* ---------- Primitive: scale (px) ---------- */
+  --scale-10: 10px;
+  --scale-12: 12px;
+  --scale-14: 14px;
+  --scale-16: 16px;
+  --scale-18: 18px;
+  --scale-20: 20px;
+  --scale-24: 24px;
+  --scale-28: 28px;
+  --scale-32: 32px;
+  --scale-36: 36px;
+  --scale-40: 40px;
+  --scale-44: 44px;
+  --scale-48: 48px;
+  --scale-52: 52px;
+  --scale-56: 56px;
+  --scale-60: 60px;
+  --scale-64: 64px;
+  --scale-68: 68px;
+  --scale-72: 72px;
+  --scale-80: 80px;
+  --scale-88: 88px;
+  --scale-96: 96px;
+
+  /* ---------- Primitive: letter spacing ---------- */
+  --ls-wider: 0.8px;
+  --ls-wide: 0.32px;
+  --ls-normal: 0;
+  --ls-tight: -0.16px;
+  --ls-tighter: -1.28px;
+
+  /* ---------- Primitive: radius ---------- */
+  --radius-none: 0;
+  --radius-xs: 8px;
+  --radius-sm: 16px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --radius-xl: 48px;
+  --radius-full: 999px;
+
+  /* ---------- Typeface ---------- */
+  --font-headline: "Comfortaa", system-ui, sans-serif; /* headline + title */
+  --font-body: "Nunito", system-ui, sans-serif; /* description, label, button */
+
+  /* ---------- Semantic: colour ---------- */
+  --bg-default: var(--violet-800);
+  --bg-subtle: var(--grey-50);
+  --bg-brand: var(--violet-500);
+  --bg-inverse: var(--neutral-0);
+
+  --surface-default: var(--violet-500);
+  --surface-subtle: var(--violet-100);
+  --surface-raised: var(--green-500);
+  --surface-inverse: var(--violet-50);
+
+  --text-default: var(--grey-900);
+  --text-secondary: var(--green-500);
+  --text-subtle: var(--violet-300);
+  --text-muted: var(--violet-200);
+  --text-brand: var(--violet-500);
+  --text-inverse: var(--violet-50);
+  --text-disabled: var(--violet-100);
+
+  --icon-default: var(--grey-900);
+  --icon-subtle: var(--green-500);
+  --icon-muted: var(--violet-200);
+  --icon-brand: var(--violet-500);
+  --icon-inverse: var(--neutral-0);
+  --icon-disabled: var(--violet-300);
+
+  --border-default: var(--violet-50);
+  --border-subtle: var(--violet-200);
+  --border-strong: var(--neutral-0);
+  --border-brand: var(--violet-500);
+  --border-focus: var(--violet-400);
+  --border-inverse: var(--violet-900);
+
+  --action-primary: var(--violet-500);
+  --action-primary-hover: var(--violet-400);
+  --action-primary-pressed: var(--violet-700);
+  --action-primary-disabled: var(--grey-100);
+  --action-secondary: var(--green-300);
+  --action-secondary-hover: var(--green-200);
+  --action-secondary-pressed: var(--green-400);
+  --action-secondary-disabled: var(--green-100);
+  --action-text-on-primary: var(--violet-50);
+  --action-text-on-secondary: var(--violet-500);
+  --action-link: var(--violet-600);
+  --action-link-hover: var(--violet-700);
+
+  --state-hover: var(--violet-50);
+  --state-pressed: var(--violet-100);
+  --state-selected: var(--violet-500);
+  --state-focus: var(--violet-600);
+
+  --overlay-light: rgb(118 27 71 / 10%);
+  --overlay-medium: rgb(118 27 71 / 30%);
+  --overlay-strong: rgb(118 27 71 / 50%);
+  --overlay-scrim: rgb(50 11 30 / 70%);
+
+  /* ---------- Semantic: radius ---------- */
+  --radius-card: var(--radius-md);
+  --radius-container: var(--radius-xl);
+  --radius-round: var(--radius-full);
+  --radius-button: var(--radius-round);
+  --radius-pill: var(--radius-round);
+  --radius-inputfield: var(--radius-sm);
+  --radius-textarea: var(--radius-xs);
+
+  /* ---------- Semantic: shadow ---------- */
+  --shadow-active: 0 0 0 3px rgb(145 73 108 / 55%);
+  --shadow-error: 0 0 0 3px rgb(217 58 58 / 45%);
+}

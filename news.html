@@ -1,10 +1,102 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>News — fave</title><script type="module" src="/src/inner-pages.js"></script></head><body class="page-news">
-<header class="site-header is-scrolled" id="site-header"><a class="brand" href="index.html" aria-label="Fave home"><img class="brand__white" src="/assets/images/fave-logo-white.png" alt="fave"><img class="brand__color" src="/assets/images/fave-logo-magenta.png" alt=""></a><nav class="desktop-nav" aria-label="Main navigation"><a href="hotels.html"><span>hotel</span></a><a href="offers.html"><span>offers</span></a><a href="meetings.html"><span>meetings</span></a><a href="weddings.html"><span>weddings</span></a><a href="news.html"><span>news</span></a><span class="desktop-nav__membership" aria-label="Archipelago Membership"><img src="/assets/images/membership/archi-membership-logo.svg" alt=""></span></nav><div class="header-actions"><a class="header-cta" href="index.html#booking"><span>book now</span><b>↗</b></a><button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button></div><nav class="page-mobile-nav" aria-label="Mobile navigation"><a href="hotels.html">hotel</a><a href="offers.html">offers</a><a href="meetings.html">meetings</a><a href="weddings.html">weddings</a><a href="news.html">news</a><a class="page-book" href="index.html#booking">book now</a></nav></header>
-<main class="inner-main"><div class="page-shell"><header class="page-heading-row"><div class="page-heading-copy"><h1>happenings</h1></div><div class="search-panel search-panel--compact" role="search"><input data-page-search type="search" placeholder="search news title, city, or hotel" aria-label="Search news"><button data-search-button type="button">Search</button></div></header><section class="card-grid" aria-label="Latest news">
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/deals/60-seconds-to-tokyo.png" alt="Japanese street food news"></div><div class="content-card__body"><p class="eyebrow">fave+ hotel Banjarbaru</p><h2>60 Seconds to Tokyo brings bright Japanese street food moments</h2><div class="card-meta"><span>23 October 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/arrival-friends.png" alt="Creative community event"></div><div class="content-card__body"><p class="eyebrow">favehotel Malang</p><h2>Kids unleash their creativity and imagination in Malang</h2><div class="card-meta"><span>28 September 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/fave-lobby.png" alt="Community hotel news"></div><div class="content-card__body"><p class="eyebrow">favehotel Manahan Solo</p><h2>Fave and local communities deliver support to residents</h2><div class="card-meta"><span>25 September 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/lime-cafe.png" alt="Fave culinary news"></div><div class="content-card__body"><p class="eyebrow">favehotel Premier Cihampelas</p><h2>A playful Japanese street food experience arrives in Bandung</h2><div class="card-meta"><span>19 September 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/rooftop-pool.png" alt="Poolside romantic dinner"></div><div class="content-card__body"><p class="eyebrow">favehotel Jababeka Cikarang</p><h2>An intimate poolside dinner makes date night brighter</h2><div class="card-meta"><span>8 September 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-<article class="content-card reveal-card" data-search-card><div class="content-card__image"><img src="/assets/images/cities/favehotel-malang.png" alt="Favehotel Malang news"></div><div class="content-card__body"><p class="eyebrow">favehotel Malang</p><h2>School holidays get more exciting with a cheerful city stay</h2><div class="card-meta"><span>19 June 2026</span><a class="circle-arrow" href="#">↗</a></div></div></article>
-</section></div></main><footer class="page-footer"><div class="page-footer__inner"><img src="/assets/images/fave-logo-white.png" alt="fave"><nav><a href="hotels.html">Hotels</a><a href="offers.html">Offers</a><a href="news.html">News</a></nav><small>Copyright 2026 © Archipelago</small></div></footer></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>news — fave</title>
+  <meta name="description" content="News and press from favehotels: openings, awards, partnerships and community programmes.">
+  <link rel="icon" href="/assets/images/fave-logo-magenta.png">
+  <script type="module" src="/src/fave-pages.js"></script>
+</head>
+<body data-page="news" id="top">
+<!--#include header-->
+<main class="fx-page" data-filter-scope data-f-noun="stories">
+  <div class="fx-pattern-top" aria-hidden="true">
+    <img class="fx-disc fx-disc--a" src="/assets/images/fave-patterns/pattern-6.png" alt="">
+    <img class="fx-disc fx-disc--b" src="/assets/images/fave-patterns/pattern-2.png" alt="">
+    <img class="fx-disc fx-disc--c" src="/assets/images/fave-patterns/pattern-9.png" alt="">
+    <img class="fx-disc fx-disc--d" src="/assets/images/fave-patterns/pattern-4.png" alt="">
+    <img class="fx-disc fx-disc--e" src="/assets/images/fave-patterns/pattern-1.png" alt="">
+    <img class="fx-disc fx-disc--f" src="/assets/images/fave-patterns/pattern-7.png" alt="">
+  </div>
+
+  <section class="fx-hero" aria-labelledby="news-title">
+    <nav class="fx-crumbs" aria-label="Breadcrumb" data-r><a href="index.html">home</a><span aria-hidden="true">/</span><span aria-current="page">news</span></nav>
+    <p class="fx-eyebrow" data-r>news &amp; press</p>
+    <h1 class="fx-h1" id="news-title" data-r style="--d:80ms">fave stories</h1>
+    <p class="fx-lead" data-r style="--d:140ms">official announcements from favehotels and archipelago: openings, awards, partnerships and community programmes.</p>
+  </section>
+
+  <section class="fx-sec" aria-label="News list">
+    <div class="fx-filterbar" data-r>
+      <label class="fx-search"><span class="visually-hidden">Search news</span><svg class="fx-ico" aria-hidden="true"><use href="#i-search"/></svg><input type="search" placeholder="search news" data-f-search></label>
+      <div class="fx-chips">
+        <label class="fx-select"><span class="visually-hidden">Year</span><select data-f-select="year"><option value="all">all years</option><option value="2026">2026</option><option value="2025">2025</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
+        <label class="fx-select"><span class="visually-hidden">Hotel</span><select data-f-select="hotel"><option value="all">all hotels</option><option value="kuta">favehotel kuta kartika plaza</option><option value="braga">favehotel braga</option><option value="malioboro">favehotel malioboro</option><option value="kemang">favehotel kemang</option><option value="langko">favehotel langko</option><option value="group">favehotels group</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
+      </div>
+    </div>
+    <p class="fx-count" data-f-count aria-live="polite"></p>
+
+    <div class="fx-nlist" data-f-list>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="group">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">16</span><span class="fx-nrow__mon">nov 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/arrival-friends.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotels group</span><h2 class="fx-nrow__title">favehotels wins best budget hotel brand at the indonesia travel awards 2026</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>4 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="kuta">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">06</span><span class="fx-nrow__mon">nov 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/rooftop-pool.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotel kuta kartika plaza</span><h2 class="fx-nrow__title">favehotel kuta kartika plaza opens its new rooftop pool and sunset bar</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>3 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="braga">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">28</span><span class="fx-nrow__mon">oct 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/lime-cafe.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotel braga</span><h2 class="fx-nrow__title">favehotel braga partners with local cafes for a bandung coffee trail</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>5 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="malioboro">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">14</span><span class="fx-nrow__mon">sep 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/breakfast.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotel malioboro</span><h2 class="fx-nrow__title">favehotel malioboro shares 500 breakfast boxes with street vendors</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>2 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="kemang">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">02</span><span class="fx-nrow__mon">aug 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/hero-room.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotel kemang</span><h2 class="fx-nrow__title">favehotel kemang completes its room refresh with brighter, greener rooms</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>4 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2026" data-hotel="group">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">19</span><span class="fx-nrow__mon">jun 2026</span></div>
+        <div class="fx-media"><img src="/assets/images/fave-lobby.png" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotels group</span><h2 class="fx-nrow__title">favehotels launches its new brand look with brighter colours and patterns</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>6 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2025" data-hotel="langko">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">11</span><span class="fx-nrow__mon">dec 2025</span></div>
+        <div class="fx-media"><img src="/assets/images/fave-pool-welcome.webp" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotel langko</span><h2 class="fx-nrow__title">favehotel langko celebrates 10 years in mataram with a community fun run</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>3 min read</span></div>
+      </a>
+      <a class="fx-nrow" href="#" data-item data-r data-year="2025" data-hotel="group">
+        <div class="fx-nrow__date"><span class="fx-nrow__day">22</span><span class="fx-nrow__mon">oct 2025</span></div>
+        <div class="fx-media"><img src="/assets/images/fave-moments/cropped/family-suite.jpg" alt="" loading="lazy"></div>
+        <div class="fx-nrow__copy"><span class="fx-tag">favehotels group</span><h2 class="fx-nrow__title">favehotels introduces family rooms in 18 hotels across indonesia</h2></div>
+        <div class="fx-nrow__side"><span class="fx-link">read <svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></span><span><svg class="fx-ico" aria-hidden="true"><use href="#i-clock"/></svg>4 min read</span></div>
+      </a>
+    </div>
+    <p class="fx-empty" data-f-empty hidden>no stories match your search. try another word, year or hotel.</p>
+  </section>
+
+  <nav class="fx-pager fx-wrap" aria-label="Pages" data-pager>
+    <button type="button" class="is-on" data-page="1" aria-current="page">1</button>
+    <button type="button" data-page="2">2</button>
+    <button type="button" data-page="3">3</button>
+    <button type="button" data-page="next" aria-label="Next page"><svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </nav>
+</main>
+<!--#include footer-->
+</body>
+</html>
