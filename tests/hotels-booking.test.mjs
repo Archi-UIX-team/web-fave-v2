@@ -328,6 +328,93 @@ test("Bali card links to city.html, which lists that city's hotels", async () =>
   await city.close();
 });
 
+test("city page: map sticks, pins follow the list, cards fill, search kept", async () => {
+  const page = await openPage("city");
+  // nothing between the map and the page may be a scroll container, or sticky is dead
+  const blockers = await page.evaluate(() => {
+    const out = [];
+    for (let el = document.querySelector(".fx-map").parentElement; el; el = el.parentElement) {
+      const s = getComputedStyle(el);
+      if (["hidden", "auto", "scroll"].includes(s.overflowY) && el !== document.documentElement) {
+        out.push(`${el.tagName}.${el.className} overflow-y:${s.overflowY}`);
+      }
+    }
+    return out;
+  });
+  assert.deepEqual(blockers, [], "a clipping ancestor stops the map sticking");
+  // with a long list the map stays in view while the rows scroll past
+  const sticky = await page.evaluate(async () => {
+    const list = document.querySelector(".fx-rowlist");
+    const card = list.querySelector(".fx-rowcard");
+    for (let i = 0; i < 8; i++) list.append(card.cloneNode(true));
+    const map = document.querySelector(".fx-map");
+    window.scrollTo({ top: document.querySelector("#all-hotels").getBoundingClientRect().top + scrollY + 700, behavior: "instant" });
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    return { position: getComputedStyle(map).position, top: Math.round(map.getBoundingClientRect().top) };
+  });
+  assert.equal(sticky.position, "sticky");
+  assert.ok(sticky.top >= 0, `map scrolled out of view (top ${sticky.top})`);
+  await page.reload({ waitUntil: "networkidle" });
+  await page.waitForTimeout(400);
+
+  // pins follow the visible list
+  const visiblePins = () => page.$$eval(".fx-map__pin", (p) => p.filter((x) => x.offsetParent !== null).map((x) => x.textContent.trim()));
+  assert.equal((await visiblePins()).length, 2);
+  await page.fill("[data-f-search]", "seminyak");
+  await page.waitForTimeout(150);
+  const pins = await visiblePins();
+  assert.equal(pins.length, 1, pins.join(","));
+  assert.match(pins[0], /610K/);
+  // book now keeps what the visitor typed
+  await page.locator('.fx-hero button[type="submit"]').click();
+  await page.waitForTimeout(200);
+  assert.equal(await page.inputValue("[data-f-search]"), "seminyak");
+  await page.fill("[data-f-search]", "");
+
+  // the row card photo fills the whole card
+  const fill = await page.evaluate(() => {
+    const card = document.querySelector(".fx-rowcard");
+    return { card: Math.round(card.getBoundingClientRect().height), photo: Math.round(card.querySelector(".fx-media").getBoundingClientRect().height) };
+  });
+  assert.equal(fill.photo, fill.card, JSON.stringify(fill));
+
+  // the map's own controls are reachable, and its description is readable
+  const a11y = await page.evaluate(() => ({
+    mapRole: document.querySelector(".fx-map").getAttribute("role"),
+    canvasRole: document.querySelector(".fx-map__canvas").getAttribute("role"),
+    label: document.querySelector('.fx-map [role="img"]').getAttribute("aria-label"),
+    buttons: [...document.querySelectorAll(".fx-map button")].map((b) => b.getAttribute("aria-label") || b.textContent.trim()),
+  }));
+  assert.notEqual(a11y.mapRole, "img", "role=img on the panel hides its buttons");
+  assert.equal(a11y.canvasRole, "img");
+  assert.match(a11y.label, /545K/, "the label names the prices");
+  assert.deepEqual(a11y.buttons, ["Zoom in", "Zoom out"]);
+  // zoom does something
+  const zoom = await page.evaluate(async () => {
+    const canvas = document.querySelector(".fx-map__canvas");
+    const before = getComputedStyle(canvas).scale;
+    document.querySelector('.fx-map button[aria-label="Zoom in"]').click();
+    await new Promise((r) => setTimeout(r, 50));
+    return [before, getComputedStyle(canvas).scale];
+  });
+  assert.notEqual(zoom[0], zoom[1], `scale did not change (${zoom.join(" -> ")})`);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+test("booking bar field dividers stay visible on the violet bar", async () => {
+  const page = await openHotels();
+  const seen = await page.evaluate(() => {
+    const fld = document.querySelectorAll(".fx-hero .fx-bar .fx-fld")[1];
+    const bar = getComputedStyle(document.querySelector(".fx-hero .fx-bar")).backgroundColor;
+    return { border: getComputedStyle(fld).borderLeftColor, bar };
+  });
+  // a 50% violet-500 divider over a violet-500 bar composites to the bar colour
+  assert.notEqual(seen.border, "rgba(118, 27, 71, 0.5)", "divider is invisible on the new bar colour");
+  assert.notEqual(seen.border, seen.bar);
+  await page.close();
+});
+
 test("phone: city page stacks the list above the map", async () => {
   const page = await openPage("city", { width: 390, height: 844 });
   const list = await page.locator(".fx-rowlist").boundingBox();

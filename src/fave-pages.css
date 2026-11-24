@@ -43,7 +43,8 @@ h1,h2,h3,p,figure{margin:0}
 }
 .fx-wrap{padding-inline:var(--gx)}
 .fx-wrap-s{padding-inline:var(--gxs)}
-.fx-page{position:relative;overflow:hidden;isolation:isolate}
+/* clip, not hidden: hidden would make a scroll container and break position:sticky inside */
+.fx-page{position:relative;overflow:clip;isolation:isolate}
 
 /* ---------- typography roles ---------- */
 .fx-eyebrow{font:700 var(--scale-14)/1.2 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
@@ -102,7 +103,7 @@ h1,h2,h3,p,figure{margin:0}
 /* booking bar */
 .fx-bar{display:flex;align-items:stretch;margin-top:var(--scale-12);border:1px solid var(--action-secondary);border-radius:var(--radius-container);background:var(--violet-500);overflow:hidden}
 .fx-fld{flex:1;min-width:1px;padding:var(--scale-18) var(--scale-28);display:flex;flex-direction:column;gap:6px;white-space:nowrap}
-.fx-fld + .fx-fld{border-left:1px solid var(--overlay-strong)}
+.fx-fld + .fx-fld{border-left:1px solid var(--violet-400)}
 .fx-fld__l{font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
 .fx-fld__v{font:600 var(--scale-18)/1.2 var(--font-body);color:var(--text-inverse)}
 .fx-fld__v select,.fx-fld__v input{width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;outline:none;appearance:none;cursor:pointer}

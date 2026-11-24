@@ -11,6 +11,8 @@ document.documentElement.classList.add("js");
 // hotels page only: booking pickers and the all-filters pop-up
 const bookingRoots = document.querySelectorAll("[data-booking]");
 if (bookingRoots.length) import("./booking.js").then((m) => m.initBooking(bookingRoots));
+const mapRoot = document.querySelector("[data-map]")?.closest("[data-filter-scope]");
+if (mapRoot) import("./city-map.js").then((m) => m.initCityMap(mapRoot));
 const filterRoot = document.querySelector("[data-open-filters]")?.closest("[data-filter-scope]");
 if (filterRoot) import("./hotel-filters.js").then((m) => { m.initHotelFilters(filterRoot); m.initSelectMenus(filterRoot); });
 

@@ -420,7 +420,9 @@ export function initBooking(rootList) {
     const search = scope?.querySelector("[data-f-search]");
     if (!search) return scope;
     if (!citySelect) {
-      // lists without a city menu (e.g. the city view page) search by place or hotel name
+      // a page for one city (no destination field) must not touch the visitor's search
+      if (!fieldFor("dest", roots[0])) return scope;
+      // other lists without a city menu (e.g. city view) search by place or hotel name
       search.value = state.dest.name;
       search.dispatchEvent(new Event("input"));
       return scope;

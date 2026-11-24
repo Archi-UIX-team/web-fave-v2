@@ -78,17 +78,16 @@
       </article>
         <p class="fx-empty" data-f-empty hidden>no hotels match this search. try another name or fewer filters.</p>
       </div>
-      <div class="fx-map" aria-label="Map of fave hotels in Bali" role="img">
-        <div class="fx-map__canvas" aria-hidden="true">
+      <div class="fx-map" data-map>
+        <div class="fx-map__canvas" role="img" aria-label="Sample map of fave hotels in Bali.">
           <span class="fx-map__water"></span><span class="fx-map__road fx-map__road--1"></span><span class="fx-map__road fx-map__road--2"></span><span class="fx-map__road fx-map__road--3"></span>
-          <span class="fx-map__pin" style="--x:32%;--y:40%"><b class="fx-proper">IDR 545K</b> / night</span>
-          <span class="fx-map__pin" style="--x:56%;--y:62%"><b class="fx-proper">IDR 610K</b> / night</span>
-          <span class="fx-map__place fx-proper" style="--x:40%;--y:49%">Kuta</span>
-          <span class="fx-map__place fx-proper" style="--x:64%;--y:71%">Seminyak</span>
+          <span class="fx-map__pin" data-pin-for="favehotel kuta kartika plaza" data-place="Kuta" data-price="IDR 545K" style="--x:32%;--y:40%"><b class="fx-proper">IDR 545K</b> / night</span>
+          <span class="fx-map__pin" data-pin-for="favehotel sunset seminyak" data-place="Seminyak" data-price="IDR 610K" style="--x:56%;--y:62%"><b class="fx-proper">IDR 610K</b> / night</span>
+          <span class="fx-map__place fx-proper" data-place-for="favehotel kuta kartika plaza" style="--x:40%;--y:49%">Kuta</span>
+          <span class="fx-map__place fx-proper" data-place-for="favehotel sunset seminyak" style="--x:64%;--y:71%">Seminyak</span>
         </div>
-        <button class="fx-map__search" type="button">search this area</button>
-        <div class="fx-map__zoom"><button type="button" aria-label="Zoom in"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button><button type="button" aria-label="Zoom out"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button></div>
-        <p class="visually-hidden">Sample map: Kuta from IDR 545K per night, Seminyak from IDR 610K per night.</p>
+        <span class="fx-map__search" aria-hidden="true">search this area</span>
+        <div class="fx-map__zoom"><button type="button" aria-label="Zoom in" data-zoom-in><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button><button type="button" aria-label="Zoom out" data-zoom-out><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button></div>
       </div>
     </div>
   </section>
