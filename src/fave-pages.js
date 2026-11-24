@@ -1,8 +1,15 @@
 import "./fave-tokens.css";
 import "./navbar.css";
 import "./fave-pages.css";
+import "./fave-hotels.css";
 
 document.documentElement.classList.add("js");
+
+// hotels page only: booking pickers and the all-filters pop-up
+const bookingRoot = document.querySelector("[data-booking]");
+if (bookingRoot) import("./booking.js").then((m) => m.initBooking(bookingRoot));
+const filterRoot = document.querySelector("[data-open-filters]")?.closest("[data-filter-scope]");
+if (filterRoot) import("./hotel-filters.js").then((m) => m.initHotelFilters(filterRoot));
 
 /* ---------- navbar (same behaviour as before) ---------- */
 const header = document.querySelector(".site-header");
@@ -77,6 +84,7 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
     const filters = active();
     const matched = items.filter((item) => {
       if (q && !item.textContent.toLowerCase().includes(q)) return false;
+      if (typeof scope.fxExtra === "function" && !scope.fxExtra(item)) return false;
       // data-f-select="room-type" must read data-room-type, i.e. dataset.roomType
       return Object.entries(filters).every(([key, value]) =>
         value === "all" || (item.dataset[toDatasetKey(key)] || "").split(" ").includes(value));
@@ -120,6 +128,7 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
     apply();
   });
   more?.addEventListener("click", () => { limit += step; apply(); });
+  scope.addEventListener("fx:refresh", resetAndApply);
   items.forEach((item, i) => { item.dataset.order = i; });
   apply();
 });

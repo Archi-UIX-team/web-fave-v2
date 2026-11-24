@@ -1,0 +1,186 @@
+/*
+  Hotels page refinements: booking pickers (destination, dates, guests),
+  stuck booking strip, all-filters pop-up, upcoming-hotel hover, and the
+  proper-case rule for place names. Fave tokens only (fave-tokens.css).
+*/
+
+/* names of cities, provinces, countries and hotels keep their own casing;
+   currency codes (IDR) are written in capitals in the markup */
+.fx-proper{text-transform:none}
+
+/* ---------- booking form with pickers ---------- */
+/* the hero (with its open pickers) must paint above the sections after it */
+.fx-hero:has(.fx-booking){z-index:5}
+.fx-booking{position:relative;z-index:30;margin-top:var(--scale-12)}
+.fx-booking .fx-bar{margin-top:0}
+.fx-bar .fx-fld{padding:0}
+.fx-fld__btn{position:relative;width:100%;height:100%;padding:var(--scale-18) var(--scale-28);display:flex;flex-direction:column;gap:6px;text-align:left;transition:background-color .25s}
+.fx-fld__btn:hover{background:rgb(118 27 71 / 35%)}
+.fx-fld__btn::after{content:"";position:absolute;left:var(--scale-28);right:var(--scale-28);bottom:0;height:2px;border-radius:var(--radius-round);background:var(--action-secondary);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.fx-fld.is-active .fx-fld__btn{background:var(--violet-700)}
+.fx-fld.is-active .fx-fld__btn::after{transform:scaleX(1)}
+.fx-fld__btn:focus-visible{box-shadow:inset var(--shadow-active);border-radius:0}
+.fx-fld__row{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-10)}
+/* white calendar icon in the check-in / check-out fields */
+.fx-fld__row .fx-ico{width:18px;height:18px;color:var(--neutral-0)}
+
+.fx-pop{
+  position:absolute;z-index:40;top:calc(100% + 10px);left:0;
+  border:1px solid var(--overlay-strong);border-radius:var(--radius-md);background:var(--violet-900);color:var(--text-inverse);
+  box-shadow:0 28px 60px rgb(20 3 12 / 55%);overflow:hidden;
+}
+.fx-pop[hidden]{display:none}
+.fx-pop__head{display:none}
+.fx-pop__foot{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-16);padding:var(--scale-18) var(--scale-24);border-top:1px solid var(--overlay-strong)}
+.fx-textbtn{font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-muted);transition:color .25s}
+.fx-textbtn:hover{color:var(--text-inverse)}
+
+/* destination */
+.fx-pop--dest{width:min(460px,100%)}
+.fx-dest__search{display:flex;align-items:center;gap:var(--scale-12);padding:var(--scale-18) var(--scale-24);border-bottom:1px solid var(--overlay-strong)}
+.fx-dest__search .fx-ico{color:var(--text-muted)}
+.fx-dest__search input{flex:1;min-width:0;border:0;background:transparent;color:var(--text-inverse);font-size:var(--scale-16);outline:none}
+.fx-dest__search input:focus-visible{box-shadow:none}
+.fx-dest__search:focus-within .fx-ico{color:var(--text-secondary)}
+.fx-dest__list{max-height:340px;margin:0;padding:var(--scale-10) 0;list-style:none;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--violet-400) transparent}
+.fx-dest__group{padding:var(--scale-12) var(--scale-24) 6px;font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
+.fx-dest__item{width:100%;display:flex;align-items:center;gap:var(--scale-12);padding:var(--scale-10) var(--scale-24);text-align:left;transition:background-color .2s}
+.fx-dest__item .fx-ico{color:var(--text-muted)}
+.fx-dest__item:hover,.fx-dest__item.is-focus,.fx-dest__item:focus-visible{background:var(--violet-700);box-shadow:none;border-radius:0}
+.fx-dest__item:hover .fx-ico,.fx-dest__item.is-focus .fx-ico{color:var(--text-secondary)}
+.fx-dest__name{font:700 var(--scale-16)/1.3 var(--font-body)}
+.fx-dest__meta{font-size:var(--scale-14);color:var(--text-muted)}
+.fx-dest__empty{padding:var(--scale-24);color:var(--text-muted);font-size:var(--scale-14)}
+
+/* dates */
+.fx-pop--dates{width:min(760px,100%)}
+.fx-cal{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--scale-40);padding:var(--scale-24) var(--scale-32) var(--scale-16)}
+.fx-cal:has(> .fx-cal__month:only-of-type){grid-template-columns:1fr}
+.fx-cal__nav{position:absolute;top:var(--scale-20);width:var(--scale-36);height:var(--scale-36);display:grid;place-items:center;border-radius:50%;color:var(--text-inverse);transition:background-color .2s}
+.fx-cal__nav:hover{background:var(--violet-700)}
+.fx-cal__nav:disabled{opacity:.3;pointer-events:none}
+.fx-cal__nav--prev{left:var(--scale-20)}
+.fx-cal__nav--next{right:var(--scale-20)}
+.fx-cal__title{margin-bottom:var(--scale-16);text-align:center;font:700 var(--scale-18)/2 var(--font-headline)}
+.fx-cal__week,.fx-cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 0}
+.fx-cal__week span{padding-bottom:var(--scale-10);text-align:center;font:700 var(--scale-12)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-muted)}
+.fx-cal__day{position:relative;height:var(--scale-40);border-radius:var(--radius-xs);font:700 var(--scale-14)/1 var(--font-body);color:var(--text-inverse);transition:background-color .15s,color .15s}
+.fx-cal__day:hover{background:var(--violet-700)}
+.fx-cal__day:disabled{color:var(--text-muted);opacity:.4;text-decoration:line-through;pointer-events:none}
+.fx-cal__day.is-today::after{content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;border-radius:50%;background:var(--action-secondary);translate:-50% 0}
+.fx-cal__day.is-range,.fx-cal__day.is-hover-end{border-radius:0;background:var(--violet-600)}
+.fx-cal__day.is-start,.fx-cal__day.is-end{background:var(--action-secondary);color:var(--action-text-on-secondary)}
+.fx-cal__day.is-start.is-today::after,.fx-cal__day.is-end.is-today::after{background:var(--action-text-on-secondary)}
+.fx-cal__day.is-start{border-radius:var(--radius-xs) 0 0 var(--radius-xs)}
+.fx-cal__day.is-end{border-radius:0 var(--radius-xs) var(--radius-xs) 0}
+.fx-cal__day.is-start:last-child,.fx-cal__day.is-start.is-end{border-radius:var(--radius-xs)}
+.fx-cal__note{font-size:var(--scale-14);color:var(--text-muted)}
+.fx-cal__note strong{color:var(--text-secondary)}
+.fx-cal__note em{font-style:normal}
+.fx-pop__actions{display:flex;align-items:center;gap:var(--scale-20)}
+.fx-pop__actions .fx-btn:disabled{opacity:.45;pointer-events:none}
+
+/* guests */
+.fx-pop--guests{width:min(400px,100%)}
+.fx-guests{padding:var(--scale-10) var(--scale-24)}
+.fx-guest{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-16);padding:var(--scale-18) 0}
+.fx-guest + .fx-guest{border-top:1px solid var(--overlay-strong)}
+.fx-guest__t{font:700 var(--scale-16)/1.3 var(--font-body)}
+.fx-guest__s{font-size:var(--scale-14);color:var(--text-muted)}
+.fx-stepper{display:flex;align-items:center;gap:var(--scale-14)}
+.fx-stepper button{width:var(--scale-36);height:var(--scale-36);display:grid;place-items:center;border:1px solid var(--border-subtle);border-radius:50%;transition:border-color .2s,background-color .2s,color .2s}
+.fx-stepper button:hover{border-color:var(--action-secondary);color:var(--action-secondary)}
+.fx-stepper button:disabled{opacity:.3;pointer-events:none}
+.fx-stepper .fx-ico{width:16px;height:16px}
+.fx-stepper output{min-width:var(--scale-20);text-align:center;font:700 var(--scale-18)/1 var(--font-body)}
+
+/* ---------- stuck booking strip under the navbar ---------- */
+.fx-stuck{
+  position:fixed;z-index:990;top:78px;left:50%;width:min(1328px,84vw);
+  display:flex;align-items:center;gap:8px;padding:6px 6px 6px var(--scale-16);
+  border:1px solid var(--overlay-strong);border-radius:var(--radius-round);background:rgb(50 11 30 / 90%);
+  box-shadow:0 16px 40px rgb(20 3 12 / 35%);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  transform:translate(-50%,-14px);opacity:0;visibility:hidden;
+  transition:transform .4s var(--ease),opacity .3s,visibility 0s .4s;
+}
+.fx-stuck.is-on{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .4s var(--ease),opacity .3s}
+.fx-stuck__f{display:flex;align-items:center;gap:8px;min-width:0;padding:8px var(--scale-14);border-radius:var(--radius-round);font:700 var(--scale-14)/1.2 var(--font-body);white-space:nowrap;transition:background-color .2s,color .2s}
+.fx-stuck__f:hover{background:var(--violet-700);color:var(--text-secondary)}
+.fx-stuck__f .fx-ico{width:16px;height:16px;color:var(--text-secondary)}
+.fx-stuck__sep{flex:none;width:1px;height:var(--scale-20);background:var(--overlay-strong)}
+.fx-stuck .fx-btn{flex:none;margin-left:auto;min-height:var(--scale-40)}
+@media (max-width:1000px){.fx-stuck{top:84px;width:calc(100vw - 32px)}}
+@media (max-width:760px){
+  .fx-stuck__f--dates,.fx-stuck__f--guests,.fx-stuck__sep{display:none}
+  .fx-stuck__f span{overflow:hidden;text-overflow:ellipsis}
+}
+
+/* ---------- all filters chip + pop-up ---------- */
+.fx-chip__badge{min-width:20px;height:20px;padding:0 6px;display:inline-grid;place-items:center;border-radius:var(--radius-pill);background:var(--action-secondary);color:var(--action-text-on-secondary);font-size:var(--scale-12)}
+.fx-chip__badge[hidden]{display:none}
+.fx-chip.is-on .fx-chip__badge{background:var(--violet-800);color:var(--text-secondary)}
+.fx-modal{
+  width:min(860px,calc(100% - 32px));max-width:none;max-height:min(88vh,900px);padding:0;
+  border:1px solid var(--overlay-strong);border-radius:var(--radius-lg);background:var(--violet-900);color:var(--text-inverse);
+  box-shadow:0 40px 90px rgb(10 2 6 / 60%);overflow:hidden;
+}
+.fx-modal[open]{display:flex;flex-direction:column;animation:fxModalIn .35s var(--ease)}
+.fx-modal::backdrop{background:var(--overlay-scrim);backdrop-filter:blur(6px)}
+@keyframes fxModalIn{from{opacity:0;translate:0 16px}}
+.fx-modal__head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--scale-16);padding:var(--scale-32) var(--scale-32) var(--scale-24);border-bottom:1px solid var(--overlay-strong)}
+.fx-modal__title{font:700 var(--scale-28)/1.2 var(--font-headline)}
+.fx-modal__sub{margin-top:6px;font-size:var(--scale-16);color:var(--text-muted)}
+.fx-modal__close{flex:none;width:var(--scale-40);height:var(--scale-40);display:grid;place-items:center;border-radius:50%;transition:background-color .2s}
+.fx-modal__close:hover{background:var(--violet-700)}
+.fx-modal__body{flex:1;overflow:auto;padding:var(--scale-24) var(--scale-32);scrollbar-width:thin;scrollbar-color:var(--violet-400) transparent}
+.fx-modal__sec + .fx-modal__sec{margin-top:var(--scale-24);padding-top:var(--scale-24);border-top:1px solid var(--overlay-strong)}
+.fx-modal__h{font:700 var(--scale-20)/1.3 var(--font-headline)}
+.fx-modal__hs{font-size:var(--scale-14);color:var(--text-muted)}
+.fx-modal__foot{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-16);padding:var(--scale-20) var(--scale-32);border-top:1px solid var(--overlay-strong)}
+.fx-price-grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:var(--scale-32);align-items:start}
+.fx-range{position:relative;height:var(--scale-28);margin:var(--scale-20) 0}
+.fx-range__track{position:absolute;left:0;right:0;top:50%;height:4px;border-radius:var(--radius-round);background:var(--overlay-strong);translate:0 -50%}
+.fx-range__fill{position:absolute;top:0;bottom:0;border-radius:inherit;background:var(--action-secondary)}
+.fx-range input{position:absolute;inset:0;width:100%;height:100%;margin:0;background:none;appearance:none;-webkit-appearance:none;pointer-events:none}
+.fx-range input::-webkit-slider-runnable-track{background:none}
+.fx-range input::-webkit-slider-thumb{width:24px;height:24px;border:2px solid var(--action-secondary);border-radius:50%;background:var(--violet-900);appearance:none;-webkit-appearance:none;pointer-events:auto;cursor:grab}
+.fx-range input::-moz-range-thumb{width:20px;height:20px;border:2px solid var(--action-secondary);border-radius:50%;background:var(--violet-900);pointer-events:auto;cursor:grab}
+.fx-range input:focus-visible{box-shadow:none}
+.fx-range input:focus-visible::-webkit-slider-thumb{box-shadow:var(--shadow-active)}
+.fx-price-boxes{display:grid;grid-template-columns:1fr 1fr;gap:var(--scale-16)}
+.fx-price-box{padding:var(--scale-12) var(--scale-16);border:1px solid var(--border-subtle);border-radius:var(--radius-inputfield)}
+.fx-price-box span{display:block;font-size:var(--scale-12);color:var(--text-muted)}
+.fx-price-box output{font:700 var(--scale-16)/1.4 var(--font-body);text-transform:none}
+.fx-currency{display:flex;margin-top:var(--scale-12);width:100%}
+.fx-currency select{width:100%;height:var(--scale-52);border-radius:var(--radius-inputfield);text-transform:none;font-size:var(--scale-16)}
+.fx-facilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--scale-14) var(--scale-24);margin-top:var(--scale-20)}
+.fx-check{display:flex;align-items:center;gap:var(--scale-12);font-size:var(--scale-16);cursor:pointer;transition:color .2s}
+.fx-check:hover{color:var(--text-secondary)}
+.fx-check input{flex:none;width:20px;height:20px;margin:0;display:grid;place-items:center;border:1.5px solid var(--border-subtle);border-radius:6px;background:transparent;appearance:none;-webkit-appearance:none;cursor:pointer;transition:background-color .2s,border-color .2s}
+.fx-check input::after{content:"";width:10px;height:6px;border:2px solid var(--action-text-on-secondary);border-top:0;border-right:0;rotate:-45deg;translate:0 -1px;opacity:0}
+.fx-check input:checked{border-color:var(--action-secondary);background:var(--action-secondary)}
+.fx-check input:checked::after{opacity:1}
+
+/* ---------- upcoming hotels: hover per hotel ---------- */
+.fx-ugroup__l a{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-12);margin:0 calc(var(--scale-10) * -1);padding:4px var(--scale-10);border-radius:var(--radius-xs);font:600 var(--scale-16)/1.35 var(--font-body);letter-spacing:var(--ls-tight);transition:color .25s,background-color .25s,padding .35s var(--ease)}
+.fx-ugroup__l a .fx-ico{width:16px;height:16px;opacity:0;translate:-6px 0;transition:opacity .25s,translate .35s var(--ease)}
+.fx-ugroup__l a:hover,.fx-ugroup__l a:focus-visible{padding-left:var(--scale-16);background:var(--violet-700);color:var(--text-secondary)}
+.fx-ugroup__l a:hover .fx-ico,.fx-ugroup__l a:focus-visible .fx-ico{opacity:1;translate:0 0}
+
+/* ---------- small screens: pickers become bottom sheets ---------- */
+@media (max-width:600px){
+  /* the huge shadow dims the page behind the sheet without covering the sheet */
+  .fx-pop{position:fixed;z-index:1100;top:auto;left:0;right:0;bottom:0;width:auto;max-height:86vh;overflow:auto;border-radius:var(--radius-lg) var(--radius-lg) 0 0;box-shadow:0 0 0 100vmax var(--overlay-scrim)}
+  .fx-pop__head{display:flex;justify-content:space-between;align-items:center;padding:var(--scale-16) var(--scale-24);border-bottom:1px solid var(--overlay-strong);font:700 var(--scale-18)/1.2 var(--font-headline)}
+  body.fx-sheet-open{overflow:hidden}
+  /* lift the hero above the fixed navbar while a sheet is open */
+  body.fx-sheet-open .fx-page{isolation:auto}
+  body.fx-sheet-open .fx-hero:has(.fx-booking){z-index:1100}
+  .fx-cal{padding:var(--scale-20) var(--scale-16) var(--scale-12)}
+  .fx-pop__foot{flex-wrap:wrap}
+  .fx-modal{width:100%;max-height:92vh;margin:auto 0 0;border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+  .fx-modal__head,.fx-modal__body,.fx-modal__foot{padding-inline:var(--scale-20)}
+  .fx-price-grid{grid-template-columns:1fr;gap:var(--scale-16)}
+  .fx-facilities{grid-template-columns:1fr 1fr}
+}
+@media (min-width:601px) and (max-width:900px){.fx-facilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
