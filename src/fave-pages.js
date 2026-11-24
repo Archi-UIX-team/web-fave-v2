@@ -3,6 +3,7 @@ import "./navbar.css";
 import "./fave-pages.css";
 import "./fave-hotels.css";
 import "./fave-view-cities.css";
+import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");
 
@@ -204,6 +205,23 @@ document.querySelectorAll("[data-feature-split]").forEach((sec) => {
   show(buttons.find((b) => b.classList.contains("is-on")) || buttons[0]);
 });
 
+/* ---------- upcoming hotels: fold per region on phones (aston) ---------- */
+const phone = window.matchMedia("(max-width: 600px)");
+const ugroups = [...document.querySelectorAll("[data-ugroup]")];
+const syncUgroups = () => ugroups.forEach((g) => {
+  // on larger screens every list is shown, so the header is not a control
+  const btn = g.querySelector(".fx-ugroup__h");
+  btn.setAttribute("aria-expanded", String(!phone.matches || !g.classList.contains("is-closed")));
+  btn.tabIndex = phone.matches ? 0 : -1;
+});
+ugroups.forEach((g) => g.querySelector(".fx-ugroup__h").addEventListener("click", () => {
+  if (!phone.matches) return;
+  g.classList.toggle("is-closed");
+  syncUgroups();
+}));
+phone.addEventListener("change", syncUgroups);
+syncUgroups();
+
 /* ---------- regions accordion ---------- */
 document.querySelectorAll("[data-acc]").forEach((region) => {
   const head = region.querySelector("[data-acc-head]");
@@ -223,7 +241,10 @@ document.querySelectorAll("[data-car]").forEach((car) => {
     const first = track.firstElementChild;
     if (!first) return 1;
     const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-    return Math.max(1, Math.round((track.clientWidth + gap) / (first.offsetWidth + gap)));
+    const columns = Math.max(1, Math.round((track.clientWidth + gap) / (first.offsetWidth + gap)));
+    // a track laid out in 2 rows (phone 2x2 grid) shows columns x rows cards per page
+    const rows = new Set([...track.children].map((c) => c.offsetTop)).size || 1;
+    return columns * rows;
   };
   const update = () => {
     const per = pageSize();
@@ -242,6 +263,16 @@ document.querySelectorAll("[data-car]").forEach((car) => {
     if (prev) prev.disabled = track.scrollLeft < 4;
     if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
   };
+  // a 2-row track fills column by column; reorder each group of 4 so a page
+  // reads left to right like aston: [1 2 / 3 4] instead of [1 3 / 2 4]
+  const readRowFirst = () => {
+    const twoRows = getComputedStyle(track).gridTemplateRows.trim().split(/\s+/).length === 2;
+    [...track.children].forEach((c, i) => {
+      c.style.order = twoRows ? String(i - (i % 4) + [0, 2, 1, 3][i % 4]) : "";
+    });
+  };
+  readRowFirst();
+  window.addEventListener("resize", readRowFirst);
   prev?.addEventListener("click", () => track.scrollBy({ left: -track.clientWidth, behavior: "smooth" }));
   next?.addEventListener("click", () => track.scrollBy({ left: track.clientWidth, behavior: "smooth" }));
   track.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });

@@ -298,6 +298,83 @@ test("new pages have no sideways scroll on phones", async () => {
   }
 });
 
+/* ---------- phone layout (aston mobile) ---------- */
+test("phone: hotels page follows the aston mobile layout", async () => {
+  const page = await openPage("hotels", { width: 390, height: 844 });
+  const box = (sel) => page.locator(sel).first().boundingBox();
+  // booking: check-in and check-out side by side, destination full width
+  const [ci, co, dest] = [await box('.fx-hero [data-field="checkin"]'), await box('.fx-hero [data-field="checkout"]'), await box('.fx-hero [data-field="dest"]')];
+  assert.equal(Math.round(ci.y), Math.round(co.y));
+  assert.ok(dest.width > ci.width * 1.8);
+  // pick your view: 2 columns, pool (5th) full width in third place
+  const tiles = await page.$$eval(".fx-vrow--5 .fx-tile", (t) => t.map((x) => { const r = x.getBoundingClientRect(); return { y: Math.round(r.y), w: Math.round(r.width), label: x.querySelector(".fx-label__t").textContent }; }));
+  const pool = tiles.find((t) => t.label === "pool");
+  const city = tiles.find((t) => t.label === "city");
+  const mountain = tiles.find((t) => t.label === "mountain");
+  assert.ok(pool.w > city.w * 1.8 && pool.y > city.y && pool.y < mountain.y, JSON.stringify(tiles));
+  // room features: 2 columns
+  const rf = await page.$$eval(".fx-rgrid .fx-tile", (t) => t.slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().y)));
+  assert.equal(rf[0], rf[1]);
+  // popular destinations: 2 x 2, row first, counter 4 / 8
+  const d = await page.$$eval(".fx-destrow .fx-tile", (t) => t.map((x) => { const r = x.getBoundingClientRect(); return [x.querySelector(".fx-label__t").textContent, Math.round(r.x), Math.round(r.y)]; }));
+  const at = (n) => d.find((x) => x[0] === n);
+  assert.ok(at("Bali")[2] === at("Jakarta")[2] && at("Jakarta")[1] > at("Bali")[1], "Bali and Jakarta share the top row");
+  assert.ok(at("Yogyakarta")[2] > at("Bali")[2] && at("Yogyakarta")[1] === at("Bali")[1], "Yogyakarta under Bali");
+  assert.equal((await page.textContent('[aria-labelledby="dest-title"] [data-car-count]')).trim(), "4 / 8");
+  // filters: Indonesia | overseas, all filters | all cities as half-width pairs
+  const [indo, over, allf, cities] = [await box('[data-value="indonesia"]'), await box('[data-value="overseas"]'), await box("[data-open-filters]"), await box(".fx-cdd__btn")];
+  assert.equal(Math.round(indo.y), Math.round(over.y));
+  assert.equal(Math.round(allf.y), Math.round(cities.y));
+  assert.ok(Math.abs(indo.width - allf.width) < 2);
+  // upcoming hotels: first region open, others folded; tapping opens one
+  const groups = page.locator("[data-ugroup]");
+  assert.equal(await groups.nth(0).locator(".fx-ugroup__l").isVisible(), true);
+  assert.equal(await groups.nth(1).locator(".fx-ugroup__l").isVisible(), false);
+  await groups.nth(1).locator(".fx-ugroup__h").click();
+  assert.equal(await groups.nth(1).locator(".fx-ugroup__l").isVisible(), true);
+  assert.equal(await groups.nth(1).locator(".fx-ugroup__h").getAttribute("aria-expanded"), "true");
+  // browse by region: 2 columns
+  const rc = await page.$$eval(".fx-rcols .fx-region", (r) => r.map((x) => Math.round(x.getBoundingClientRect().y)));
+  assert.equal(rc[0], rc[1]);
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+test("desktop: upcoming hotel lists all show and headers are not controls", async () => {
+  const page = await openHotels();
+  const vis = await page.$$eval("[data-ugroup] .fx-ugroup__l", (l) => l.every((x) => x.offsetParent !== null));
+  assert.equal(vis, true);
+  assert.equal(await page.getAttribute("[data-ugroup] >> nth=1 >> .fx-ugroup__h", "tabindex"), "-1");
+  await page.close();
+});
+
+test("phone: view and cities pages follow the aston mobile layout", async () => {
+  const view = await openPage("view", { width: 390, height: 844 });
+  const fi = await view.$$eval(".fx-fi", (b) => b.slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().x)));
+  assert.equal(fi[0], fi[1], "feature list is vertical");
+  const fg = await view.$$eval("[data-feature-card]", (c) => c.filter((x) => x.offsetParent).slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().y)));
+  assert.ok(fg[1] > fg[0], "one hotel per row");
+  const rel = await view.$$eval(".fx-rel-card", (c) => c.map((x) => Math.round(x.getBoundingClientRect().y)));
+  assert.equal(rel[0], rel[1], "related offers side by side");
+  assert.equal(await view.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await view.close();
+  const cities = await openPage("cities", { width: 390, height: 844 });
+  const input = await cities.locator(".fx-csearch input").boundingBox();
+  const btn = await cities.locator(".fx-csearch button").boundingBox();
+  assert.ok(input.height >= 44 && Math.abs(input.y + input.height / 2 - (btn.y + btn.height / 2)) < 2, "search box and button side by side");
+  const cc = await cities.$$eval(".fx-ccard", (c) => c.slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().y)));
+  assert.equal(cc[0], cc[1]);
+  await cities.close();
+});
+
+test("phone layout does not change offers, news, meetings or weddings", async () => {
+  const page = await openPage("offers", { width: 390, height: 844 });
+  const cols = await page.evaluate(() => getComputedStyle(document.querySelector(".fx-foot__cols")).flexDirection);
+  assert.equal(cols, "row");
+  await page.close();
+});
+
 test("page background matches the reels section, without the dots", async () => {
   const page = await openHotels();
   const bg = await page.evaluate(() => ({
