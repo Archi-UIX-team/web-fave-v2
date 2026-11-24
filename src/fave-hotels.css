@@ -138,7 +138,7 @@
 .fx-float[hidden]{display:none}
 @keyframes fxFloatIn{from{opacity:0}}
 .fx-float .fx-booking{margin-top:0}
-.fx-float .fx-bar{background:var(--violet-900);box-shadow:0 28px 50px rgb(20 3 12 / 55%)}
+.fx-float .fx-bar{background:var(--violet-500);box-shadow:0 28px 50px rgb(20 3 12 / 55%)}
 /* while a phone sheet is open from the floating form, lift its row above the navbar */
 body.fx-sheet-open .fx-filters:has(.fx-rates-wrap){z-index:1100}
 

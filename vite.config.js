@@ -43,6 +43,7 @@ export default defineConfig({
         hotels: resolve(__dirname, "hotels.html"),
         view: resolve(__dirname, "view.html"),
         cities: resolve(__dirname, "cities.html"),
+        city: resolve(__dirname, "city.html"),
         offers: resolve(__dirname, "offers.html"),
         meetings: resolve(__dirname, "meetings.html"),
         weddings: resolve(__dirname, "weddings.html"),

@@ -1,0 +1,79 @@
+/*
+  Single city page (city.html). Layout follows Aston city.html:
+  hotel rows on the left, a map panel on the right, related offers below.
+  The map is a PLACEHOLDER panel with sample price pins, not a real map.
+*/
+
+.fx-citysplit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--scale-24);align-items:start}
+.fx-rowlist{display:flex;flex-direction:column;gap:var(--scale-16)}
+
+/* ---------- hotel row: photo left, details right ---------- */
+.fx-rowcard{
+  display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);
+  border-radius:var(--radius-card);background:var(--surface-card);overflow:hidden;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease);
+}
+.fx-rowcard:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgb(50 11 30 / 45%)}
+.fx-rowcard[hidden]{display:none}
+.fx-rowcard .fx-media{height:100%;min-height:200px;border-radius:0}
+.fx-rowcard .fx-media::after{display:none}
+.fx-rowcard:hover .fx-media img{transform:scale(1.06)}
+.fx-rowcard__body{padding:var(--scale-20);display:flex;flex-direction:column;gap:var(--scale-12)}
+/* in a row card the price follows the name instead of sitting at the bottom */
+.fx-rowcard .fx-price{margin-top:0}
+.fx-rowcard__actions{grid-column:2;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 var(--scale-20) var(--scale-20)}
+.fx-rowcard__actions .fx-btn{min-height:var(--scale-40);padding:0 var(--scale-12);font-size:var(--scale-12)}
+
+/* ---------- map panel (placeholder) ---------- */
+.fx-map{
+  position:sticky;top:var(--scale-96);height:min(640px,72vh);
+  border-radius:var(--radius-card);background:var(--violet-50);overflow:hidden;isolation:isolate;
+}
+.fx-map__canvas{position:absolute;inset:0}
+.fx-map__water{position:absolute;right:-10%;bottom:-10%;width:65%;height:55%;border-radius:45% 55% 40% 60%;background:#9ad5e3}
+.fx-map__road{position:absolute;background:var(--neutral-0);opacity:.9}
+.fx-map__road--1{left:0;right:0;top:38%;height:6px;rotate:-4deg}
+.fx-map__road--2{top:0;bottom:0;left:46%;width:6px;rotate:6deg}
+.fx-map__road--3{left:0;right:30%;top:68%;height:5px;rotate:3deg}
+.fx-map__pin{
+  position:absolute;left:var(--x);top:var(--y);translate:-50% -100%;
+  padding:6px var(--scale-12);border:1px solid var(--violet-200);border-radius:var(--radius-pill);
+  background:var(--neutral-0);color:var(--text-default);font:600 var(--scale-12)/1.2 var(--font-body);white-space:nowrap;
+  box-shadow:0 6px 14px rgb(50 11 30 / 20%);
+}
+.fx-map__pin b{font-weight:800}
+.fx-map__pin::after{content:"";position:absolute;left:50%;top:100%;border:5px solid transparent;border-top-color:var(--neutral-0);translate:-50% 0}
+.fx-map__place{position:absolute;left:var(--x);top:var(--y);translate:-50% 0;font:700 var(--scale-10)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--grey-600)}
+.fx-map__search{
+  position:absolute;top:var(--scale-16);left:var(--scale-16);height:var(--scale-36);padding:0 var(--scale-16);
+  border-radius:var(--radius-pill);background:var(--action-secondary);color:var(--action-text-on-secondary);
+  font:700 var(--scale-12)/1 var(--font-body);letter-spacing:var(--ls-wide);
+}
+.fx-map__zoom{position:absolute;top:var(--scale-16);right:var(--scale-16);display:flex;flex-direction:column;gap:2px}
+.fx-map__zoom button{width:var(--scale-32);height:var(--scale-32);display:grid;place-items:center;background:var(--violet-800);color:var(--text-inverse);transition:background-color .2s}
+.fx-map__zoom button:first-child{border-radius:var(--radius-xs) var(--radius-xs) 0 0}
+.fx-map__zoom button:last-child{border-radius:0 0 var(--radius-xs) var(--radius-xs)}
+.fx-map__zoom button:hover{background:var(--violet-600)}
+.fx-map__zoom .fx-ico{width:16px;height:16px}
+
+/* ---------- related offers row (carousel) ---------- */
+.fx-relrow{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 2 * var(--scale-24)) / 3);gap:var(--scale-24);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.fx-relrow::-webkit-scrollbar{display:none}
+.fx-relrow > *{scroll-snap-align:start}
+
+@media (max-width:1100px){
+  .fx-citysplit{grid-template-columns:1fr}
+  /* relative, not static: the pins and roads are positioned against the map */
+  .fx-map{position:relative;top:auto;height:auto;aspect-ratio:16/9}
+  .fx-relrow{grid-auto-columns:calc((100% - var(--scale-24)) / 2)}
+}
+@media (max-width:600px){
+  body[data-page="hotels"]{
+    /* phone: card photo on top, like the other hotel cards (aston) */
+    .fx-rowcard{grid-template-columns:1fr}
+    .fx-rowcard .fx-media{min-height:0;aspect-ratio:3/2}
+    .fx-rowcard__actions{grid-column:1}
+    .fx-map{aspect-ratio:4/3}
+    .fx-relrow{grid-auto-columns:86%}
+  }
+}

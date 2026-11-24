@@ -57,8 +57,8 @@
     /* ---------- upcoming hotels: one column, each region folds ---------- */
     .fx-ugrid{grid-template-columns:1fr;gap:0}
     .fx-ucol{gap:var(--scale-16)}
-    .fx-ugroup{border-top:1px solid var(--overlay-strong)}
-    .fx-ugroup:last-child{border-bottom:1px solid var(--overlay-strong)}
+    .fx-ugroup{border-top:1px solid var(--violet-400)}
+    .fx-ugroup:last-child{border-bottom:1px solid var(--violet-400)}
     .fx-ugroup__h{padding:var(--scale-16) 0;cursor:pointer}
     .fx-ugroup__h .fx-ico{display:block}
     .fx-ugroup:not(.is-closed) .fx-ugroup__h .fx-ico{rotate:180deg}

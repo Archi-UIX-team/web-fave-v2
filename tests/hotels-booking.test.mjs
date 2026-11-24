@@ -135,7 +135,7 @@ test("on phones a picker from the floating form is a bottom sheet over everythin
 test("a destination card clears an old search", async () => {
   const page = await openHotels();
   await page.fill("[data-f-search]", "braga");
-  await page.click('[data-pick-city="bali"]');
+  await page.click('[data-pick-city="jakarta"]');
   assert.match(await count(page), /of 2 hotels/);
   assert.equal(await page.inputValue("[data-f-search]"), "");
   await page.close();
@@ -296,6 +296,99 @@ test("new pages have no sideways scroll on phones", async () => {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, name);
     await page.close();
   }
+});
+
+/* ---------- single city page (city.html) ---------- */
+test("Bali card links to city.html, which lists that city's hotels", async () => {
+  const page = await openHotels();
+  const bali = page.locator('[aria-labelledby="dest-title"] .fx-tile').first();
+  assert.equal(await bali.getAttribute("href"), "city.html");
+  assert.equal(await bali.getAttribute("data-pick-city"), null, "a card with its own page must not also filter");
+  await page.close();
+
+  const city = await openPage("city");
+  assert.match(await city.title(), /^hotels in bali/);
+  assert.equal((await city.textContent("#all-hotels [data-f-count]")).trim(), "displaying 2 of 2 available hotels in Bali");
+  const names = await city.$$eval(".fx-rowcard:not([hidden])", (c) => c.map((x) => x.dataset.city));
+  assert.deepEqual(names, ["bali", "bali"]);
+  // the booking bar has no destination field (the city is fixed)
+  assert.equal(await city.locator('[data-field="dest"]').count(), 0);
+  assert.equal(await city.locator('.fx-hero [data-field="checkin"]').isVisible(), true);
+  // map pins match the hotels in the list
+  const pins = await city.$$eval(".fx-map__pin", (p) => p.map((x) => x.textContent.trim()));
+  const prices = await city.$$eval(".fx-rowcard", (c) => c.map((x) => `IDR ${Math.round(Number(x.dataset.price) / 1000)}K / night`));
+  assert.deepEqual(pins, prices, JSON.stringify(pins));
+  // search and the filters dialog still work here
+  await city.fill("[data-f-search]", "seminyak");
+  assert.equal((await city.textContent("#all-hotels [data-f-count]")).trim(), "displaying 1 of 1 available hotel in Bali");
+  await city.fill("[data-f-search]", "");
+  await city.click("[data-change-booking]");
+  assert.equal(await city.isVisible("#float-booking"), true);
+  assert.deepEqual(city.errors, []);
+  await city.close();
+});
+
+test("phone: city page stacks the list above the map", async () => {
+  const page = await openPage("city", { width: 390, height: 844 });
+  const list = await page.locator(".fx-rowlist").boundingBox();
+  const map = await page.locator(".fx-map").boundingBox();
+  assert.ok(map.y > list.y, "map comes after the list");
+  const card = await page.locator(".fx-rowcard").first().boundingBox();
+  const photo = await page.locator(".fx-rowcard .fx-media").first().boundingBox();
+  assert.ok(photo.width > card.width * 0.9, "photo is full width on phones");
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  await page.close();
+});
+
+/* ---------- look: bar colour, borders, patterns ---------- */
+test("booking bars use violet-500 and region borders use violet-400", async () => {
+  for (const name of ["hotels", "view", "city"]) {
+    const page = await openPage(name);
+    const bar = await page.evaluate(() => getComputedStyle(document.querySelector(".fx-bar")).backgroundColor);
+    assert.equal(bar, "rgb(118, 27, 71)", `${name} booking bar`);
+    await page.close();
+  }
+  const page = await openHotels();
+  const borders = await page.evaluate(() => ({
+    upcoming: getComputedStyle(document.querySelector(".fx-ugroup__l")).borderTopColor,
+    region: getComputedStyle(document.querySelector(".fx-region__item")).borderTopColor,
+  }));
+  assert.equal(borders.upcoming, "rgb(145, 73, 108)");
+  assert.equal(borders.region, "rgb(145, 73, 108)");
+  await page.close();
+});
+
+test("patterns: 3 discs per page, 2 in the footer, no gradient over them", async () => {
+  for (const name of ["hotels", "view", "cities", "city", "offers", "news"]) {
+    const page = await openPage(name);
+    const info = await page.evaluate(() => ({
+      top: document.querySelectorAll(".fx-pattern-top .fx-disc").length,
+      foot: document.querySelectorAll(".fx-foot__pattern .fx-disc").length,
+      topOverlay: getComputedStyle(document.querySelector(".fx-pattern-top"), "::after").content,
+      footOverlay: getComputedStyle(document.querySelector(".fx-foot__pattern"), "::after").content,
+    }));
+    assert.equal(info.top, 3, `${name} top discs`);
+    assert.equal(info.foot, 2, `${name} footer discs`);
+    assert.equal(info.topOverlay, "none", `${name} pattern overlay`);
+    assert.equal(info.footOverlay, "none", `${name} footer overlay`);
+    await page.close();
+  }
+});
+
+test("footer discs sit in the bottom corners", async () => {
+  const page = await openHotels();
+  const pos = await page.evaluate(() => {
+    const wrap = document.querySelector(".fx-foot__pattern").getBoundingClientRect();
+    return [...document.querySelectorAll(".fx-foot__pattern .fx-disc")].map((d) => {
+      const r = d.getBoundingClientRect();
+      return { left: r.left < wrap.left + wrap.width / 2, bottomPast: r.bottom > wrap.bottom };
+    });
+  });
+  assert.equal(pos.length, 2);
+  assert.equal(pos[0].left, true, "first disc on the left");
+  assert.equal(pos[1].left, false, "second disc on the right");
+  assert.ok(pos.every((p) => p.bottomPast), "both reach past the bottom edge");
+  await page.close();
 });
 
 /* ---------- phone layout (aston mobile) ---------- */
