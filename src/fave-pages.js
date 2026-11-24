@@ -11,10 +11,15 @@ const setMenu = (open) => {
   header?.classList.toggle("is-open", open);
   document.body.classList.toggle("menu-open", open);
   menuButton?.setAttribute("aria-expanded", String(open));
+  menuButton?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 };
 menuButton?.addEventListener("click", () => setMenu(!header.classList.contains("is-open")));
 document.querySelectorAll(".page-mobile-nav a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || !header?.classList.contains("is-open")) return;
+  setMenu(false);
+  menuButton?.focus();
+});
 
 /* ---------- scroll reveal ---------- */
 // A fully clipped element (data-r="clip") never reports as intersecting,
@@ -44,6 +49,7 @@ document.querySelectorAll("[data-r]").forEach((el) => {
     <div data-f-list> ... <article data-item data-city="bali" ...>
     <button data-f-more>               reveals the next batch
 */
+const toDatasetKey = (name) => name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
   const list = scope.querySelector("[data-f-list]");
   const items = [...scope.querySelectorAll("[data-item]")];
@@ -71,8 +77,9 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
     const filters = active();
     const matched = items.filter((item) => {
       if (q && !item.textContent.toLowerCase().includes(q)) return false;
+      // data-f-select="room-type" must read data-room-type, i.e. dataset.roomType
       return Object.entries(filters).every(([key, value]) =>
-        value === "all" || (item.dataset[key] || "").split(" ").includes(value));
+        value === "all" || (item.dataset[toDatasetKey(key)] || "").split(" ").includes(value));
     });
     items.forEach((item) => { item.hidden = !matched.includes(item); item.classList.remove("is-capped"); });
     matched.forEach((item, i) => item.classList.toggle("is-capped", i >= limit));
@@ -102,7 +109,7 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
   }));
   sort?.addEventListener("change", () => {
     const key = sort.value;
-    const value = (item) => item.dataset[key] ?? "";
+    const value = (item) => item.dataset[toDatasetKey(key)] ?? "";
     const numeric = items.every((item) => value(item) === "" || !Number.isNaN(Number(value(item))));
     const sorted = [...items].sort((a, b) => {
       if (key === "default") return Number(a.dataset.order) - Number(b.dataset.order);
@@ -141,7 +148,10 @@ document.querySelectorAll("[data-car]").forEach((car) => {
   const update = () => {
     const per = pageSize();
     const pages = Math.max(1, Math.ceil(track.children.length / per));
-    const page = Math.min(pages, Math.round(track.scrollLeft / Math.max(1, track.clientWidth)) + 1);
+    // Map the scroll position onto the page count, so the end of the track is
+    // always the last page even when the cards do not divide evenly.
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const page = maxScroll > 0 ? Math.round((track.scrollLeft / maxScroll) * (pages - 1)) + 1 : 1;
     if (counter) counter.textContent = `${page} / ${pages}`;
     if (prev) prev.disabled = track.scrollLeft < 4;
     if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
@@ -160,9 +170,13 @@ document.querySelectorAll("[data-gal]").forEach((gal) => {
   const dots = gal.querySelector("[data-gal-dots]");
   let index = 0;
   if (dots) dots.innerHTML = imgs.map(() => "<i></i>").join("");
+  count?.setAttribute("aria-live", "polite");
   const show = (i) => {
     index = (i + imgs.length) % imgs.length;
-    imgs.forEach((img, n) => img.classList.toggle("is-on", n === index));
+    imgs.forEach((img, n) => {
+      img.classList.toggle("is-on", n === index);
+      if (n === index) img.removeAttribute("aria-hidden"); else img.setAttribute("aria-hidden", "true");
+    });
     dots?.querySelectorAll("i").forEach((d, n) => d.classList.toggle("is-on", n === index));
     if (count) count.textContent = `${index + 1} / ${imgs.length}`;
   };

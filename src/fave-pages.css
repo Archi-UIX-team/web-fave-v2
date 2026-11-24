@@ -422,3 +422,6 @@ h1,h2,h3,p,figure{margin:0}
   .fx-vbar__field{min-width:0}
   .fx-pattern-top .fx-disc--c,.fx-pattern-top .fx-disc--e,.fx-pattern-top .fx-disc--f{display:none}
 }
+
+/* touch screens have no hover: keep the gallery arrows visible */
+@media (hover:none){.fx-gal__btn{opacity:1}}
