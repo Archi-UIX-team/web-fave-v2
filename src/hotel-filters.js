@@ -30,30 +30,35 @@ const money = (idr, cur) => {
 const label = (name) => name.toLowerCase().replace(/\b(tv|led)\b/g, (m) => `<span class="fx-proper">${m.toUpperCase()}</span>`);
 
 /*
-  "all cities" dropdown (Aston style). The hidden native <select data-f-select="city">
-  stays the source of truth for the filter engine; this listbox mirrors it.
+  Aston-style dropdown menus ("all cities", "sort by"). Each wraps a visually hidden
+  native <select>, which stays the source of truth for the filter engine; the listbox
+  mirrors it. Add data-cdd-proper to keep option casing (city names).
 */
-export function initCityDropdown(scope) {
-  const wrap = scope.querySelector("[data-cdd]");
-  if (!wrap) return;
+export function initSelectMenus(scope) {
+  scope.querySelectorAll("[data-cdd]").forEach((wrap) => initSelectMenu(scope, wrap));
+}
+
+function initSelectMenu(scope, wrap) {
   const select = wrap.querySelector("select");
   const btn = wrap.querySelector(".fx-cdd__btn");
   const label = btn.querySelector("[data-cdd-label]");
   const menu = wrap.querySelector(".fx-cdd__menu");
-  menu.innerHTML = [...select.options].map((o, i) => `<li class="fx-cdd__opt${o.value === "all" ? "" : " fx-proper"}" role="option" id="cdd-opt-${i}" data-value="${o.value}" aria-selected="${o.selected}"><span>${o.textContent}</span><svg class="fx-ico" aria-hidden="true"><use href="#i-check"/></svg></li>`).join("");
+  const proper = wrap.hasAttribute("data-cdd-proper");
+  const fallback = select.options[0].value;
+  menu.innerHTML = [...select.options].map((o, i) => `<li class="fx-cdd__opt${proper && o.value !== fallback ? " fx-proper" : ""}" role="option" id="${menu.id}-opt-${i}" data-value="${o.value}" aria-selected="${o.selected}"><span>${o.textContent}</span><svg class="fx-ico" aria-hidden="true"><use href="#i-check"/></svg></li>`).join("");
   const opts = [...menu.children];
   let focus = -1;
 
   const sync = () => {
-    // a value with no matching option falls back to "all cities"
+    // a value with no matching option falls back to the first option
     if (!select.selectedOptions.length) {
-      select.value = "all";
+      select.value = fallback;
       select.dispatchEvent(new Event("change"));
       return;
     }
     const current = select.selectedOptions[0];
     label.textContent = current.textContent;
-    label.classList.toggle("fx-proper", current.value !== "all");
+    label.classList.toggle("fx-proper", proper && current.value !== fallback);
     opts.forEach((o) => o.setAttribute("aria-selected", String(o.dataset.value === select.value)));
   };
   const setFocus = (i) => {
@@ -93,7 +98,7 @@ export function initCityDropdown(scope) {
   // the booking form and others change the select directly
   select.addEventListener("change", sync);
   // popular destination cards pick their city in the list below
-  document.querySelectorAll("[data-pick-city]").forEach((card) => card.addEventListener("click", () => {
+  if (select.dataset.fSelect === "city") document.querySelectorAll("[data-pick-city]").forEach((card) => card.addEventListener("click", () => {
     scope.querySelector('[data-f-chips="country"] [data-value="indonesia"]:not(.is-on)')?.click();
     // a city pick replaces any earlier search (e.g. a hotel name from the booking form)
     const search = scope.querySelector("[data-f-search]");
@@ -199,16 +204,27 @@ export function initHotelFilters(scope) {
   dialog.querySelector("[data-filters-reset]").addEventListener("click", () => {
     writeForm({ min: 0, max: MAX_IDR, currency: currency.value, facilities: [] });
   });
-  dialog.querySelector("[data-filters-apply]").addEventListener("click", () => {
-    applied = readForm();
+  const paintBadge = () => {
     const n = activeCount(applied);
     badge.textContent = n;
     badge.hidden = n === 0;
     openBtn.classList.toggle("is-on", n > 0);
+  };
+  dialog.querySelector("[data-filters-apply]").addEventListener("click", () => {
+    applied = readForm();
+    paintBadge();
     paintCards(applied.currency);
     scope.dispatchEvent(new Event("fx:refresh"));
     dialog.close();
   });
+
+  // filters the page starts with, e.g. the city view page: data-f-preset-facilities="city-view"
+  const preset = (scope.dataset.fPresetFacilities || "").split(" ").filter(Boolean);
+  if (preset.length) {
+    applied = { ...applied, facilities: preset };
+    paintBadge();
+    scope.dispatchEvent(new Event("fx:refresh"));
+  }
 
   paintPrice();
 }

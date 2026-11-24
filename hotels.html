@@ -35,34 +35,14 @@
         <button class="fx-btn fx-btn--secondary" type="submit">book now</button>
       </form>
 
-      <div class="fx-pop fx-pop--dest" id="pop-dest" role="dialog" aria-label="Choose destination" hidden>
-        <p class="fx-pop__head">destination <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
-        <label class="fx-dest__search"><svg class="fx-ico" aria-hidden="true"><use href="#i-search"/></svg><span class="visually-hidden">Search city, region or hotel</span><input type="search" placeholder="search city, region or hotel" autocomplete="off"></label>
-        <ul class="fx-dest__list" data-dest-list></ul>
-      </div>
-
-      <div class="fx-pop fx-pop--dates" id="pop-dates" role="dialog" aria-label="Choose check-in and check-out dates" hidden>
-        <p class="fx-pop__head">dates <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
-        <div class="fx-cal" data-cal></div>
-        <div class="fx-pop__foot"><p class="fx-cal__note" data-cal-note aria-live="polite"></p><div class="fx-pop__actions"><button type="button" class="fx-textbtn" data-cal-clear>clear dates</button><button type="button" class="fx-btn fx-btn--secondary" data-cal-apply>apply</button></div></div>
-      </div>
-
-      <div class="fx-pop fx-pop--guests" id="pop-guests" role="dialog" aria-label="Guests and rooms" hidden>
-        <p class="fx-pop__head">guests <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
-        <div class="fx-guests">
-          <div class="fx-guest" data-count="adults"><div><p class="fx-guest__t">adults</p><p class="fx-guest__s">age 13 and above</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer adults"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More adults"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
-          <div class="fx-guest" data-count="children"><div><p class="fx-guest__t">children</p><p class="fx-guest__s">age 0 to 12</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer children"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More children"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
-          <div class="fx-guest" data-count="rooms"><div><p class="fx-guest__t">rooms</p><p class="fx-guest__s">up to one room per adult</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer rooms"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More rooms"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
-        </div>
-        <div class="fx-pop__foot"><p class="fx-cal__note" data-guest-note></p><button type="button" class="fx-btn fx-btn--secondary" data-guest-done>done</button></div>
-      </div>
+      <!--#include booking-pickers-->
     </div>
   </section>
 
   <section class="fx-sec" aria-labelledby="views-title">
     <div class="fx-titles" data-r><p class="fx-eyebrow">choose your vibe</p><h2 class="fx-title" id="views-title">pick your view</h2></div>
     <div class="fx-vrow fx-vrow--5">
-      <a class="fx-tile" href="#all-hotels" data-r><div class="fx-media" data-r="clip"><img src="/assets/images/cities/jakarta.jpg" alt="City skyline view" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">city</span><span class="fx-label__s">32 hotels</span></div></a>
+      <a class="fx-tile" href="view.html" data-r><div class="fx-media" data-r="clip"><img src="/assets/images/cities/jakarta.jpg" alt="City skyline view" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">city</span><span class="fx-label__s">32 hotels</span></div></a>
       <a class="fx-tile" href="#all-hotels" data-r style="--d:60ms"><div class="fx-media" data-r="clip" style="--d:60ms"><img src="/assets/images/fave-moments/cropped/garden-terrace-suite.jpg" alt="Garden terrace view" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">garden</span><span class="fx-label__s">11 hotels</span></div></a>
       <a class="fx-tile" href="#all-hotels" data-r style="--d:120ms"><div class="fx-media" data-r="clip" style="--d:120ms"><img src="/assets/images/cities/malang.jpg" alt="Mountain view near Malang" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">mountain</span><span class="fx-label__s">7 hotels</span></div></a>
       <a class="fx-tile" href="#all-hotels" data-r style="--d:180ms"><div class="fx-media" data-r="clip" style="--d:180ms"><img src="/assets/images/cities/bali.png" alt="Beach view in Bali" loading="lazy"></div><div class="fx-label"><span class="fx-label__t">beach</span><span class="fx-label__s">6 hotels</span></div></a>
@@ -85,7 +65,7 @@
   <section class="fx-sec" aria-labelledby="dest-title" data-car data-car-count="items">
     <div class="fx-titles" data-r><p class="fx-eyebrow">popular destinations</p><h2 class="fx-title" id="dest-title">where to next?</h2></div>
     <div class="fx-pop-bar" data-r>
-      <a class="fx-btn fx-btn--outline" href="#all-hotels">see all cities</a>
+      <a class="fx-btn fx-btn--outline" href="cities.html">see all cities</a>
       <div class="fx-pager-mini"><button class="fx-btn fx-btn--icon" type="button" aria-label="Previous destinations" data-car-prev><svg class="fx-ico" aria-hidden="true"><use href="#i-arrow-left"/></svg></button><span data-car-count aria-live="polite">4 / 8</span><button class="fx-btn fx-btn--icon" type="button" aria-label="Next destinations" data-car-next><svg class="fx-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
     </div>
     <div class="fx-destrow" data-car-track>
@@ -114,7 +94,7 @@
           </div>
           <span class="fx-cdiv" aria-hidden="true"></span>
           <button class="fx-chip" type="button" data-open-filters aria-haspopup="dialog" aria-expanded="false" aria-controls="hotel-filters"><svg class="fx-ico" aria-hidden="true"><use href="#i-filter"/></svg>all filters<span class="fx-chip__badge" data-filter-badge hidden>0</span></button>
-          <div class="fx-cdd" data-cdd>
+          <div class="fx-cdd" data-cdd data-cdd-proper>
             <button class="fx-chip fx-cdd__btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="city-listbox" aria-label="City"><span data-cdd-label>all cities</span><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
             <ul class="fx-cdd__menu" id="city-listbox" role="listbox" aria-label="City" hidden></ul>
             <select class="visually-hidden" data-f-select="city" tabindex="-1" aria-hidden="true"><option value="all">all cities</option><option value="jakarta">Jakarta</option><option value="bandung">Bandung</option><option value="yogyakarta">Yogyakarta</option><option value="surabaya">Surabaya</option><option value="semarang">Semarang</option><option value="malang">Malang</option><option value="cikarang">Cikarang</option><option value="bali">Bali</option><option value="lombok">Lombok</option><option value="medan">Medan</option><option value="padang">Padang</option><option value="palembang">Palembang</option><option value="banjarmasin">Banjarmasin</option><option value="makassar">Makassar</option></select>
@@ -202,30 +182,7 @@
   </section>
 </main>
 
-<dialog class="fx-modal" id="hotel-filters" aria-labelledby="filters-title">
-  <div class="fx-modal__head">
-    <div><h2 class="fx-modal__title" id="filters-title">filters</h2><p class="fx-modal__sub">find a stay that fits your plans.</p></div>
-    <button type="button" class="fx-modal__close" data-filters-close aria-label="Close filters"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button>
-  </div>
-  <div class="fx-modal__body">
-    <section class="fx-modal__sec fx-price-grid" aria-label="Price">
-      <div>
-        <h3 class="fx-modal__h">price range</h3><p class="fx-modal__hs">per room, per night</p>
-        <div class="fx-range"><div class="fx-range__track"><i class="fx-range__fill" data-price-fill></i></div><input type="range" value="0" aria-label="Minimum price" data-price-min><input type="range" value="5000000" aria-label="Maximum price" data-price-max></div>
-        <div class="fx-price-boxes"><div class="fx-price-box"><span>minimum price</span><output data-price-min-out>IDR 0</output></div><div class="fx-price-box"><span>maximum price</span><output data-price-max-out>IDR 5,000,000+</output></div></div>
-      </div>
-      <div>
-        <h3 class="fx-modal__h">currency</h3>
-        <label class="fx-select fx-currency"><span class="visually-hidden">Currency</span><select data-currency><option value="IDR">IDR</option><option value="USD">USD</option><option value="SGD">SGD</option><option value="MYR">MYR</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
-      </div>
-    </section>
-    <section class="fx-modal__sec" aria-label="Facilities">
-      <h3 class="fx-modal__h">facilities</h3>
-      <div class="fx-facilities" data-facilities></div>
-    </section>
-  </div>
-  <div class="fx-modal__foot"><button type="button" class="fx-textbtn" data-filters-reset>reset all</button><button type="button" class="fx-btn fx-btn--secondary" data-filters-apply>apply filters</button></div>
-</dialog>
+<!--#include filters-dialog-->
 <!--#include footer-->
 </body>
 </html>

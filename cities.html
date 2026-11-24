@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>all cities — fave</title>
+  <meta name="description" content="Every favehotels destination, one city at a time: search by city and browse Indonesia and overseas.">
+  <link rel="icon" href="/assets/images/fave-logo-magenta.png">
+  <script type="module" src="/src/fave-pages.js"></script>
+</head>
+<body data-page="hotels" id="top">
+<!--#include header-->
+<main class="fx-page" data-filter-scope data-f-noun="destinations" data-f-count-format="{total} {noun} · A–Z">
+  <div class="fx-pattern-top" aria-hidden="true">
+    <img class="fx-disc fx-disc--a" src="/assets/images/fave-patterns/pattern-6.png" alt="">
+    <img class="fx-disc fx-disc--b" src="/assets/images/fave-patterns/pattern-8.png" alt="">
+    <img class="fx-disc fx-disc--c" src="/assets/images/fave-patterns/pattern-2.png" alt="">
+    <img class="fx-disc fx-disc--d" src="/assets/images/fave-patterns/pattern-4.png" alt="">
+    <img class="fx-disc fx-disc--e" src="/assets/images/fave-patterns/pattern-5.png" alt="">
+    <img class="fx-disc fx-disc--f" src="/assets/images/fave-patterns/pattern-9.png" alt="">
+  </div>
+
+  <section class="fx-hero" aria-labelledby="cities-title">
+    <nav class="fx-crumbs" aria-label="Breadcrumb" data-r><a href="index.html">home</a><span aria-hidden="true">/</span><a href="hotels.html">hotels</a><span aria-hidden="true">/</span><span aria-current="page">all cities</span></nav>
+    <p class="fx-eyebrow" data-r>our destinations</p>
+    <h1 class="fx-h1" id="cities-title" data-r style="--d:80ms">where will you go next?</h1>
+    <p class="fx-lead" data-r style="--d:140ms">explore every destination, one city at a time.</p>
+    <form class="fx-csearch" role="search" data-r style="--d:200ms">
+      <label class="visually-hidden" for="city-search">Search cities</label>
+      <input id="city-search" type="search" placeholder="search by city" autocomplete="off" data-f-search>
+      <button class="fx-btn fx-btn--secondary" type="submit">search cities</button>
+    </form>
+  </section>
+
+  <section class="fx-sec fx-regions" aria-labelledby="all-cities-title">
+    <div class="fx-shead" data-r>
+      <div class="fx-titles"><p class="fx-eyebrow">find your next stay</p><h2 class="fx-title" id="all-cities-title">all cities</h2></div>
+      <p class="fx-count" data-f-count aria-live="polite"></p>
+    </div>
+    <div class="fx-chips" data-f-chips="country" role="group" aria-label="Country" data-r>
+      <button class="fx-chip fx-proper is-on" type="button" data-value="indonesia" aria-pressed="true">Indonesia</button>
+      <button class="fx-chip" type="button" data-value="overseas" aria-pressed="false">overseas</button>
+    </div>
+    <div class="fx-cgrid" data-f-list>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><img src="/assets/images/cities/bali.png" alt="" loading="lazy"><p class="fx-ccard__n fx-proper">Bali</p><p class="fx-ccard__r fx-proper">Bali &amp; Nusa Tenggara</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Balikpapan</p><p class="fx-ccard__r fx-proper">Kalimantan</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Bandung</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Banjarmasin</p><p class="fx-ccard__r fx-proper">Kalimantan</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Batam</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Bogor</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Bukittinggi</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Cikarang</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Cirebon</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Garut</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><img src="/assets/images/cities/jakarta.jpg" alt="" loading="lazy"><p class="fx-ccard__n fx-proper">Jakarta</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Jambi</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Kediri</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Kendari</p><p class="fx-ccard__r fx-proper">Eastern Indonesia</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Kupang</p><p class="fx-ccard__r fx-proper">Eastern Indonesia</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Lombok</p><p class="fx-ccard__r fx-proper">Bali &amp; Nusa Tenggara</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Makassar</p><p class="fx-ccard__r fx-proper">Eastern Indonesia</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><img src="/assets/images/cities/malang.jpg" alt="" loading="lazy"><p class="fx-ccard__n fx-proper">Malang</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Manado</p><p class="fx-ccard__r fx-proper">Eastern Indonesia</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Medan</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Padang</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Palembang</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Pekanbaru</p><p class="fx-ccard__r fx-proper">Sumatra</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Pontianak</p><p class="fx-ccard__r fx-proper">Kalimantan</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Samarinda</p><p class="fx-ccard__r fx-proper">Kalimantan</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Semarang</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><p class="fx-ccard__n fx-proper">Solo</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:165deg"><p class="fx-ccard__n fx-proper">Subang</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:135deg"><p class="fx-ccard__n fx-proper">Surabaya</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:150deg"><p class="fx-ccard__n fx-proper">Tasikmalaya</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="indonesia" style="--a:120deg"><img src="/assets/images/cities/jogja.jpeg" alt="" loading="lazy"><p class="fx-ccard__n fx-proper">Yogyakarta</p><p class="fx-ccard__r fx-proper">Java</p></div>
+      <div class="fx-ccard" data-item data-country="overseas" style="--a:165deg"><p class="fx-ccard__n fx-proper">Kuala Lumpur</p><p class="fx-ccard__r">overseas</p></div>
+      <div class="fx-ccard" data-item data-country="overseas" style="--a:135deg"><p class="fx-ccard__n fx-proper">Penang</p><p class="fx-ccard__r">overseas</p></div>
+    </div>
+    <p class="fx-empty" data-f-empty hidden>no cities match your search. try another name or region.</p>
+  </section>
+</main>
+<!--#include footer-->
+</body>
+</html>

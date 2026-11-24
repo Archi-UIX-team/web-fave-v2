@@ -1,0 +1,24 @@
+<dialog class="fx-modal" id="hotel-filters" aria-labelledby="filters-title">
+  <div class="fx-modal__head">
+    <div><h2 class="fx-modal__title" id="filters-title">filters</h2><p class="fx-modal__sub">find a stay that fits your plans.</p></div>
+    <button type="button" class="fx-modal__close" data-filters-close aria-label="Close filters"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="fx-modal__body">
+    <section class="fx-modal__sec fx-price-grid" aria-label="Price">
+      <div>
+        <h3 class="fx-modal__h">price range</h3><p class="fx-modal__hs">per room, per night</p>
+        <div class="fx-range"><div class="fx-range__track"><i class="fx-range__fill" data-price-fill></i></div><input type="range" value="0" aria-label="Minimum price" data-price-min><input type="range" value="5000000" aria-label="Maximum price" data-price-max></div>
+        <div class="fx-price-boxes"><div class="fx-price-box"><span>minimum price</span><output data-price-min-out>IDR 0</output></div><div class="fx-price-box"><span>maximum price</span><output data-price-max-out>IDR 5,000,000+</output></div></div>
+      </div>
+      <div>
+        <h3 class="fx-modal__h">currency</h3>
+        <label class="fx-select fx-currency"><span class="visually-hidden">Currency</span><select data-currency><option value="IDR">IDR</option><option value="USD">USD</option><option value="SGD">SGD</option><option value="MYR">MYR</option></select><svg class="fx-ico" aria-hidden="true"><use href="#i-chevron"/></svg></label>
+      </div>
+    </section>
+    <section class="fx-modal__sec" aria-label="Facilities">
+      <h3 class="fx-modal__h">facilities</h3>
+      <div class="fx-facilities" data-facilities></div>
+    </section>
+  </div>
+  <div class="fx-modal__foot"><button type="button" class="fx-textbtn" data-filters-reset>reset all</button><button type="button" class="fx-btn fx-btn--secondary" data-filters-apply>apply filters</button></div>
+</dialog>

@@ -2,6 +2,7 @@ import "./fave-tokens.css";
 import "./navbar.css";
 import "./fave-pages.css";
 import "./fave-hotels.css";
+import "./fave-view-cities.css";
 
 document.documentElement.classList.add("js");
 
@@ -9,7 +10,7 @@ document.documentElement.classList.add("js");
 const bookingRoots = document.querySelectorAll("[data-booking]");
 if (bookingRoots.length) import("./booking.js").then((m) => m.initBooking(bookingRoots));
 const filterRoot = document.querySelector("[data-open-filters]")?.closest("[data-filter-scope]");
-if (filterRoot) import("./hotel-filters.js").then((m) => { m.initHotelFilters(filterRoot); m.initCityDropdown(filterRoot); });
+if (filterRoot) import("./hotel-filters.js").then((m) => { m.initHotelFilters(filterRoot); m.initSelectMenus(filterRoot); });
 
 /* ---------- navbar (same behaviour as before) ---------- */
 const header = document.querySelector(".site-header");
@@ -55,6 +56,9 @@ document.querySelectorAll("[data-r]").forEach((el) => {
     <p data-f-count>                   "showing x of y"
     <div data-f-list> ... <article data-item data-city="bali" ...>
     <button data-f-more>               reveals the next batch
+  Optional on the scope:
+    data-f-page-size="8" + <nav data-f-pager>   numbered pages (aston style) instead of show-more
+    data-f-count-format="displaying {shown} of {total} available {noun}"   count wording
 */
 const toDatasetKey = (name) => name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
@@ -71,6 +75,31 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
   const progress = scope.querySelector("[data-f-progress]");
   const empty = scope.querySelector("[data-f-empty]");
   const noun = scope.dataset.fNoun || "items";
+  const pageSize = Number(scope.dataset.fPageSize) || 0;
+  const pager = scope.querySelector("[data-f-pager]");
+  const countFormat = scope.dataset.fCountFormat;
+  let page = 1;
+
+  // 1 2 3 … 10 with prev/next, like the aston pager
+  const pageList = (pages) => {
+    if (pages <= 5) return Array.from({ length: pages }, (_, i) => i + 1);
+    const near = [page - 1, page, page + 1].filter((p) => p > 1 && p < pages);
+    const list = [1, ...near, pages];
+    return list.flatMap((p, i) => (i && p - list[i - 1] > 1 ? ["…", p] : [p]));
+  };
+  const renderPager = (pages) => {
+    if (!pager) return;
+    pager.hidden = pages <= 1;
+    const icon = (id) => `<svg class="fx-ico" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+    pager.innerHTML = `<button type="button" data-goto="${page - 1}" aria-label="Previous page"${page <= 1 ? " disabled" : ""}>${icon("arrow-left")}</button>${pageList(pages).map((p) => (p === "…" ? '<span aria-hidden="true">…</span>' : `<button type="button" data-goto="${p}"${p === page ? ' class="is-on" aria-current="page"' : ""}>${p}</button>`)).join("")}<button type="button" data-goto="${page + 1}" aria-label="Next page"${page >= pages ? " disabled" : ""}>${icon("arrow")}</button>`;
+  };
+  pager?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-goto]");
+    if (!btn || btn.disabled) return;
+    page = Number(btn.dataset.goto);
+    apply();
+    list.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   const active = () => {
     const filters = {};
@@ -90,20 +119,33 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
         value === "all" || (item.dataset[toDatasetKey(key)] || "").split(" ").includes(value));
     });
     items.forEach((item) => { item.hidden = !matched.includes(item); item.classList.remove("is-capped"); });
-    matched.forEach((item, i) => item.classList.toggle("is-capped", i >= limit));
-    const shown = Math.min(matched.length, limit);
+    let first = 0;
+    let shown;
+    if (pageSize) {
+      const pages = Math.max(1, Math.ceil(matched.length / pageSize));
+      page = Math.min(Math.max(1, page), pages);
+      first = (page - 1) * pageSize;
+      matched.forEach((item, i) => item.classList.toggle("is-capped", i < first || i >= first + pageSize));
+      shown = Math.max(0, Math.min(pageSize, matched.length - first));
+      renderPager(pages);
+    } else {
+      matched.forEach((item, i) => item.classList.toggle("is-capped", i >= limit));
+      shown = Math.min(matched.length, limit);
+    }
     const word = (n) => (n === 1 ? noun.replace(/s$/, "") : noun).replace(/storie$/, "story");
-    if (count) count.textContent = matched.length ? `showing ${shown === matched.length ? matched.length : `1-${shown}`} of ${matched.length} ${word(matched.length)}` : `no ${noun} found`;
+    if (count && countFormat) {
+      count.textContent = countFormat.replace("{shown}", shown).replace("{total}", matched.length).replace("{noun}", word(matched.length));
+    } else if (count) count.textContent = matched.length ? `showing ${shown === matched.length ? matched.length : `1-${shown}`} of ${matched.length} ${word(matched.length)}` : `no ${noun} found`;
     if (more) more.hidden = shown >= matched.length;
     if (progress) progress.style.width = `${matched.length ? (shown / matched.length) * 100 : 0}%`;
     const moreLabel = scope.querySelector("[data-f-more-label]");
     if (moreLabel) moreLabel.textContent = `showing ${shown} of ${matched.length} ${noun}`;
     if (empty) empty.hidden = matched.length > 0;
     // reveal anything newly shown
-    matched.slice(0, shown).forEach((item) => item.classList.add("in"));
+    matched.slice(first, first + shown).forEach((item) => item.classList.add("in"));
   };
 
-  const resetAndApply = () => { limit = step; apply(); };
+  const resetAndApply = () => { limit = step; page = 1; apply(); };
   search?.addEventListener("input", resetAndApply);
   selects.forEach((s) => s.addEventListener("change", resetAndApply));
   chipGroups.forEach((group) => group.addEventListener("click", (e) => {
@@ -131,6 +173,35 @@ document.querySelectorAll("[data-filter-scope]").forEach((scope) => {
   scope.addEventListener("fx:refresh", resetAndApply);
   items.forEach((item, i) => { item.dataset.order = i; });
   apply();
+});
+
+/* ---------- search forms that only filter the page (all cities) ---------- */
+document.querySelectorAll("form.fx-csearch").forEach((form) => form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  form.querySelector("[data-f-search]")?.dispatchEvent(new Event("input"));
+}));
+
+/* ---------- hotels by room feature (view page) ----------
+  <section data-feature-split data-feature-max="6">
+    <button data-feature="city-view">   feature list (one is .is-on)
+    <article data-feature-card data-facilities="...">   cards; up to max shown per feature
+*/
+document.querySelectorAll("[data-feature-split]").forEach((sec) => {
+  const buttons = [...sec.querySelectorAll("[data-feature]")];
+  const cards = [...sec.querySelectorAll("[data-feature-card]")];
+  const max = Number(sec.dataset.featureMax) || 6;
+  const show = (btn) => {
+    buttons.forEach((b) => { b.classList.toggle("is-on", b === btn); b.setAttribute("aria-pressed", String(b === btn)); });
+    let n = 0;
+    cards.forEach((card) => {
+      const match = (card.dataset.facilities || "").split(" ").includes(btn.dataset.feature) && n < max;
+      if (match) n += 1;
+      card.hidden = !match;
+      if (match) card.classList.add("in");
+    });
+  };
+  buttons.forEach((b) => b.addEventListener("click", () => show(b)));
+  show(buttons.find((b) => b.classList.contains("is-on")) || buttons[0]);
 });
 
 /* ---------- regions accordion ---------- */

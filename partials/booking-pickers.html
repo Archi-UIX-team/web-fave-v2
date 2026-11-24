@@ -1,0 +1,21 @@
+<div class="fx-pop fx-pop--dest" id="pop-dest" role="dialog" aria-label="Choose destination" hidden>
+        <p class="fx-pop__head">destination <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
+        <label class="fx-dest__search"><svg class="fx-ico" aria-hidden="true"><use href="#i-search"/></svg><span class="visually-hidden">Search city, region or hotel</span><input type="search" placeholder="search city, region or hotel" autocomplete="off"></label>
+        <ul class="fx-dest__list" data-dest-list></ul>
+      </div>
+
+      <div class="fx-pop fx-pop--dates" id="pop-dates" role="dialog" aria-label="Choose check-in and check-out dates" hidden>
+        <p class="fx-pop__head">dates <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
+        <div class="fx-cal" data-cal></div>
+        <div class="fx-pop__foot"><p class="fx-cal__note" data-cal-note aria-live="polite"></p><div class="fx-pop__actions"><button type="button" class="fx-textbtn" data-cal-clear>clear dates</button><button type="button" class="fx-btn fx-btn--secondary" data-cal-apply>apply</button></div></div>
+      </div>
+
+      <div class="fx-pop fx-pop--guests" id="pop-guests" role="dialog" aria-label="Guests and rooms" hidden>
+        <p class="fx-pop__head">guests <button type="button" class="fx-modal__close" data-pop-close aria-label="Close"><svg class="fx-ico" aria-hidden="true"><use href="#i-close"/></svg></button></p>
+        <div class="fx-guests">
+          <div class="fx-guest" data-count="adults"><div><p class="fx-guest__t">adults</p><p class="fx-guest__s">age 13 and above</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer adults"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More adults"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+          <div class="fx-guest" data-count="children"><div><p class="fx-guest__t">children</p><p class="fx-guest__s">age 0 to 12</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer children"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More children"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+          <div class="fx-guest" data-count="rooms"><div><p class="fx-guest__t">rooms</p><p class="fx-guest__s">up to one room per adult</p></div><div class="fx-stepper"><button type="button" data-step="-1" aria-label="Fewer rooms"><svg class="fx-ico" aria-hidden="true"><use href="#i-minus"/></svg></button><output aria-live="polite">0</output><button type="button" data-step="1" aria-label="More rooms"><svg class="fx-ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+        </div>
+        <div class="fx-pop__foot"><p class="fx-cal__note" data-guest-note></p><button type="button" class="fx-btn fx-btn--secondary" data-guest-done>done</button></div>
+      </div>

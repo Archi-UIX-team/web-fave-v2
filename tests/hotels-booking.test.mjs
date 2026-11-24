@@ -206,6 +206,98 @@ test("popular destinations page through 4 cards at a time", async () => {
   await page.close();
 });
 
+/* ---------- linked pages: city view (view.html) and all cities (cities.html) ---------- */
+const openPage = async (name, { width = 1440, height = 900 } = {}) => {
+  const context = await browser.newContext({ viewport: { width, height }, reducedMotion: "reduce" });
+  const page = await context.newPage();
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(`${base}/${name}.html`, { waitUntil: "networkidle" });
+  page.errors = errors;
+  return page;
+};
+
+test("hotels page links: city card -> view.html, see all cities -> cities.html", async () => {
+  const page = await openHotels();
+  assert.equal(await page.getAttribute('[aria-labelledby="views-title"] .fx-tile >> nth=0', "href"), "view.html");
+  assert.equal(await page.getAttribute('[aria-labelledby="dest-title"] a.fx-btn', "href"), "cities.html");
+  await page.click('[aria-labelledby="views-title"] .fx-tile >> nth=0');
+  await page.waitForURL(/view\.html$/);
+  assert.match(await page.title(), /^city view hotels/);
+  await page.close();
+});
+
+test("city view page: city view filter preset, numbered pages, feature list", async () => {
+  const page = await openPage("view");
+  await page.waitForFunction(() => document.querySelector("[data-filter-badge]") && !document.querySelector("[data-filter-badge]").hidden);
+  assert.equal((await page.textContent("[data-filter-badge]")).trim(), "1");
+  assert.equal((await page.textContent("#all-hotels [data-f-count]")).trim(), "displaying 8 of 9 available hotels");
+  // every visible card has city view
+  const fac = await page.$$eval("#all-hotels .fx-hcard:not([hidden]):not(.is-capped)", (c) => c.map((x) => x.dataset.facilities.includes("city-view")));
+  assert.ok(fac.length === 8 && fac.every(Boolean));
+  // page 2
+  await page.click('#all-hotels [data-f-pager] [data-goto="2"]');
+  assert.equal((await page.textContent("#all-hotels [data-f-count]")).trim(), "displaying 1 of 9 available hotels");
+  assert.equal(await page.getAttribute('#all-hotels [data-f-pager] [aria-current="page"]', "data-goto"), "2");
+  // sort menu
+  await page.click("#all-hotels .fx-cdd__btn");
+  await page.click('#sort-listbox [data-value="price"]');
+  const prices = await page.$$eval("#all-hotels .fx-hcard:not([hidden]):not(.is-capped)", (c) => c.map((x) => Number(x.dataset.price)));
+  assert.deepEqual(prices, [...prices].sort((a, b) => a - b));
+  // feature list: city view is on; picking garden view shows only garden-view hotels
+  assert.equal(await page.getAttribute('[data-feature="city-view"]', "aria-pressed"), "true");
+  const visibleCards = () => page.$$eval("[data-feature-card]", (c) => c.filter((x) => x.offsetParent !== null).map((x) => x.dataset.facilities));
+  assert.equal((await visibleCards()).length, 6, "city view shows at most 6 cards");
+  await page.click('[data-feature="garden-view"]');
+  const shown = await visibleCards();
+  assert.ok(shown.length > 0 && shown.length <= 6 && shown.every((f) => f.includes("garden-view")), JSON.stringify(shown.length));
+  assert.equal((await page.textContent(".desktop-nav [aria-current]")).trim(), "hotel");
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+test("city view page: booking change form and reset of the preset filter", async () => {
+  const page = await openPage("view");
+  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
+  await page.click("[data-change-booking]");
+  assert.equal(await page.isVisible("#float-booking"), true);
+  await page.click('#float-booking button[type="submit"]');
+  assert.equal(await page.isHidden("#float-booking"), true);
+  await page.fill("#all-hotels [data-f-search]", "");
+  await page.click("[data-open-filters]");
+  await page.click("[data-filters-reset]");
+  await page.click("[data-filters-apply]");
+  assert.equal((await page.textContent("#all-hotels [data-f-count]")).trim(), "displaying 8 of 16 available hotels");
+  await page.close();
+});
+
+test("all cities page: count, search, overseas", async () => {
+  const page = await openPage("cities");
+  const count = () => page.textContent("[data-f-count]").then((t) => t.trim());
+  assert.equal(await count(), "31 destinations · A–Z");
+  await page.fill("[data-f-search]", "ja");
+  await page.click(".fx-csearch button");
+  const names = await page.$$eval(".fx-ccard:not([hidden]) .fx-ccard__n", (n) => n.map((x) => x.textContent));
+  assert.ok(names.includes("Jakarta") && names.every((n) => true));
+  assert.equal(await count(), `${names.length} destinations · A–Z`);
+  await page.fill("[data-f-search]", "");
+  await page.click('[data-f-chips="country"] [data-value="overseas"]');
+  assert.equal(await count(), "2 destinations · A–Z");
+  await page.fill("[data-f-search]", "zzz");
+  assert.equal(await page.isVisible("[data-f-empty]"), true);
+  assert.equal((await page.textContent(".fx-ccard__r >> nth=0")).trim().length > 0, true);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+test("new pages have no sideways scroll on phones", async () => {
+  for (const name of ["view", "cities"]) {
+    const page = await openPage(name, { width: 390, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, name);
+    await page.close();
+  }
+});
+
 test("page background matches the reels section, without the dots", async () => {
   const page = await openHotels();
   const bg = await page.evaluate(() => ({

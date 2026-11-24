@@ -418,7 +418,13 @@ export function initBooking(rootList) {
     const scope = document.querySelector("#all-hotels");
     const citySelect = scope?.querySelector('[data-f-select="city"]');
     const search = scope?.querySelector("[data-f-search]");
-    if (!citySelect || !search) return scope;
+    if (!search) return scope;
+    if (!citySelect) {
+      // lists without a city menu (e.g. the city view page) search by place or hotel name
+      search.value = state.dest.name;
+      search.dispatchEvent(new Event("input"));
+      return scope;
+    }
     // the destination decides the place: Indonesia or Overseas chip, then city or name
     const country = state.dest.group === "overseas" ? "overseas" : "indonesia";
     scope.querySelector(`[data-f-chips="country"] [data-value="${country}"]:not(.is-on)`)?.click();
