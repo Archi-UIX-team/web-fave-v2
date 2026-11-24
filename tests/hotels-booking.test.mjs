@@ -116,6 +116,70 @@ test("change next to lowest rates opens a floating booking form that applies", a
   await page.close();
 });
 
+test("on phones a picker from the floating form is a bottom sheet over everything", async () => {
+  const page = await openHotels({ width: 390, height: 844 });
+  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
+  await page.click("[data-change-booking]");
+  await page.click('#float-booking [data-field="checkin"] button');
+  const sheet = await page.evaluate(() => {
+    const p = document.querySelector("#pop-dates");
+    const r = p.getBoundingClientRect();
+    const top = document.elementFromPoint(r.x + r.width / 2, r.y + 30);
+    return { bottom: Math.round(r.bottom), vh: innerHeight, onTop: p.contains(top) };
+  });
+  assert.ok(Math.abs(sheet.bottom - sheet.vh) <= 2, `sheet bottom ${sheet.bottom} vs viewport ${sheet.vh}`);
+  assert.equal(sheet.onTop, true, "sheet must not be covered (e.g. by the navbar)");
+  await page.close();
+});
+
+test("a destination card clears an old search", async () => {
+  const page = await openHotels();
+  await page.fill("[data-f-search]", "braga");
+  await page.click('[data-pick-city="bali"]');
+  assert.match(await count(page), /of 2 hotels/);
+  assert.equal(await page.inputValue("[data-f-search]"), "");
+  await page.close();
+});
+
+test("city listbox survives a value it does not list", async () => {
+  const page = await openHotels();
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.evaluate(() => {
+    const s = document.querySelector('[data-f-select="city"]');
+    s.value = "atlantis";
+    s.dispatchEvent(new Event("change"));
+  });
+  assert.deepEqual(errors, []);
+  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "all cities");
+  await page.close();
+});
+
+test("space chooses a city and keeps the menu closed", async () => {
+  const page = await openHotels();
+  await page.focus(".fx-cdd__btn");
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press(" ");
+  await page.waitForTimeout(100);
+  assert.equal(await page.isHidden("#city-listbox"), true);
+  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "Jakarta");
+  await page.close();
+});
+
+test("escape in the filters pop-up does not also close the floating form", async () => {
+  const page = await openHotels();
+  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
+  await page.click("[data-change-booking]");
+  await page.focus("[data-open-filters]");
+  await page.keyboard.press("Enter");
+  assert.equal(await page.evaluate(() => document.querySelector("#hotel-filters").open), true);
+  await page.keyboard.press("Escape");
+  assert.equal(await page.evaluate(() => document.querySelector("#hotel-filters").open), false);
+  assert.equal(await page.isVisible("#float-booking"), true);
+  await page.close();
+});
+
 test("no stuck booking strip under the navbar", async () => {
   const page = await openHotels();
   assert.equal(await page.locator("[data-stuck], .fx-stuck").count(), 0);

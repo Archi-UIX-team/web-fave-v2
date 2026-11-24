@@ -45,6 +45,12 @@ export function initCityDropdown(scope) {
   let focus = -1;
 
   const sync = () => {
+    // a value with no matching option falls back to "all cities"
+    if (!select.selectedOptions.length) {
+      select.value = "all";
+      select.dispatchEvent(new Event("change"));
+      return;
+    }
     const current = select.selectedOptions[0];
     label.textContent = current.textContent;
     label.classList.toggle("fx-proper", current.value !== "all");
@@ -89,6 +95,9 @@ export function initCityDropdown(scope) {
   // popular destination cards pick their city in the list below
   document.querySelectorAll("[data-pick-city]").forEach((card) => card.addEventListener("click", () => {
     scope.querySelector('[data-f-chips="country"] [data-value="indonesia"]:not(.is-on)')?.click();
+    // a city pick replaces any earlier search (e.g. a hotel name from the booking form)
+    const search = scope.querySelector("[data-f-search]");
+    if (search?.value) { search.value = ""; search.dispatchEvent(new Event("input")); }
     select.value = card.dataset.pickCity;
     select.dispatchEvent(new Event("change"));
   }));

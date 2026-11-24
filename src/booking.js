@@ -154,6 +154,8 @@ export function initBooking(rootList) {
   }));
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
+    // a modal dialog (e.g. all filters) handles its own Escape
+    if (document.querySelector("dialog[open]")) return;
     if (open) { close(); return; }
     if (floatPanel && !floatPanel.hidden) toggleFloat(false, true);
   });

@@ -132,11 +132,15 @@
 .fx-rates > p{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px var(--scale-12)}
 .fx-chg{font:700 var(--scale-16)/1.2 var(--font-body);color:var(--action-secondary);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;transition:color .2s}
 .fx-chg:hover,.fx-chg[aria-expanded="true"]{color:var(--action-secondary-hover)}
-.fx-float{position:absolute;z-index:30;top:calc(100% + 12px);left:0;width:min(1000px,100%);filter:drop-shadow(0 28px 50px rgb(20 3 12 / 55%));animation:fxFloatIn .3s var(--ease)}
+/* no filter/transform on the panel itself: either would trap the phone bottom
+   sheet (position:fixed) inside the panel instead of the screen */
+.fx-float{position:absolute;z-index:30;top:calc(100% + 12px);left:0;width:min(1000px,100%);animation:fxFloatIn .3s var(--ease)}
 .fx-float[hidden]{display:none}
-@keyframes fxFloatIn{from{opacity:0;translate:0 -8px}}
+@keyframes fxFloatIn{from{opacity:0}}
 .fx-float .fx-booking{margin-top:0}
-.fx-float .fx-bar{background:var(--violet-900)}
+.fx-float .fx-bar{background:var(--violet-900);box-shadow:0 28px 50px rgb(20 3 12 / 55%)}
+/* while a phone sheet is open from the floating form, lift its row above the navbar */
+body.fx-sheet-open .fx-filters:has(.fx-rates-wrap){z-index:1100}
 
 /* ---------- all filters chip + pop-up ---------- */
 .fx-chip__badge{min-width:20px;height:20px;padding:0 6px;display:inline-grid;place-items:center;border-radius:var(--radius-pill);background:var(--action-secondary);color:var(--action-text-on-secondary);font-size:var(--scale-12)}
