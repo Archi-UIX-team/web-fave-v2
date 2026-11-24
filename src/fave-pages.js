@@ -208,11 +208,21 @@ document.querySelectorAll("[data-feature-split]").forEach((sec) => {
 /* ---------- upcoming hotels: fold per region on phones (aston) ---------- */
 const phone = window.matchMedia("(max-width: 600px)");
 const ugroups = [...document.querySelectorAll("[data-ugroup]")];
+// regions start folded only when this script runs (without it every list stays visible)
+ugroups.slice(1).forEach((g) => g.classList.add("is-closed"));
 const syncUgroups = () => ugroups.forEach((g) => {
-  // on larger screens every list is shown, so the header is not a control
   const btn = g.querySelector(".fx-ugroup__h");
-  btn.setAttribute("aria-expanded", String(!phone.matches || !g.classList.contains("is-closed")));
-  btn.tabIndex = phone.matches ? 0 : -1;
+  const list = g.querySelector(".fx-ugroup__l");
+  if (phone.matches) {
+    btn.setAttribute("aria-expanded", String(!g.classList.contains("is-closed")));
+    btn.setAttribute("aria-controls", list.id);
+    btn.tabIndex = 0;
+  } else {
+    // on larger screens every list is shown, so the header is not a control
+    btn.removeAttribute("aria-expanded");
+    btn.removeAttribute("aria-controls");
+    btn.tabIndex = -1;
+  }
 });
 ugroups.forEach((g) => g.querySelector(".fx-ugroup__h").addEventListener("click", () => {
   if (!phone.matches) return;
@@ -254,11 +264,11 @@ document.querySelectorAll("[data-car]").forEach((car) => {
     const maxScroll = track.scrollWidth - track.clientWidth;
     const page = maxScroll > 0 ? Math.round((track.scrollLeft / maxScroll) * (pages - 1)) + 1 : 1;
     if (counter && car.dataset.carCount === "items") {
-      // aston style: number of the last card in view / total cards ("4 / 8")
+      // aston style: last card of the current page / total ("4 / 8"), counted by whole pages
       const total = track.children.length;
-      const maxScroll2 = Math.max(1, track.scrollWidth - track.clientWidth);
-      const first = Math.round((track.scrollLeft / maxScroll2) * Math.max(0, total - per));
-      counter.textContent = `${Math.min(total, first + per)} / ${total}`;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      const pageIndex = atEnd ? pages - 1 : Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      counter.textContent = `${Math.min(total, (pageIndex + 1) * per)} / ${total}`;
     } else if (counter) counter.textContent = `${page} / ${pages}`;
     if (prev) prev.disabled = track.scrollLeft < 4;
     if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;

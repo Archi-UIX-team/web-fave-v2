@@ -346,6 +346,45 @@ test("desktop: upcoming hotel lists all show and headers are not controls", asyn
   const vis = await page.$$eval("[data-ugroup] .fx-ugroup__l", (l) => l.every((x) => x.offsetParent !== null));
   assert.equal(vis, true);
   assert.equal(await page.getAttribute("[data-ugroup] >> nth=1 >> .fx-ugroup__h", "tabindex"), "-1");
+  assert.equal(await page.getAttribute("[data-ugroup] >> nth=1 >> .fx-ugroup__h", "aria-expanded"), null, "no expand state announced on desktop");
+  await page.close();
+});
+
+test("phone: upcoming regions stay readable without the page script", async () => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(`${base}/hotels.html`, { waitUntil: "networkidle" });
+  assert.equal(await page.locator("[data-ugroup] >> nth=1 >> .fx-ugroup__l").isVisible(), true);
+  await page.close();
+});
+
+test("phone: destinations snap and count by whole pages", async () => {
+  const page = await openPage("hotels", { width: 390, height: 844 });
+  const snaps = await page.$$eval(".fx-destrow > *", (c) => c.map((x) => getComputedStyle(x).scrollSnapAlign));
+  assert.deepEqual(snaps.map((s) => s !== "none"), [true, false, false, false, true, false, false, false], snaps.join(","));
+  // half a page in: counter still names a page boundary
+  const counts = await page.evaluate(async () => {
+    const t = document.querySelector(".fx-destrow");
+    t.style.scrollBehavior = "auto";
+    t.style.scrollSnapType = "none";
+    const out = [];
+    for (const f of [0.3, 0.6]) {
+      t.scrollLeft = (t.scrollWidth - t.clientWidth) * f;
+      t.dispatchEvent(new Event("scroll"));
+      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+      out.push(document.querySelector('[aria-labelledby="dest-title"] [data-car-count]').textContent.trim());
+    }
+    return out;
+  });
+  assert.ok(counts.every((c) => c === "4 / 8" || c === "8 / 8"), counts.join(","));
+  // a last page of 3 still reads left to right
+  const order = await page.evaluate(() => {
+    const t = document.querySelector(".fx-destrow");
+    t.lastElementChild.remove();
+    window.dispatchEvent(new Event("resize"));
+    return [...t.children].slice(4).map((c) => c.style.order);
+  });
+  assert.deepEqual(order, ["4", "6", "5"]);
   await page.close();
 });
 
