@@ -19,7 +19,6 @@ export const facilitySlug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, 
 // PLACEHOLDER exchange rates for display only. Replace with live rates from
 // the booking engine before launch.
 const SAMPLE_RATES = { IDR: 1, USD: 1 / 16000, SGD: 1 / 12000, MYR: 1 / 3600 };
-const SYMBOL = { IDR: "Rp", USD: "US$", SGD: "S$", MYR: "RM" };
 const MAX_IDR = 5000000;
 const STEP_IDR = 50000;
 
@@ -62,21 +61,30 @@ export function initHotelFilters(scope) {
     boxes.forEach((b) => { b.checked = s.facilities.includes(b.value); });
     paintPrice();
   };
-  const paintPrice = () => {
+  // `moved` is the slider the user is moving; the other one gives way.
+  // (Deciding by focus fails in browsers where clicking a slider does not focus it.)
+  const paintPrice = (moved) => {
     if (Number(minR.value) > Number(maxR.value) - STEP_IDR) {
-      if (document.activeElement === minR) minR.value = Number(maxR.value) - STEP_IDR;
-      else maxR.value = Number(minR.value) + STEP_IDR;
+      if (moved === maxR) maxR.value = Number(minR.value) + STEP_IDR;
+      else minR.value = Number(maxR.value) - STEP_IDR;
     }
+    // keep the thumb that can still move on top, so a thumb pushed to an end can be grabbed again
+    const minOnTop = moved === minR || (moved !== maxR && Number(minR.value) > MAX_IDR / 2);
+    minR.style.zIndex = minOnTop ? "3" : "2";
+    maxR.style.zIndex = minOnTop ? "2" : "3";
     const cur = currency.value;
-    const sym = SYMBOL[cur];
-    minOut.textContent = `${sym} ${money(Number(minR.value), cur)}`;
-    maxOut.textContent = `${sym} ${money(Number(maxR.value), cur)}${Number(maxR.value) >= MAX_IDR ? "+" : ""}`;
+    minOut.textContent = `${cur} ${money(Number(minR.value), cur)}`;
+    maxOut.textContent = `${cur} ${money(Number(maxR.value), cur)}${Number(maxR.value) >= MAX_IDR ? "+" : ""}`;
     fill.style.left = `${(minR.value / MAX_IDR) * 100}%`;
     fill.style.right = `${100 - (maxR.value / MAX_IDR) * 100}%`;
     minR.setAttribute("aria-valuetext", minOut.textContent);
     maxR.setAttribute("aria-valuetext", maxOut.textContent);
   };
-  [minR, maxR, currency].forEach((el) => el.addEventListener("input", paintPrice));
+  minR.addEventListener("input", () => paintPrice(minR));
+  maxR.addEventListener("input", () => paintPrice(maxR));
+  minR.addEventListener("pointerdown", () => paintPrice(minR));
+  maxR.addEventListener("pointerdown", () => paintPrice(maxR));
+  currency.addEventListener("input", () => paintPrice());
 
   const activeCount = (s) => (s.min > 0 || s.max < MAX_IDR ? 1 : 0) + s.facilities.length;
   const paintCards = (cur) => {
@@ -100,8 +108,18 @@ export function initHotelFilters(scope) {
     openBtn.setAttribute("aria-expanded", "true");
   });
   dialog.addEventListener("close", () => openBtn.setAttribute("aria-expanded", "false"));
-  // click on the dimmed backdrop closes without applying
-  dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  // a click on the dimmed backdrop closes without applying. A drag that starts
+  // inside (slider, text selection) and ends outside must not count.
+  let pressedOutside = false;
+  const outside = (e) => {
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  dialog.addEventListener("pointerdown", (e) => { pressedOutside = e.target === dialog && outside(e); });
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog && pressedOutside && outside(e)) dialog.close();
+    pressedOutside = false;
+  });
   dialog.querySelector("[data-filters-close]").addEventListener("click", () => dialog.close());
   dialog.querySelector("[data-filters-reset]").addEventListener("click", () => {
     writeForm({ min: 0, max: MAX_IDR, currency: currency.value, facilities: [] });

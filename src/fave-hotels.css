@@ -44,7 +44,7 @@
 .fx-dest__search:focus-within .fx-ico{color:var(--text-secondary)}
 .fx-dest__list{max-height:340px;margin:0;padding:var(--scale-10) 0;list-style:none;overflow:auto;scrollbar-width:thin;scrollbar-color:var(--violet-400) transparent}
 .fx-dest__group{padding:var(--scale-12) var(--scale-24) 6px;font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
-.fx-dest__item{width:100%;display:flex;align-items:center;gap:var(--scale-12);padding:var(--scale-10) var(--scale-24);text-align:left;transition:background-color .2s}
+.fx-dest__item{width:100%;display:flex;align-items:center;gap:var(--scale-12);padding:var(--scale-10) var(--scale-24);text-align:left;cursor:pointer;transition:background-color .2s}
 .fx-dest__item .fx-ico{color:var(--text-muted)}
 .fx-dest__item:hover,.fx-dest__item.is-focus,.fx-dest__item:focus-visible{background:var(--violet-700);box-shadow:none;border-radius:0}
 .fx-dest__item:hover .fx-ico,.fx-dest__item.is-focus .fx-ico{color:var(--text-secondary)}
