@@ -29,6 +29,72 @@ const money = (idr, cur) => {
 // keep acronyms uppercase while the rest of the label follows the lowercase rule
 const label = (name) => name.toLowerCase().replace(/\b(tv|led)\b/g, (m) => `<span class="fx-proper">${m.toUpperCase()}</span>`);
 
+/*
+  "all cities" dropdown (Aston style). The hidden native <select data-f-select="city">
+  stays the source of truth for the filter engine; this listbox mirrors it.
+*/
+export function initCityDropdown(scope) {
+  const wrap = scope.querySelector("[data-cdd]");
+  if (!wrap) return;
+  const select = wrap.querySelector("select");
+  const btn = wrap.querySelector(".fx-cdd__btn");
+  const label = btn.querySelector("[data-cdd-label]");
+  const menu = wrap.querySelector(".fx-cdd__menu");
+  menu.innerHTML = [...select.options].map((o, i) => `<li class="fx-cdd__opt${o.value === "all" ? "" : " fx-proper"}" role="option" id="cdd-opt-${i}" data-value="${o.value}" aria-selected="${o.selected}"><span>${o.textContent}</span><svg class="fx-ico" aria-hidden="true"><use href="#i-check"/></svg></li>`).join("");
+  const opts = [...menu.children];
+  let focus = -1;
+
+  const sync = () => {
+    const current = select.selectedOptions[0];
+    label.textContent = current.textContent;
+    label.classList.toggle("fx-proper", current.value !== "all");
+    opts.forEach((o) => o.setAttribute("aria-selected", String(o.dataset.value === select.value)));
+  };
+  const setFocus = (i) => {
+    focus = (i + opts.length) % opts.length;
+    opts.forEach((o, n) => o.classList.toggle("is-focus", n === focus));
+    btn.setAttribute("aria-activedescendant", opts[focus].id);
+    opts[focus].scrollIntoView({ block: "nearest" });
+  };
+  const toggle = (show) => {
+    menu.hidden = !show;
+    btn.setAttribute("aria-expanded", String(show));
+    if (show) setFocus(Math.max(0, opts.findIndex((o) => o.dataset.value === select.value)));
+    else btn.removeAttribute("aria-activedescendant");
+  };
+  const choose = (opt) => {
+    select.value = opt.dataset.value;
+    select.dispatchEvent(new Event("change"));
+    toggle(false);
+    btn.focus();
+  };
+  btn.addEventListener("click", () => toggle(menu.hidden));
+  btn.addEventListener("keydown", (e) => {
+    const open = !menu.hidden;
+    if (["ArrowDown", "ArrowUp"].includes(e.key)) {
+      e.preventDefault();
+      if (!open) toggle(true); else setFocus(focus + (e.key === "ArrowDown" ? 1 : -1));
+    } else if (e.key === "Home" && open) { e.preventDefault(); setFocus(0); }
+    else if (e.key === "End" && open) { e.preventDefault(); setFocus(opts.length - 1); }
+    else if ((e.key === "Enter" || e.key === " ") && open) { e.preventDefault(); choose(opts[focus]); }
+    else if (e.key === "Escape" && open) { e.preventDefault(); e.stopPropagation(); toggle(false); }
+  });
+  // keep focus on the button while clicking an option, so blur does not close the menu first
+  menu.addEventListener("pointerdown", (e) => e.preventDefault());
+  menu.addEventListener("click", (e) => { const o = e.target.closest(".fx-cdd__opt"); if (o) choose(o); });
+  document.addEventListener("pointerdown", (e) => { if (!menu.hidden && !wrap.contains(e.target)) toggle(false); });
+  btn.addEventListener("blur", (e) => { if (!wrap.contains(e.relatedTarget)) toggle(false); });
+  // the booking form and others change the select directly
+  select.addEventListener("change", sync);
+  // popular destination cards pick their city in the list below
+  document.querySelectorAll("[data-pick-city]").forEach((card) => card.addEventListener("click", () => {
+    scope.querySelector('[data-f-chips="country"] [data-value="indonesia"]:not(.is-on)')?.click();
+    select.value = card.dataset.pickCity;
+    select.dispatchEvent(new Event("change"));
+  }));
+  sync();
+}
+
 export function initHotelFilters(scope) {
   const dialog = document.querySelector("#hotel-filters");
   const openBtn = scope.querySelector("[data-open-filters]");

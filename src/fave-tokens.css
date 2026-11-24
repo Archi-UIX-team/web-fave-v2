@@ -102,7 +102,8 @@
   --font-body: "Nunito", system-ui, sans-serif; /* description, label, button */
 
   /* ---------- Semantic: colour ---------- */
-  --bg-default: var(--violet-800);
+  /* page background = homepage reels section (violet-500 + glow), per manager request */
+  --bg-default: var(--violet-500);
   --bg-subtle: var(--grey-50);
   --bg-brand: var(--violet-500);
   --bg-inverse: var(--neutral-0);
@@ -111,6 +112,8 @@
   --surface-subtle: var(--violet-100);
   --surface-raised: var(--green-500);
   --surface-inverse: var(--violet-50);
+  /* cards sit on the violet-500 page, so they use a darker violet to stay visible */
+  --surface-card: var(--violet-700);
 
   --text-default: var(--grey-900);
   --text-secondary: var(--green-500);

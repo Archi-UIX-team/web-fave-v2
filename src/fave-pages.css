@@ -12,6 +12,17 @@ body{
   margin:0;overflow-x:clip;background:var(--bg-default);color:var(--text-inverse);
   font-family:var(--font-body);font-size:var(--scale-18);line-height:1.6;
   text-transform:lowercase;-webkit-font-smoothing:antialiased;
+  /* on the brighter violet-500 page, violet-200 muted text is only 4.05:1;
+     violet-100 gives 5.7:1 (WCAG AA for small text) */
+  --text-muted:var(--violet-100);
+}
+/* same glow as the homepage reels section (without its dot pattern),
+   fixed to the viewport so every screen of the page looks like the reels */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(62% 58% at 50% 48%,rgb(169 14 89 / 22%) 0%,rgb(135 22 77 / 12%) 36%,rgb(118 27 71 / 0%) 72%),
+    radial-gradient(38% 42% at 18% 22%,rgb(169 14 89 / 9%) 0%,rgb(118 27 71 / 0%) 70%);
 }
 body.menu-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
@@ -73,7 +84,7 @@ h1,h2,h3,p,figure{margin:0}
 
 /* ---------- pattern (replaces aston pattern-top / pattern-bottom) ---------- */
 .fx-pattern-top{position:absolute;z-index:-1;top:0;right:0;width:min(900px,62vw);height:460px;pointer-events:none}
-.fx-pattern-top::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 75% at 55% 20%,rgb(65 15 39 / 35%) 0,var(--bg-default) 100%)}
+.fx-pattern-top::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 60% 75% at 55% 20%,rgb(118 27 71 / 35%) 0,var(--bg-default) 100%)}
 .fx-disc{position:absolute;border-radius:50%;object-fit:cover;animation:fxSpin 60s linear infinite}
 .fx-pattern-top .fx-disc--a{width:250px;height:250px;top:-60px;right:120px}
 .fx-pattern-top .fx-disc--b{width:150px;height:150px;top:110px;right:-30px;animation-direction:reverse}
@@ -159,7 +170,7 @@ h1,h2,h3,p,figure{margin:0}
 
 /* ---------- hotel cards ---------- */
 .fx-hgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--scale-32) var(--scale-24)}
-.fx-hcard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-default);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.fx-hcard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-card);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .fx-hcard:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgb(50 11 30 / 45%)}
 .fx-hcard .fx-media{aspect-ratio:3/2;border-radius:0}
 .fx-hcard .fx-media::after{display:none}
@@ -220,7 +231,7 @@ h1,h2,h3,p,figure{margin:0}
 .fx-car__track::-webkit-scrollbar{display:none}
 .fx-car__track > *{scroll-snap-align:start}
 .fx-ogrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--scale-32) var(--scale-24)}
-.fx-ocard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-default);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.fx-ocard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-card);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .fx-ocard:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgb(50 11 30 / 45%)}
 .fx-ocard .fx-media{aspect-ratio:16/10;border-radius:0}
 .fx-ocard .fx-media::after{display:none}
@@ -257,7 +268,7 @@ h1,h2,h3,p,figure{margin:0}
 /* ---------- meetings + weddings ---------- */
 .fx-mhero{position:relative;min-height:540px;display:grid;place-items:center;padding:160px var(--gx) var(--scale-96);text-align:center;overflow:hidden;border-radius:0 0 var(--radius-container) var(--radius-container)}
 .fx-mhero__media{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
-.fx-mhero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--overlay-scrim),rgb(65 15 39 / 55%) 55%,var(--bg-default))}
+.fx-mhero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--overlay-scrim),rgb(118 27 71 / 55%) 55%,var(--bg-default))}
 .fx-mhero__copy{display:flex;flex-direction:column;align-items:center;gap:var(--scale-16)}
 .fx-mhero .fx-h1{font-size:var(--scale-68)}
 .fx-mhero .fx-lead{text-align:center;color:var(--text-inverse)}
@@ -270,7 +281,7 @@ h1,h2,h3,p,figure{margin:0}
 .fx-vbar__field .fx-select{width:100%}.fx-vbar__field .fx-select select{width:100%}
 .fx-vbar__field .fx-select .fx-ico{right:0}
 .fx-vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--scale-32) var(--scale-24);padding-bottom:120px}
-.fx-vcard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-default);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.fx-vcard{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-card);overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .fx-vcard:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgb(50 11 30 / 45%)}
 .fx-gal{position:relative;aspect-ratio:5/3;overflow:hidden;background:var(--violet-700)}
 .fx-gal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;scale:1.05;transition:opacity .6s var(--ease),scale 1.2s var(--ease)}
@@ -298,7 +309,7 @@ h1,h2,h3,p,figure{margin:0}
 /* ---------- footer (aston layout, fave brand) ---------- */
 .fx-foot{position:relative;margin-top:120px;background:var(--violet-900)}
 .fx-foot__pattern{position:absolute;left:0;right:0;bottom:100%;height:120px;overflow:hidden;pointer-events:none}
-.fx-foot__pattern::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg-default) 0,rgb(65 15 39 / 0%) 100%)}
+.fx-foot__pattern::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg-default) 0,rgb(118 27 71 / 0%) 100%)}
 .fx-foot__pattern .fx-disc{bottom:-90px;width:180px;height:180px}
 .fx-foot__pattern .fx-disc--a{left:4%}.fx-foot__pattern .fx-disc--b{left:20%;width:140px;height:140px;bottom:-60px;animation-direction:reverse}
 .fx-foot__pattern .fx-disc--c{left:38%;width:200px;height:200px;bottom:-110px}.fx-foot__pattern .fx-disc--d{left:56%;width:150px;height:150px;bottom:-70px;animation-direction:reverse}

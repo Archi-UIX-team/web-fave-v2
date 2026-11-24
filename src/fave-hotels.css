@@ -94,26 +94,49 @@
 .fx-stepper .fx-ico{width:16px;height:16px}
 .fx-stepper output{min-width:var(--scale-20);text-align:center;font:700 var(--scale-18)/1 var(--font-body)}
 
-/* ---------- stuck booking strip under the navbar ---------- */
-.fx-stuck{
-  position:fixed;z-index:990;top:78px;left:50%;width:min(1328px,84vw);
-  display:flex;align-items:center;gap:8px;padding:6px 6px 6px var(--scale-16);
-  border:1px solid var(--overlay-strong);border-radius:var(--radius-round);background:rgb(50 11 30 / 90%);
-  box-shadow:0 16px 40px rgb(20 3 12 / 35%);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  transform:translate(-50%,-14px);opacity:0;visibility:hidden;
-  transition:transform .4s var(--ease),opacity .3s,visibility 0s .4s;
+/* ---------- pick your view: 5 cards ---------- */
+.fx-vrow--5{grid-template-columns:repeat(5,minmax(0,1fr))}
+
+/* ---------- popular destinations (aston: see-all + pager, 4 cards per page) ---------- */
+.fx-pop-bar{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-16)}
+.fx-pager-mini{display:flex;align-items:center;gap:var(--scale-12);font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wide);color:var(--text-muted)}
+.fx-pager-mini .fx-btn--icon{width:var(--scale-44);min-height:var(--scale-44)}
+.fx-pager-mini .fx-btn--icon:disabled{opacity:.35;pointer-events:none}
+.fx-destrow{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3 * var(--scale-16)) / 4);gap:var(--scale-16);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.fx-destrow::-webkit-scrollbar{display:none}
+.fx-destrow > *{scroll-snap-align:start}
+.fx-destrow .fx-media{aspect-ratio:1/1}
+
+/* ---------- city dropdown (aston style) ---------- */
+.fx-cdd{position:relative}
+.fx-cdd__btn .fx-ico{transition:rotate .25s var(--ease)}
+.fx-cdd__btn[aria-expanded="true"]{border-color:var(--action-secondary)}
+.fx-cdd__btn[aria-expanded="true"] .fx-ico{rotate:180deg}
+.fx-cdd__menu{
+  position:absolute;z-index:40;top:calc(100% + 8px);left:0;min-width:220px;max-height:320px;margin:0;padding:6px;list-style:none;overflow:auto;
+  border:1px solid var(--overlay-strong);border-radius:var(--radius-sm);background:var(--violet-900);
+  box-shadow:0 24px 50px rgb(20 3 12 / 50%);scrollbar-width:thin;scrollbar-color:var(--violet-400) transparent;
 }
-.fx-stuck.is-on{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .4s var(--ease),opacity .3s}
-.fx-stuck__f{display:flex;align-items:center;gap:8px;min-width:0;padding:8px var(--scale-14);border-radius:var(--radius-round);font:700 var(--scale-14)/1.2 var(--font-body);white-space:nowrap;transition:background-color .2s,color .2s}
-.fx-stuck__f:hover{background:var(--violet-700);color:var(--text-secondary)}
-.fx-stuck__f .fx-ico{width:16px;height:16px;color:var(--text-secondary)}
-.fx-stuck__sep{flex:none;width:1px;height:var(--scale-20);background:var(--overlay-strong)}
-.fx-stuck .fx-btn{flex:none;margin-left:auto;min-height:var(--scale-40)}
-@media (max-width:1000px){.fx-stuck{top:84px;width:calc(100vw - 32px)}}
-@media (max-width:760px){
-  .fx-stuck__f--dates,.fx-stuck__f--guests,.fx-stuck__sep{display:none}
-  .fx-stuck__f span{overflow:hidden;text-overflow:ellipsis}
-}
+.fx-cdd__menu[hidden]{display:none}
+.fx-cdd__opt{display:flex;justify-content:space-between;align-items:center;gap:var(--scale-16);padding:var(--scale-10) var(--scale-14);border-radius:var(--radius-xs);font:700 var(--scale-14)/1.2 var(--font-body);cursor:pointer;transition:background-color .15s,color .15s}
+.fx-cdd__opt .fx-ico{width:16px;height:16px;color:var(--text-secondary);opacity:0}
+.fx-cdd__opt[aria-selected="true"] .fx-ico{opacity:1}
+.fx-cdd__opt[aria-selected="true"]{color:var(--text-secondary)}
+.fx-cdd__opt:hover,.fx-cdd__opt.is-focus{background:var(--violet-700)}
+
+/* ---------- lowest rates: change + floating booking form ---------- */
+/* the filters row holds the city menu and the floating form, so it must paint
+   above the hotel cards that follow it (its reveal animation makes it a layer) */
+.fx-filters:has(.fx-rates-wrap){position:relative;z-index:25}
+.fx-rates-wrap{position:relative;z-index:20}
+.fx-rates > p{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px var(--scale-12)}
+.fx-chg{font:700 var(--scale-16)/1.2 var(--font-body);color:var(--action-secondary);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;transition:color .2s}
+.fx-chg:hover,.fx-chg[aria-expanded="true"]{color:var(--action-secondary-hover)}
+.fx-float{position:absolute;z-index:30;top:calc(100% + 12px);left:0;width:min(1000px,100%);filter:drop-shadow(0 28px 50px rgb(20 3 12 / 55%));animation:fxFloatIn .3s var(--ease)}
+.fx-float[hidden]{display:none}
+@keyframes fxFloatIn{from{opacity:0;translate:0 -8px}}
+.fx-float .fx-booking{margin-top:0}
+.fx-float .fx-bar{background:var(--violet-900)}
 
 /* ---------- all filters chip + pop-up ---------- */
 .fx-chip__badge{min-width:20px;height:20px;padding:0 6px;display:inline-grid;place-items:center;border-radius:var(--radius-pill);background:var(--action-secondary);color:var(--action-text-on-secondary);font-size:var(--scale-12)}
@@ -184,3 +207,8 @@
   .fx-facilities{grid-template-columns:1fr 1fr}
 }
 @media (min-width:601px) and (max-width:900px){.fx-facilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ---------- responsive: views, destinations, floating form ---------- */
+@media (max-width:1200px){.fx-vrow--5{grid-template-columns:repeat(3,minmax(0,1fr))}.fx-destrow{grid-auto-columns:calc((100% - 2 * var(--scale-16)) / 3)}}
+@media (max-width:900px){.fx-float{width:100%}}
+@media (max-width:600px){.fx-vrow--5{grid-template-columns:repeat(2,minmax(0,1fr))}.fx-destrow{grid-auto-columns:78%}.fx-pop-bar{flex-wrap:wrap}.fx-cdd__menu{max-height:260px}}

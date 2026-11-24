@@ -6,10 +6,10 @@ import "./fave-hotels.css";
 document.documentElement.classList.add("js");
 
 // hotels page only: booking pickers and the all-filters pop-up
-const bookingRoot = document.querySelector("[data-booking]");
-if (bookingRoot) import("./booking.js").then((m) => m.initBooking(bookingRoot));
+const bookingRoots = document.querySelectorAll("[data-booking]");
+if (bookingRoots.length) import("./booking.js").then((m) => m.initBooking(bookingRoots));
 const filterRoot = document.querySelector("[data-open-filters]")?.closest("[data-filter-scope]");
-if (filterRoot) import("./hotel-filters.js").then((m) => m.initHotelFilters(filterRoot));
+if (filterRoot) import("./hotel-filters.js").then((m) => { m.initHotelFilters(filterRoot); m.initCityDropdown(filterRoot); });
 
 /* ---------- navbar (same behaviour as before) ---------- */
 const header = document.querySelector(".site-header");
@@ -161,7 +161,13 @@ document.querySelectorAll("[data-car]").forEach((car) => {
     // always the last page even when the cards do not divide evenly.
     const maxScroll = track.scrollWidth - track.clientWidth;
     const page = maxScroll > 0 ? Math.round((track.scrollLeft / maxScroll) * (pages - 1)) + 1 : 1;
-    if (counter) counter.textContent = `${page} / ${pages}`;
+    if (counter && car.dataset.carCount === "items") {
+      // aston style: number of the last card in view / total cards ("4 / 8")
+      const total = track.children.length;
+      const maxScroll2 = Math.max(1, track.scrollWidth - track.clientWidth);
+      const first = Math.round((track.scrollLeft / maxScroll2) * Math.max(0, total - per));
+      counter.textContent = `${Math.min(total, first + per)} / ${total}`;
+    } else if (counter) counter.textContent = `${page} / ${pages}`;
     if (prev) prev.disabled = track.scrollLeft < 4;
     if (next) next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
   };

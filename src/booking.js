@@ -51,10 +51,17 @@ const defaultStay = () => {
   return { start, end: addDays(start, 2) };
 };
 
-export function initBooking(root) {
-  const form = root.querySelector("[data-booking-form]");
-  const fields = [...root.querySelectorAll("[data-field]")];
-  const pops = { dest: root.querySelector("#pop-dest"), dates: root.querySelector("#pop-dates"), guests: root.querySelector("#pop-guests") };
+/*
+  roots: every booking form on the page (the hero bar and the floating
+  "change" form). They share one state and one set of pickers; a picker is
+  moved into whichever form opened it.
+*/
+export function initBooking(rootList) {
+  const roots = [...rootList];
+  const forms = roots.map((r) => r.querySelector("[data-booking-form]"));
+  const fields = roots.flatMap((r) => [...r.querySelectorAll("[data-field]")]);
+  const pops = { dest: document.querySelector("#pop-dest"), dates: document.querySelector("#pop-dates"), guests: document.querySelector("#pop-guests") };
+  let root = roots[0]; // the form whose picker is open (or was last used)
 
   const state = { dest: DESTINATIONS[1], hotel: "", ...defaultStay(), guests: { adults: 2, children: 0, rooms: 1 } };
   let open = null; // "dest" | "dates" | "guests"
@@ -75,18 +82,20 @@ export function initBooking(root) {
   const render = () => {
     const out = { dest: destText(), checkin: fmtShort(state.start), checkout: fmtShort(state.end), guests: guestText(), range: `${fmtShort(state.start)} - ${fmtShort(state.end)}` };
     Object.entries(out).forEach(([key, text]) => document.querySelectorAll(`[data-out="${key}"]`).forEach((el) => { el.textContent = text; }));
-    form.querySelector('[name="checkin"]').value = iso(state.start);
-    form.querySelector('[name="checkout"]').value = iso(state.end);
-    form.querySelector('[name="destination"]').value = destText();
-    form.querySelector('[name="guests"]').value = guestText();
+    forms.forEach((form) => {
+      form.querySelector('[name="checkin"]').value = iso(state.start);
+      form.querySelector('[name="checkout"]').value = iso(state.end);
+      form.querySelector('[name="destination"]').value = destText();
+      form.querySelector('[name="guests"]').value = guestText();
+    });
   };
 
   /* ---------- open / close ---------- */
-  const fieldFor = (name) => fields.find((f) => f.dataset.field === name);
+  const fieldFor = (name, r = root) => fields.find((f) => f.dataset.field === name && r.contains(f));
   const popFor = (fieldName) => (fieldName === "checkin" || fieldName === "checkout" ? "dates" : fieldName);
   const setActive = (fieldName) => {
     fields.forEach((f) => {
-      const on = f.dataset.field === fieldName;
+      const on = f.dataset.field === fieldName && root.contains(f);
       f.classList.toggle("is-active", on);
       f.querySelector("button").setAttribute("aria-expanded", String(on));
     });
@@ -104,9 +113,12 @@ export function initBooking(root) {
     if (returnFocus) opener?.focus();
     open = null;
   };
-  const openPop = (fieldName) => {
+  const openPop = (fieldName, r = root) => {
     const name = popFor(fieldName);
     close(false);
+    root = r;
+    // the picker lives next to the form that opened it
+    if (pops[name].parentElement !== root) root.append(pops[name]);
     const field = fieldFor(fieldName);
     open = name;
     opener = field.querySelector("button");
@@ -120,27 +132,33 @@ export function initBooking(root) {
   };
   fields.forEach((field) => {
     const name = field.dataset.field;
+    const fieldRoot = field.closest("[data-booking]");
     field.querySelector("button").addEventListener("click", () => {
+      const sameForm = fieldRoot === root;
       // while the calendar is open, a date field only switches what is being picked
       // (it never closes the calendar or drops a half-picked range)
-      if (open === "dates" && popFor(name) === "dates") {
+      if (sameForm && open === "dates" && popFor(name) === "dates") {
         if (!field.classList.contains("is-active")) switchDateField(name);
         return;
       }
-      if (open === popFor(name)) { close(); return; }
-      openPop(name);
+      if (sameForm && open === popFor(name)) { close(); return; }
+      openPop(name, fieldRoot);
     });
   });
   document.addEventListener("pointerdown", (e) => {
-    if (open && !pops[open].contains(e.target) && !e.target.closest("[data-field]") && !e.target.closest("[data-stuck]")) close(false);
+    if (open && !pops[open].contains(e.target) && !e.target.closest("[data-field]")) close(false);
   });
-  // moving focus to anything outside the booking form closes the picker
-  root.addEventListener("focusout", (e) => {
-    if (open && e.relatedTarget && !root.contains(e.relatedTarget)) close(false);
+  // moving focus to anything outside the form that owns the picker closes it
+  roots.forEach((r) => r.addEventListener("focusout", (e) => {
+    if (open && r === root && e.relatedTarget && !root.contains(e.relatedTarget)) close(false);
+  }));
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    if (open) { close(); return; }
+    if (floatPanel && !floatPanel.hidden) toggleFloat(false, true);
   });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && open) close(); });
   window.addEventListener("resize", () => { if (open) place(pops[open], root.querySelector("[data-field].is-active")); });
-  root.querySelectorAll("[data-pop-close]").forEach((b) => b.addEventListener("click", () => close()));
+  Object.values(pops).forEach((p) => p.querySelectorAll("[data-pop-close]").forEach((b) => b.addEventListener("click", () => close())));
 
   /* ---------- destination (combobox + listbox) ---------- */
   const destSearch = pops.dest.querySelector("input");
@@ -394,46 +412,49 @@ export function initBooking(root) {
   });
 
   /* ---------- submit: show matching hotels ---------- */
-  form.addEventListener("submit", (e) => {
+  const showMatchingHotels = () => {
+    const scope = document.querySelector("#all-hotels");
+    const citySelect = scope?.querySelector('[data-f-select="city"]');
+    const search = scope?.querySelector("[data-f-search]");
+    if (!citySelect || !search) return scope;
+    // the destination decides the place: Indonesia or Overseas chip, then city or name
+    const country = state.dest.group === "overseas" ? "overseas" : "indonesia";
+    scope.querySelector(`[data-f-chips="country"] [data-value="${country}"]:not(.is-on)`)?.click();
+    const isCity = !state.hotel && [...citySelect.options].some((o) => o.value === state.dest.city && o.value);
+    citySelect.value = isCity ? state.dest.city : "all";
+    // a hotel, or a place with no city option (e.g. Malaysia), is searched by name
+    search.value = isCity || state.dest.group === "overseas" ? "" : state.dest.name;
+    citySelect.dispatchEvent(new Event("change"));
+    search.dispatchEvent(new Event("input"));
+    return scope;
+  };
+  forms.forEach((form) => form.addEventListener("submit", (e) => {
     e.preventDefault();
     close(false);
     keepDatesCurrent();
     render();
-    const scope = document.querySelector("#all-hotels");
-    const citySelect = scope?.querySelector('[data-f-select="city"]');
-    const search = scope?.querySelector("[data-f-search]");
-    if (citySelect && search) {
-      // the destination decides the place, so clear the region chip
-      scope.querySelector('[data-f-chips="region"] [data-value="all"]:not(.is-on)')?.click();
-      const isCity = !state.hotel && [...citySelect.options].some((o) => o.value === state.dest.city && o.value);
-      citySelect.value = isCity ? state.dest.city : "all";
-      // a hotel or a place with no city option (e.g. Malaysia) is searched by name
-      search.value = isCity ? "" : state.dest.name;
-      citySelect.dispatchEvent(new Event("change"));
-      search.dispatchEvent(new Event("input"));
-    }
-    scope?.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+    const scope = showMatchingHotels();
+    if (floatPanel?.contains(form)) toggleFloat(false, true);
+    else scope?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
 
-  /* ---------- stuck strip under the navbar ---------- */
-  const strip = document.querySelector("[data-stuck]");
-  if (strip) {
-    const watch = new IntersectionObserver(([entry]) => {
-      const passed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-      strip.classList.toggle("is-on", passed);
-      strip.inert = !passed;
-      if (passed) strip.removeAttribute("aria-hidden"); else strip.setAttribute("aria-hidden", "true");
-    }, { rootMargin: "-90px 0px 0px 0px" });
-    watch.observe(form);
-    strip.addEventListener("click", (e) => {
-      if (e.target.closest("[data-stuck-book]")) { form.requestSubmit(); return; }
-      const target = e.target.closest("[data-stuck-field]");
-      if (!target) return;
-      root.scrollIntoView({ behavior: "smooth", block: "center" });
-      // always open (never toggle closed) the picker for this field
-      setTimeout(() => openPop(target.dataset.stuckField), 450);
-    });
-  }
+  /* ---------- "change" next to lowest rates: floating booking form ---------- */
+  const floatPanel = document.querySelector("[data-float-booking]");
+  const changeBtn = document.querySelector("[data-change-booking]");
+  const toggleFloat = (show, returnFocus = false) => {
+    if (!floatPanel) return;
+    if (!show) close(false);
+    floatPanel.hidden = !show;
+    changeBtn?.setAttribute("aria-expanded", String(show));
+    if (show) setTimeout(() => floatPanel.querySelector("[data-field] button")?.focus(), 0);
+    else if (returnFocus) changeBtn?.focus();
+  };
+  changeBtn?.addEventListener("click", () => toggleFloat(floatPanel.hidden));
+  document.addEventListener("pointerdown", (e) => {
+    if (!floatPanel || floatPanel.hidden) return;
+    const inside = floatPanel.contains(e.target) || changeBtn?.contains(e.target) || Object.values(pops).some((p) => p.contains(e.target));
+    if (!inside) toggleFloat(false);
+  });
 
   render();
 }
