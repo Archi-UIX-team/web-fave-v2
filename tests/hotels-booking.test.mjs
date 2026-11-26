@@ -450,6 +450,20 @@ test("hotels page room-feature cards: 4 cards, kitchenette links to room.html", 
   await page.close();
 });
 
+test("each room-feature card count matches the hotels it filters to", async () => {
+  const page = await openHotels();
+  const cards = await page.$$eval('[aria-labelledby="rooms-title"] .fx-tile', (tiles) => tiles.map((x) => ({
+    facility: x.dataset.pickFacility || "kitchenette",
+    count: Number(x.querySelector(".fx-label__s").textContent.match(/\d+/)[0]),
+  })));
+  const have = await page.$$eval("#all-hotels .fx-hcard", (hc) => hc.map((x) => x.dataset.facilities.split(" ")));
+  for (const c of cards) {
+    const actual = have.filter((f) => f.includes(c.facility)).length;
+    assert.equal(c.count, actual, `${c.facility}: card says ${c.count}, data has ${actual}`);
+  }
+  await page.close();
+});
+
 test("room.html lists kitchenette hotels with show-more and no feature index", async () => {
   const page = await openPage("room");
   assert.match(await page.title(), /^hotels with kitchenettes/);
