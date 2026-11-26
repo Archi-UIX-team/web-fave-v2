@@ -5,6 +5,7 @@ import "./fave-hotels.css";
 import "./fave-view-cities.css";
 import "./fave-city.css";
 import "./fave-upcoming.css";
+import "./fave-offer-detail.css";
 import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");
@@ -330,6 +331,38 @@ document.querySelectorAll("[data-pager]").forEach((pager) => {
       b.classList.toggle("is-on", b === btn);
       if (b === btn) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
+  });
+});
+
+/* ---------- offer / detail page: tabs, copy code, read-more ---------- */
+document.querySelectorAll("[data-tabs]").forEach((wrap) => {
+  const tabs = [...wrap.querySelectorAll('[role="tab"]')];
+  const panels = [...wrap.querySelectorAll('[role="tabpanel"]')];
+  const select = (i) => {
+    tabs.forEach((t, n) => t.setAttribute("aria-selected", String(n === i)));
+    panels.forEach((p, n) => { p.hidden = n !== i; });
+  };
+  tabs.forEach((t, i) => t.addEventListener("click", () => select(i)));
+  select(tabs.findIndex((t) => t.getAttribute("aria-selected") === "true") < 0 ? 0 : tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"));
+});
+document.querySelectorAll("[data-copy]").forEach((btn) => {
+  const label = btn.querySelector("span");
+  const original = label?.textContent;
+  btn.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(btn.dataset.copy); } catch (e) { /* clipboard unavailable */ }
+    btn.classList.add("is-done");
+    if (label) label.textContent = "copied";
+    setTimeout(() => { btn.classList.remove("is-done"); if (label) label.textContent = original; }, 1600);
+  });
+});
+document.querySelectorAll("[data-readmore]").forEach((btn) => {
+  const target = document.getElementById(btn.getAttribute("aria-controls"));
+  if (!target) return;
+  target.classList.add("is-clamped");
+  btn.addEventListener("click", () => {
+    const clamped = target.classList.toggle("is-clamped");
+    btn.setAttribute("aria-expanded", String(!clamped));
+    btn.textContent = clamped ? "read more" : "read less";
   });
 });
 

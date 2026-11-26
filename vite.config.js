@@ -1,6 +1,14 @@
 import { defineConfig } from "vite";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+
+// Every HTML file at the project root is a page (home, hotels, offer-*, etc.),
+// so the build input is discovered rather than listed by hand.
+const htmlInputs = Object.fromEntries(
+  readdirSync(__dirname)
+    .filter((f) => f.endsWith(".html"))
+    .map((f) => [f.replace(/\.html$/, ""), resolve(__dirname, f)]),
+);
 
 // Shared HTML partials for the inner pages.
 // In a page, `<!--#include header-->` is replaced with partials/header.html.
@@ -38,19 +46,7 @@ export default defineConfig({
   plugins: [htmlPartials()],
   build: {
     rollupOptions: {
-      input: {
-        home: resolve(__dirname, "index.html"),
-        hotels: resolve(__dirname, "hotels.html"),
-        view: resolve(__dirname, "view.html"),
-        cities: resolve(__dirname, "cities.html"),
-        city: resolve(__dirname, "city.html"),
-        room: resolve(__dirname, "room.html"),
-        upcoming: resolve(__dirname, "upcoming.html"),
-        offers: resolve(__dirname, "offers.html"),
-        meetings: resolve(__dirname, "meetings.html"),
-        weddings: resolve(__dirname, "weddings.html"),
-        news: resolve(__dirname, "news.html"),
-      },
+      input: htmlInputs,
     },
   },
 });
