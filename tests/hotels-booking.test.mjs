@@ -43,7 +43,7 @@ const openHotels = async ({ now, width = 1440, height = 900 } = {}) => {
   const page = await context.newPage();
   if (now) await page.clock.install({ time: now });
   await page.goto(`${base}/hotels.html`, { waitUntil: "networkidle" });
-  await page.waitForFunction(() => document.querySelector('[data-out="checkin"]')?.textContent.trim());
+  await page.waitForFunction(() => document.querySelector('[data-out="range"]')?.textContent.trim());
   await page.waitForFunction(() => document.querySelectorAll(".fx-check").length > 0);
   return page;
 };
@@ -105,11 +105,11 @@ test("change next to lowest rates opens a floating booking form that applies", a
   assert.equal(await page.isVisible("#float-booking"), true);
   // the floating form must be on top of the hotel cards
   assert.equal(await page.evaluate(() => {
-    const b = document.querySelector('#float-booking [data-field="checkin"] button');
+    const b = document.querySelector('#float-booking [data-field="dates"] button');
     const r = b.getBoundingClientRect();
     return b.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2));
   }), true, "floating form is covered");
-  await page.click('#float-booking [data-field="checkin"] button');
+  await page.click('#float-booking [data-field="dates"] button');
   assert.equal(await page.evaluate(() => document.querySelector("#float-booking").contains(document.querySelector("#pop-dates"))), true, "calendar opens inside the floating form");
   assert.equal(await page.isHidden("#pop-dates .fx-pop__head"), true, "phone-only sheet header stays hidden on desktop");
   const days = page.locator("#pop-dates [data-day]:not([disabled])");
@@ -128,7 +128,7 @@ test("on phones a picker from the floating form is a bottom sheet over everythin
   const page = await openHotels({ width: 390, height: 844 });
   await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
   await page.click("[data-change-booking]");
-  await page.click('#float-booking [data-field="checkin"] button');
+  await page.click('#float-booking [data-field="dates"] button');
   const sheet = await page.evaluate(() => {
     const p = document.querySelector("#pop-dates");
     const r = p.getBoundingClientRect();
@@ -321,7 +321,7 @@ test("Bali card links to city.html, which lists that city's hotels", async () =>
   assert.deepEqual(names, ["bali", "bali"]);
   // the booking bar has no destination field (the city is fixed)
   assert.equal(await city.locator('[data-field="dest"]').count(), 0);
-  assert.equal(await city.locator('.fx-hero [data-field="checkin"]').isVisible(), true);
+  assert.equal(await city.locator('.fx-hero [data-field="dates"]').isVisible(), true);
   // map pins match the hotels in the list
   const pins = await city.$$eval(".fx-map__pin", (p) => p.map((x) => x.textContent.trim()));
   const prices = await city.$$eval(".fx-rowcard", (c) => c.map((x) => `IDR ${Math.round(Number(x.dataset.price) / 1000)}K / night`));
@@ -583,10 +583,10 @@ test("footer discs sit in the bottom corners", async () => {
 test("phone: hotels page follows the aston mobile layout", async () => {
   const page = await openPage("hotels", { width: 390, height: 844 });
   const box = (sel) => page.locator(sel).first().boundingBox();
-  // booking: check-in and check-out side by side, destination full width
-  const [ci, co, dest] = [await box('.fx-hero [data-field="checkin"]'), await box('.fx-hero [data-field="checkout"]'), await box('.fx-hero [data-field="dest"]')];
-  assert.equal(Math.round(ci.y), Math.round(co.y));
-  assert.ok(dest.width > ci.width * 1.8);
+  // booking: destination, the single dates field and guests stack full width
+  const [dest, dates, guests] = [await box('.fx-hero [data-field="dest"]'), await box('.fx-hero [data-field="dates"]'), await box('.fx-hero [data-field="guests"]')];
+  assert.ok(dates.y > dest.y && guests.y > dates.y, "fields stack vertically");
+  assert.ok(dest.width > 300 && Math.abs(dest.width - dates.width) < 2, "fields span full width");
   // pick your view: 2 columns, pool (5th) full width in third place
   const tiles = await page.$$eval(".fx-vrow--5 .fx-tile", (t) => t.map((x) => { const r = x.getBoundingClientRect(); return { y: Math.round(r.y), w: Math.round(r.width), label: x.querySelector(".fx-label__t").textContent }; }));
   const pool = tiles.find((t) => t.label === "pool");
@@ -710,7 +710,7 @@ test("page background matches the reels section, without the dots", async () => 
 test("today is recomputed when the page stays open past midnight", async () => {
   const page = await openHotels({ now: new Date(2026, 10, 23, 23, 58) });
   await page.clock.fastForward("05:00"); // now 24 nov, 00:03
-  await page.click('[data-field="checkin"] button');
+  await page.click('[data-field="dates"] button');
   assert.equal(await page.isDisabled('#pop-dates [data-day="2026-11-23"]'), true, "yesterday must be disabled");
   assert.equal(await page.getAttribute('#pop-dates [data-day="2026-11-24"]', "class").then((c) => c.includes("is-today")), true);
   await page.close();
@@ -725,7 +725,7 @@ test("default stay starts today when today is a friday", async () => {
 
 test("hovering the calendar keeps keyboard focus on a day", async () => {
   const page = await openHotels();
-  await page.click('[data-field="checkin"] button');
+  await page.click('[data-field="dates"] button');
   const days = page.locator("#pop-dates [data-day]:not([disabled])");
   await days.nth(3).click();
   await days.nth(4).focus();
@@ -734,14 +734,16 @@ test("hovering the calendar keeps keyboard focus on a day", async () => {
   await page.close();
 });
 
-test("clicking check-out while picking keeps the calendar open", async () => {
+test("picking check-in keeps the calendar open to choose check-out", async () => {
   const page = await openHotels();
-  await page.click('[data-field="checkin"] button');
-  await page.locator("#pop-dates [data-day]:not([disabled])").nth(3).click();
-  await page.click('[data-field="checkout"] button');
+  await page.click('[data-field="dates"] button');
+  const days = page.locator("#pop-dates [data-day]:not([disabled])");
+  await days.nth(3).click(); // check-in; the calendar must stay open for check-out
   assert.equal(await page.isVisible("#pop-dates"), true);
-  assert.equal(await page.getAttribute('[data-field="checkout"] button', "aria-expanded"), "true");
-  assert.equal(await page.getAttribute('[data-field="checkin"] button', "aria-expanded"), "false");
+  assert.equal(await page.getAttribute('[data-field="dates"] button', "aria-expanded"), "true");
+  await days.nth(6).click(); // check-out
+  await page.click("#pop-dates [data-cal-apply]");
+  assert.match((await page.textContent('[data-out="range"]')).trim(), /\w+, \d+ \w+ - \w+, \d+ \w+/, "a full check-in/check-out range is chosen");
   await page.close();
 });
 
@@ -767,7 +769,7 @@ test("destination list is a listbox with an active option", async () => {
 
 test("calendar has a single tab stop", async () => {
   const page = await openHotels();
-  await page.click('[data-field="checkin"] button');
+  await page.click('[data-field="dates"] button');
   const stops = await page.$$eval('#pop-dates [data-day]:not([disabled])', (b) => b.filter((x) => x.tabIndex === 0).length);
   assert.equal(stops, 1);
   await page.close();

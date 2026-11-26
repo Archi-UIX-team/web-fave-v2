@@ -101,14 +101,14 @@ h1,h2,h3,p,figure{margin:0}
 .fx-crumbs [aria-current]{color:var(--text-inverse)}
 
 /* booking bar */
-.fx-bar{display:flex;align-items:stretch;margin-top:var(--scale-12);border:1px solid var(--action-secondary);border-radius:var(--radius-container);background:var(--violet-500);overflow:hidden}
+.fx-bar{display:flex;align-items:stretch;margin-top:var(--scale-12);border:1px solid var(--action-secondary);border-radius:var(--radius-sm);background:var(--violet-500);overflow:hidden}
 .fx-fld{flex:1;min-width:1px;padding:var(--scale-18) var(--scale-28);display:flex;flex-direction:column;gap:6px;white-space:nowrap}
 .fx-fld + .fx-fld{border-left:1px solid var(--violet-400)}
 .fx-fld__l{font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
 .fx-fld__v{font:600 var(--scale-18)/1.2 var(--font-body);color:var(--text-inverse)}
 .fx-fld__v select,.fx-fld__v input{width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;outline:none;appearance:none;cursor:pointer}
 .fx-fld__v option{color:var(--text-default)}
-.fx-bar .fx-btn{min-height:auto;margin:8px;padding:0 var(--scale-48);border-radius:var(--radius-round)}
+.fx-bar .fx-btn{min-height:auto;margin:0;padding:0 var(--scale-48);border-radius:0;align-self:stretch}
 
 /* ---------- sections ---------- */
 .fx-sec{position:relative;padding:var(--scale-72) var(--gx) 0;display:flex;flex-direction:column;gap:var(--scale-32)}

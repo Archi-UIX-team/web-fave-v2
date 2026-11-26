@@ -92,7 +92,7 @@ export function initBooking(rootList) {
 
   /* ---------- open / close ---------- */
   const fieldFor = (name, r = root) => fields.find((f) => f.dataset.field === name && r.contains(f));
-  const popFor = (fieldName) => (fieldName === "checkin" || fieldName === "checkout" ? "dates" : fieldName);
+  const popFor = (fieldName) => fieldName;
   const setActive = (fieldName) => {
     fields.forEach((f) => {
       const on = f.dataset.field === fieldName && root.contains(f);
@@ -126,7 +126,7 @@ export function initBooking(rootList) {
     pops[name].hidden = false;
     document.body.classList.add("fx-sheet-open");
     if (name === "dest") openDest();
-    if (name === "dates") openDates(fieldName);
+    if (name === "dates") openDates();
     if (name === "guests") openGuests();
     place(pops[name], field);
   };
@@ -135,12 +135,6 @@ export function initBooking(rootList) {
     const fieldRoot = field.closest("[data-booking]");
     field.querySelector("button").addEventListener("click", () => {
       const sameForm = fieldRoot === root;
-      // while the calendar is open, a date field only switches what is being picked
-      // (it never closes the calendar or drops a half-picked range)
-      if (sameForm && open === "dates" && popFor(name) === "dates") {
-        if (!field.classList.contains("is-active")) switchDateField(name);
-        return;
-      }
       if (sameForm && open === popFor(name)) { close(); return; }
       openPop(name, fieldRoot);
     });
@@ -307,25 +301,18 @@ export function initBooking(rootList) {
     setTabStop();
     btn?.focus();
   };
-  const openDates = (fieldName) => {
+  // one "check-in / check-out" field: always open on check-in, the calendar
+  // then walks the visitor from check-in to check-out
+  const openDates = () => {
     keepDatesCurrent();
     render();
     draft = { start: state.start, end: state.end };
-    picking = fieldName === "checkout" ? "end" : "start";
-    if (picking === "end") draft.end = null;
+    picking = "start";
     hover = null;
     focusDay = state.start;
     viewMonth = new Date(state.start.getFullYear(), state.start.getMonth(), 1);
     const stop = renderCal();
     setTimeout(() => stop?.focus(), 0);
-  };
-  const switchDateField = (fieldName) => {
-    setActive(fieldName);
-    opener = fieldFor(fieldName).querySelector("button");
-    picking = fieldName === "checkout" && draft.start ? "end" : "start";
-    if (picking === "end") draft.end = null;
-    hover = null;
-    renderCal();
   };
   cal.addEventListener("click", (e) => {
     if (e.target.closest("[data-cal-prev]")) { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCal(); return; }
@@ -336,7 +323,7 @@ export function initBooking(rootList) {
     if (picking === "start" || !draft.start || date <= draft.start) {
       draft = { start: date, end: null };
       picking = "end";
-      setActive("checkout");
+      setActive("dates");
     } else {
       draft.end = date;
       picking = "start";
@@ -370,7 +357,7 @@ export function initBooking(rootList) {
   pops.dates.querySelector("[data-cal-clear]").addEventListener("click", () => {
     draft = { start: null, end: null };
     picking = "start";
-    setActive("checkin");
+    setActive("dates");
     renderCal();
   });
   calApply.addEventListener("click", () => {
