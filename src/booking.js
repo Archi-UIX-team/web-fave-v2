@@ -431,8 +431,10 @@ export function initBooking(rootList) {
     keepDatesCurrent();
     render();
     const scope = showMatchingHotels();
+    // a page with no in-page hotel list (e.g. the hotels landing) sends search to the cities index
+    if (!scope) { window.location.assign("cities.html"); return; }
     if (floatPanel?.contains(form)) toggleFloat(false, true);
-    else scope?.scrollIntoView({ behavior: "smooth", block: "start" });
+    else scope.scrollIntoView({ behavior: "smooth", block: "start" });
   }));
 
   /* ---------- "change" next to lowest rates: floating booking form ---------- */

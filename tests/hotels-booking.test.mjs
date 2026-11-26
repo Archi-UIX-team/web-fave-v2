@@ -44,7 +44,6 @@ const openHotels = async ({ now, width = 1440, height = 900 } = {}) => {
   if (now) await page.clock.install({ time: now });
   await page.goto(`${base}/hotels.html`, { waitUntil: "networkidle" });
   await page.waitForFunction(() => document.querySelector('[data-out="range"]')?.textContent.trim());
-  await page.waitForFunction(() => document.querySelectorAll(".fx-check").length > 0);
   return page;
 };
 const count = (page) => page.textContent("#all-hotels [data-f-count]");
@@ -53,140 +52,6 @@ const chooseDest = async (page, name) => {
   await page.fill("#pop-dest input", name);
   await page.keyboard.press("Enter");
 };
-
-test("book now switches back to the Indonesia chip so the chosen city shows", async () => {
-  const page = await openHotels();
-  await page.click('[data-f-chips="country"] [data-value="overseas"]');
-  await chooseDest(page, "Bali");
-  await page.click('.fx-bar button[type="submit"]');
-  assert.match(await count(page), /of 2 hotels/);
-  assert.equal(await page.getAttribute('[data-f-chips="country"] [data-value="indonesia"]', "aria-pressed"), "true");
-  await page.close();
-});
-
-test("choosing Malaysia shows no Indonesian hotels", async () => {
-  const page = await openHotels();
-  await chooseDest(page, "Malaysia");
-  await page.click('.fx-bar button[type="submit"]');
-  assert.match(await count(page), /^no hotels found/);
-  assert.equal(await page.getAttribute('[data-f-chips="country"] [data-value="overseas"]', "aria-pressed"), "true");
-  await page.close();
-});
-
-test("choose your stay has only Indonesia and Overseas chips, Indonesia on", async () => {
-  const page = await openHotels();
-  const chips = await page.$$eval('[data-f-chips] [data-value]', (b) => b.map((x) => `${x.dataset.value}:${x.getAttribute("aria-pressed")}`));
-  assert.deepEqual(chips, ["indonesia:true", "overseas:false"]);
-  await page.close();
-});
-
-test("city dropdown lists cities and filters the hotels", async () => {
-  const page = await openHotels();
-  await page.click(".fx-cdd__btn");
-  assert.equal(await page.isVisible("#city-listbox"), true);
-  assert.equal(await page.getAttribute(".fx-cdd__btn", "aria-expanded"), "true");
-  await page.click('#city-listbox [data-value="jakarta"]');
-  assert.equal(await page.isHidden("#city-listbox"), true);
-  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "Jakarta");
-  assert.match(await count(page), /of 2 hotels/);
-  // keyboard: open, move to "all cities", choose
-  await page.focus(".fx-cdd__btn");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Home");
-  await page.keyboard.press("Enter");
-  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "all cities");
-  await page.close();
-});
-
-test("change next to lowest rates opens a floating booking form that applies", async () => {
-  const page = await openHotels();
-  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
-  await page.click("[data-change-booking]");
-  assert.equal(await page.isVisible("#float-booking"), true);
-  // the floating form must be on top of the hotel cards
-  assert.equal(await page.evaluate(() => {
-    const b = document.querySelector('#float-booking [data-field="dates"] button');
-    const r = b.getBoundingClientRect();
-    return b.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2));
-  }), true, "floating form is covered");
-  await page.click('#float-booking [data-field="dates"] button');
-  assert.equal(await page.evaluate(() => document.querySelector("#float-booking").contains(document.querySelector("#pop-dates"))), true, "calendar opens inside the floating form");
-  assert.equal(await page.isHidden("#pop-dates .fx-pop__head"), true, "phone-only sheet header stays hidden on desktop");
-  const days = page.locator("#pop-dates [data-day]:not([disabled])");
-  await days.nth(14).click();
-  await page.locator("#pop-dates [data-day]:not([disabled])").nth(17).click();
-  await page.click("#pop-dates [data-cal-apply]");
-  const range = (await page.textContent('[data-out="range"]')).trim();
-  await page.click('#float-booking button[type="submit"]');
-  assert.equal(await page.isHidden("#float-booking"), true);
-  assert.equal((await page.textContent('[data-out="range"]')).trim(), range);
-  assert.equal(await page.inputValue('.fx-hero [name="checkin"]'), await page.inputValue('#float-booking [name="checkin"]'), "both forms share the dates");
-  await page.close();
-});
-
-test("on phones a picker from the floating form is a bottom sheet over everything", async () => {
-  const page = await openHotels({ width: 390, height: 844 });
-  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
-  await page.click("[data-change-booking]");
-  await page.click('#float-booking [data-field="dates"] button');
-  const sheet = await page.evaluate(() => {
-    const p = document.querySelector("#pop-dates");
-    const r = p.getBoundingClientRect();
-    const top = document.elementFromPoint(r.x + r.width / 2, r.y + 30);
-    return { bottom: Math.round(r.bottom), vh: innerHeight, onTop: p.contains(top) };
-  });
-  assert.ok(Math.abs(sheet.bottom - sheet.vh) <= 2, `sheet bottom ${sheet.bottom} vs viewport ${sheet.vh}`);
-  assert.equal(sheet.onTop, true, "sheet must not be covered (e.g. by the navbar)");
-  await page.close();
-});
-
-test("a destination card clears an old search", async () => {
-  const page = await openHotels();
-  await page.fill("[data-f-search]", "braga");
-  await page.click('[data-pick-city="jakarta"]');
-  assert.match(await count(page), /of 2 hotels/);
-  assert.equal(await page.inputValue("[data-f-search]"), "");
-  await page.close();
-});
-
-test("city listbox survives a value it does not list", async () => {
-  const page = await openHotels();
-  const errors = [];
-  page.on("pageerror", (e) => errors.push(e.message));
-  await page.evaluate(() => {
-    const s = document.querySelector('[data-f-select="city"]');
-    s.value = "atlantis";
-    s.dispatchEvent(new Event("change"));
-  });
-  assert.deepEqual(errors, []);
-  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "all cities");
-  await page.close();
-});
-
-test("space chooses a city and keeps the menu closed", async () => {
-  const page = await openHotels();
-  await page.focus(".fx-cdd__btn");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press(" ");
-  await page.waitForTimeout(100);
-  assert.equal(await page.isHidden("#city-listbox"), true);
-  assert.equal((await page.textContent("[data-cdd-label]")).trim(), "Jakarta");
-  await page.close();
-});
-
-test("escape in the filters pop-up does not also close the floating form", async () => {
-  const page = await openHotels();
-  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
-  await page.click("[data-change-booking]");
-  await page.focus("[data-open-filters]");
-  await page.keyboard.press("Enter");
-  assert.equal(await page.evaluate(() => document.querySelector("#hotel-filters").open), true);
-  await page.keyboard.press("Escape");
-  assert.equal(await page.evaluate(() => document.querySelector("#hotel-filters").open), false);
-  assert.equal(await page.isVisible("#float-booking"), true);
-  await page.close();
-});
 
 test("no stuck booking strip under the navbar", async () => {
   const page = await openHotels();
@@ -208,9 +73,6 @@ test("popular destinations page through 4 cards at a time", async () => {
   assert.equal((await counter.textContent()).trim(), "4 / 8");
   await page.evaluate(() => { const t = document.querySelector(".fx-destrow"); t.style.scrollBehavior = "auto"; t.scrollLeft = t.scrollWidth; });
   await page.waitForFunction(() => document.querySelector('[aria-labelledby="dest-title"] [data-car-count]').textContent.trim() === "8 / 8");
-  // a destination card filters the hotel list to that city
-  await page.click('[data-pick-city="lombok"]');
-  assert.match(await count(page), /of 1 hotel$/);
   await page.close();
 });
 
@@ -436,39 +298,15 @@ test("phone: city page stacks the list above the map", async () => {
 });
 
 /* ---------- room feature page (room.html) + revised room-feature cards ---------- */
-test("hotels page room-feature cards: 4 cards, kitchenette links to room.html", async () => {
+test("hotels page room-feature cards: 4 cards, all linking to room.html", async () => {
   const page = await openHotels();
   const cards = await page.$$eval('[aria-labelledby="rooms-title"] .fx-tile', (t) => t.map((x) => ({
     label: x.querySelector(".fx-label__t").textContent.trim(),
     href: x.getAttribute("href"),
-    pick: x.dataset.pickFacility || null,
   })));
   assert.deepEqual(cards.map((c) => c.label), ["balcony / terrace", "bathtub", "kitchenette", "private pool"]);
-  const kit = cards.find((c) => c.label === "kitchenette");
-  assert.equal(kit.href, "room.html");
-  assert.equal(kit.pick, null);
-  // the other three filter the all-hotels list in place
-  for (const c of cards.filter((c) => c.label !== "kitchenette")) assert.equal(c.href, "#all-hotels");
-  // clicking bathtub applies that facility and sets the badge
-  await page.click('[data-pick-facility="bathtub"]');
-  await page.waitForTimeout(150);
-  assert.equal((await page.textContent("[data-filter-badge]")).trim(), "1");
-  const shown = await page.$$eval("#all-hotels .fx-hcard:not([hidden])", (c) => c.map((x) => x.dataset.facilities.includes("bathtub")));
-  assert.ok(shown.length > 0 && shown.every(Boolean), JSON.stringify(shown.length));
-  await page.close();
-});
-
-test("each room-feature card count matches the hotels it filters to", async () => {
-  const page = await openHotels();
-  const cards = await page.$$eval('[aria-labelledby="rooms-title"] .fx-tile', (tiles) => tiles.map((x) => ({
-    facility: x.dataset.pickFacility || "kitchenette",
-    count: Number(x.querySelector(".fx-label__s").textContent.match(/\d+/)[0]),
-  })));
-  const have = await page.$$eval("#all-hotels .fx-hcard", (hc) => hc.map((x) => x.dataset.facilities.split(" ")));
-  for (const c of cards) {
-    const actual = have.filter((f) => f.includes(c.facility)).length;
-    assert.equal(c.count, actual, `${c.facility}: card says ${c.count}, data has ${actual}`);
-  }
+  // the grid was removed from this page, so every feature card now goes to room.html
+  for (const c of cards) assert.equal(c.href, "room.html", c.label);
   await page.close();
 });
 
@@ -602,11 +440,6 @@ test("phone: hotels page follows the aston mobile layout", async () => {
   assert.ok(at("Bali")[2] === at("Jakarta")[2] && at("Jakarta")[1] > at("Bali")[1], "Bali and Jakarta share the top row");
   assert.ok(at("Yogyakarta")[2] > at("Bali")[2] && at("Yogyakarta")[1] === at("Bali")[1], "Yogyakarta under Bali");
   assert.equal((await page.textContent('[aria-labelledby="dest-title"] [data-car-count]')).trim(), "4 / 8");
-  // filters: Indonesia | overseas, all filters | all cities as half-width pairs
-  const [indo, over, allf, cities] = [await box('[data-value="indonesia"]'), await box('[data-value="overseas"]'), await box("[data-open-filters]"), await box(".fx-cdd__btn")];
-  assert.equal(Math.round(indo.y), Math.round(over.y));
-  assert.equal(Math.round(allf.y), Math.round(cities.y));
-  assert.ok(Math.abs(indo.width - allf.width) < 2);
   // upcoming hotels: first region open, others folded; tapping opens one
   const groups = page.locator("[data-ugroup]");
   assert.equal(await groups.nth(0).locator(".fx-ugroup__l").isVisible(), true);
@@ -750,7 +583,7 @@ test("picking check-in keeps the calendar open to choose check-out", async () =>
 test("tabbing out of a picker closes it", async () => {
   const page = await openHotels();
   await page.click('[data-field="guests"] button');
-  await page.focus('[data-f-search]');
+  await page.focus('.fx-crumbs a');
   await page.waitForTimeout(50);
   assert.equal(await page.isHidden("#pop-guests"), true);
   await page.close();
@@ -776,7 +609,7 @@ test("calendar has a single tab stop", async () => {
 });
 
 test("dragging out of the filters dialog does not close it", async () => {
-  const page = await openHotels();
+  const page = await openPage("room");
   await page.click("[data-open-filters]");
   await page.evaluate(() => {
     const d = document.querySelector("#hotel-filters");
@@ -788,7 +621,7 @@ test("dragging out of the filters dialog does not close it", async () => {
 });
 
 test("min price slider cannot cross or hide under max", async () => {
-  const page = await openHotels();
+  const page = await openPage("room");
   await page.click("[data-open-filters]");
   const state = await page.evaluate(() => {
     const min = document.querySelector("[data-price-min]");
@@ -804,22 +637,11 @@ test("min price slider cannot cross or hide under max", async () => {
 });
 
 test("currency labels use the code everywhere", async () => {
-  const page = await openHotels();
+  const page = await openPage("room");
   await page.click("[data-open-filters]");
   await page.selectOption("[data-currency]", "USD");
   assert.match(await page.textContent("[data-price-max-out]"), /^USD /);
   await page.click("[data-filters-apply]");
   assert.match(await page.textContent(".fx-price__amt"), /^USD /);
   await page.close();
-});
-
-test("every facility matches at least one sample hotel", () => {
-  const html = readFileSync(new URL("../hotels.html", import.meta.url), "utf8");
-  const js = readFileSync(new URL("../src/hotel-filters.js", import.meta.url), "utf8");
-  const names = [...js.matchAll(/"([^"]+)"/g)].map((m) => m[1]).slice(0, 200);
-  const list = js.slice(js.indexOf("FACILITIES = ["), js.indexOf("];", js.indexOf("FACILITIES = [")));
-  const facilities = [...list.matchAll(/"([^"]+)"/g)].map((m) => m[1].toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
-  const used = new Set([...html.matchAll(/data-facilities="([^"]+)"/g)].flatMap((m) => m[1].split(" ")));
-  assert.ok(names.length && facilities.length === 46);
-  assert.deepEqual(facilities.filter((f) => !used.has(f)), []);
 });
