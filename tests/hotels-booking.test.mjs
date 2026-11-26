@@ -114,13 +114,10 @@ test("city view page: city view filter preset, numbered pages, feature list", as
   await page.click('#sort-listbox [data-value="price"]');
   const prices = await page.$$eval("#all-hotels .fx-hcard:not([hidden]):not(.is-capped)", (c) => c.map((x) => Number(x.dataset.price)));
   assert.deepEqual(prices, [...prices].sort((a, b) => a - b));
-  // feature list: city view is on; picking garden view shows only garden-view hotels
-  assert.equal(await page.getAttribute('[data-feature="city-view"]', "aria-pressed"), "true");
-  const visibleCards = () => page.$$eval("[data-feature-card]", (c) => c.filter((x) => x.offsetParent !== null).map((x) => x.dataset.facilities));
-  assert.equal((await visibleCards()).length, 6, "city view shows at most 6 cards");
-  await page.click('[data-feature="garden-view"]');
-  const shown = await visibleCards();
-  assert.ok(shown.length > 0 && shown.length <= 6 && shown.every((f) => f.includes("garden-view")), JSON.stringify(shown.length));
+  // view & room feature index: two columns, the current view is marked "you are here"
+  assert.equal(await page.locator(".fx-vf__col").count(), 2);
+  assert.equal(await page.locator(".fx-vf__row").count(), 9);
+  assert.match((await page.textContent(".fx-vf__c em")).trim(), /you are here/);
   assert.equal((await page.textContent(".desktop-nav [aria-current]")).trim(), "hotel");
   assert.deepEqual(page.errors, []);
   await page.close();
@@ -504,10 +501,9 @@ test("phone: destinations snap and count by whole pages", async () => {
 
 test("phone: view and cities pages follow the aston mobile layout", async () => {
   const view = await openPage("view", { width: 390, height: 844 });
-  const fi = await view.$$eval(".fx-fi", (b) => b.slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().x)));
-  assert.equal(fi[0], fi[1], "feature list is vertical");
-  const fg = await view.$$eval("[data-feature-card]", (c) => c.filter((x) => x.offsetParent).slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().y)));
-  assert.ok(fg[1] > fg[0], "one hotel per row");
+  // view & room feature index: the two columns stack, rows run vertically
+  const vf = await view.$$eval(".fx-vf__row", (b) => b.slice(0, 2).map((x) => Math.round(x.getBoundingClientRect().x)));
+  assert.equal(vf[0], vf[1], "feature rows share the left edge (single column)");
   const rel = await view.$$eval(".fx-rel-card", (c) => c.map((x) => Math.round(x.getBoundingClientRect().y)));
   assert.equal(rel[0], rel[1], "related offers side by side");
   assert.equal(await view.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
