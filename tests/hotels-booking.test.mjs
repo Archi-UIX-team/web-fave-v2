@@ -427,6 +427,85 @@ test("phone: city page stacks the list above the map", async () => {
   await page.close();
 });
 
+/* ---------- room feature page (room.html) + revised room-feature cards ---------- */
+test("hotels page room-feature cards: 4 cards, kitchenette links to room.html", async () => {
+  const page = await openHotels();
+  const cards = await page.$$eval('[aria-labelledby="rooms-title"] .fx-tile', (t) => t.map((x) => ({
+    label: x.querySelector(".fx-label__t").textContent.trim(),
+    href: x.getAttribute("href"),
+    pick: x.dataset.pickFacility || null,
+  })));
+  assert.deepEqual(cards.map((c) => c.label), ["balcony / terrace", "bathtub", "kitchenette", "private pool"]);
+  const kit = cards.find((c) => c.label === "kitchenette");
+  assert.equal(kit.href, "room.html");
+  assert.equal(kit.pick, null);
+  // the other three filter the all-hotels list in place
+  for (const c of cards.filter((c) => c.label !== "kitchenette")) assert.equal(c.href, "#all-hotels");
+  // clicking bathtub applies that facility and sets the badge
+  await page.click('[data-pick-facility="bathtub"]');
+  await page.waitForTimeout(150);
+  assert.equal((await page.textContent("[data-filter-badge]")).trim(), "1");
+  const shown = await page.$$eval("#all-hotels .fx-hcard:not([hidden])", (c) => c.map((x) => x.dataset.facilities.includes("bathtub")));
+  assert.ok(shown.length > 0 && shown.every(Boolean), JSON.stringify(shown.length));
+  await page.close();
+});
+
+test("room.html lists kitchenette hotels with show-more and no feature index", async () => {
+  const page = await openPage("room");
+  assert.match(await page.title(), /^hotels with kitchenettes/);
+  await page.waitForFunction(() => document.querySelector("[data-filter-badge]") && !document.querySelector("[data-filter-badge]").hidden);
+  assert.equal((await page.textContent("[data-filter-badge]")).trim(), "1");
+  assert.equal((await page.textContent("#all-hotels [data-f-count]")).trim(), "displaying 7 of 7 available hotels");
+  const fac = await page.$$eval("#all-hotels .fx-hcard:not([hidden]):not(.is-capped)", (c) => c.map((x) => x.dataset.facilities.includes("kitchenette")));
+  assert.ok(fac.length === 7 && fac.every(Boolean), JSON.stringify(fac.length));
+  assert.equal(await page.locator("[data-f-more]").count(), 1, "uses show-more, not a pager");
+  assert.equal(await page.locator("[data-f-pager]").count(), 0);
+  assert.equal(await page.locator("[data-feature-split]").count(), 0, "no room-feature index section");
+  // the change booking form still works here
+  await page.locator("[data-change-booking]").scrollIntoViewIfNeeded();
+  await page.click("[data-change-booking]");
+  assert.equal(await page.isVisible("#float-booking"), true);
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+/* ---------- upcoming page (upcoming.html) ---------- */
+test("upcoming.html is a coming-soon teaser linked from the upcoming list", async () => {
+  const hotels = await openHotels();
+  const kl = await hotels.evaluate(() => [...document.querySelectorAll("[data-ugroup] a")].find((a) => /kuala lumpur/i.test(a.textContent))?.getAttribute("href"));
+  assert.equal(kl, "upcoming.html");
+  await hotels.close();
+
+  const page = await openPage("upcoming");
+  assert.match(await page.title(), /coming soon to kuala lumpur/);
+  assert.match((await page.textContent(".fx-up-hero h1")).trim(), /^a new fave is coming to kuala lumpur$/i);
+  assert.equal((await page.textContent(".fx-up-lock__city")).trim(), "Kuala Lumpur");
+  assert.equal(await page.getAttribute('.fx-up-hero a.fx-btn', "href"), "hotels.html");
+  assert.ok((await page.locator(".fx-up-card").count()) >= 2, "discover strip has cards");
+  // the hero photo has empty alt (decorative) so it is not announced
+  assert.equal(await page.getAttribute(".fx-up-hero__bg", "alt"), "");
+  assert.deepEqual(page.errors, []);
+  await page.close();
+});
+
+test("the five card/button links from the hotels page resolve", async () => {
+  const page = await openHotels();
+  const got = await page.evaluate(() => ({
+    city: document.querySelector('[aria-labelledby="views-title"] .fx-tile').getAttribute("href"),
+    kitchenette: [...document.querySelectorAll('[aria-labelledby="rooms-title"] .fx-tile')].find((a) => a.textContent.includes("kitchenette")).getAttribute("href"),
+    seeAll: document.querySelector('[aria-labelledby="dest-title"] a.fx-btn').getAttribute("href"),
+    bali: document.querySelector('[aria-labelledby="dest-title"] .fx-tile').getAttribute("href"),
+    upcoming: [...document.querySelectorAll('[data-ugroup] a')].find((a) => /kuala lumpur/i.test(a.textContent)).getAttribute("href"),
+  }));
+  assert.deepEqual(got, { city: "view.html", kitchenette: "room.html", seeAll: "cities.html", bali: "city.html", upcoming: "upcoming.html" });
+  // each target is a real built page (200)
+  for (const name of ["view", "room", "cities", "city", "upcoming"]) {
+    const r = await page.request.get(`${base}/${name}.html`);
+    assert.equal(r.status(), 200, name);
+  }
+  await page.close();
+});
+
 /* ---------- look: bar colour, borders, patterns ---------- */
 test("booking bars use violet-500 and region borders use violet-400", async () => {
   for (const name of ["hotels", "view", "city"]) {

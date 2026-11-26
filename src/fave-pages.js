@@ -4,6 +4,7 @@ import "./fave-pages.css";
 import "./fave-hotels.css";
 import "./fave-view-cities.css";
 import "./fave-city.css";
+import "./fave-upcoming.css";
 import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");

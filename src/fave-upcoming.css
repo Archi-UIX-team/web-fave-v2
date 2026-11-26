@@ -1,0 +1,44 @@
+/*
+  "A new fave is coming to ..." teaser page (upcoming.html).
+  Layout follows Aston upcoming.html; Fave tokens only.
+*/
+
+/* ---------- full-bleed hero ---------- */
+.fx-up-hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  min-height:min(86vh,760px);display:grid;place-items:center;text-align:center;
+  padding:var(--scale-120,150px) var(--gx) var(--scale-72);
+}
+.fx-up-hero__bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+/* a flat violet tint (not a gradient) so the heading stays readable over any photo */
+.fx-up-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:rgb(50 11 30 / 52%)}
+.fx-up-hero__inner{display:flex;flex-direction:column;align-items:center;gap:var(--scale-20);max-width:760px}
+
+/* brand + city lockup */
+.fx-up-lock{display:flex;flex-direction:column;align-items:center;gap:8px}
+.fx-up-lock__logo{width:150px;height:auto}
+.fx-up-lock__city{font:600 var(--scale-24)/1 var(--font-headline);letter-spacing:var(--ls-wide)}
+.fx-up-lock__type{font:700 var(--scale-12)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
+
+.fx-up-hero .fx-h1{font-size:var(--scale-64)}
+.fx-up-hero .fx-lead{max-width:620px;color:var(--text-inverse)}
+.fx-up-hero .fx-btn{margin-top:8px}
+
+/* ---------- discover strip ---------- */
+.fx-up-discover__head{align-items:center;text-align:center}
+.fx-up-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--scale-16)}
+.fx-up-card{display:flex;flex-direction:column;border-radius:var(--radius-card);background:var(--surface-card);overflow:hidden}
+.fx-up-card .fx-media{aspect-ratio:3/2}
+.fx-up-card .fx-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.fx-up-card:hover .fx-media img{transform:scale(1.05)}
+.fx-up-card__body{padding:var(--scale-16)}
+.fx-up-card__name{font:600 var(--scale-16)/1.3 var(--font-headline);margin-top:4px}
+.fx-up-discover__cta{display:flex;justify-content:center;margin-top:8px}
+
+@media (max-width:1100px){.fx-up-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.fx-up-strip > :nth-child(n+4){display:none}}
+@media (max-width:600px){
+  .fx-up-hero .fx-h1{font-size:var(--scale-40)}
+  .fx-up-hero{min-height:70vh;padding-top:var(--scale-96)}
+  .fx-up-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fx-up-strip > :nth-child(n+3){display:none}
+}

@@ -221,6 +221,16 @@ export function initHotelFilters(scope) {
     dialog.close();
   });
 
+  // room-feature cards on the hotels page apply one facility filter in place
+  document.querySelectorAll("[data-pick-facility]").forEach((card) => card.addEventListener("click", () => {
+    const search = scope.querySelector("[data-f-search]");
+    if (search?.value) { search.value = ""; search.dispatchEvent(new Event("input")); }
+    applied = { ...applied, facilities: [card.dataset.pickFacility] };
+    paintBadge();
+    paintCards(applied.currency);
+    scope.dispatchEvent(new Event("fx:refresh"));
+  }));
+
   // filters the page starts with, e.g. the city view page: data-f-preset-facilities="city-view"
   const preset = (scope.dataset.fPresetFacilities || "").split(" ").filter(Boolean);
   if (preset.length) {
