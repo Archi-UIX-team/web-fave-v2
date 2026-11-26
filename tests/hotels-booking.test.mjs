@@ -21,8 +21,16 @@ before(async () => {
   await build({ logLevel: "error", build: { outDir, emptyOutDir: true, minify: false } });
   server = await preview({ logLevel: "error", build: { outDir }, preview: { host: "127.0.0.1", port: 0 } });
   base = server.resolvedUrls.local[0].replace(/\/$/, "");
-  const channel = process.env.PW_CHANNEL || "msedge";
-  browser = await chromium.launch({ channel });
+  // Default to the branded Edge/Chrome channel, but allow pointing at a
+  // specific Chromium binary (e.g. the one pre-installed in CI/cloud
+  // containers) via PW_EXECUTABLE_PATH, which takes precedence over PW_CHANNEL.
+  const executablePath = process.env.PW_EXECUTABLE_PATH;
+  if (executablePath) {
+    browser = await chromium.launch({ executablePath, args: ["--no-sandbox"] });
+  } else {
+    const channel = process.env.PW_CHANNEL || "msedge";
+    browser = await chromium.launch({ channel });
+  }
 });
 after(async () => {
   await browser?.close();
