@@ -87,7 +87,7 @@ h1,h2,h3,p,figure{margin:0}
 .fx-pattern-top{position:absolute;z-index:-1;top:0;right:0;width:min(900px,62vw);height:460px;pointer-events:none}
 .fx-disc{position:absolute;border-radius:50%;object-fit:cover;animation:fxSpin 60s linear infinite}
 .fx-pattern-top .fx-disc--a{width:250px;height:250px;top:-60px;right:120px}
-.fx-pattern-top .fx-disc--b{width:150px;height:150px;top:110px;right:-30px;animation-direction:reverse}
+.fx-pattern-top .fx-disc--b{display:none;width:150px;height:150px;top:110px;right:-30px;animation-direction:reverse}
 .fx-pattern-top .fx-disc--c{width:120px;height:120px;top:40px;right:400px;animation-duration:80s}
 .fx-pattern-top .fx-disc--d{width:200px;height:200px;top:230px;right:230px;animation-direction:reverse;animation-duration:70s}
 .fx-pattern-top .fx-disc--e{width:90px;height:90px;top:300px;right:520px}
@@ -335,6 +335,7 @@ h1,h2,h3,p,figure{margin:0}
 /* two discs pinned to the left/right edges at the vertical middle of the viewport */
 .fx-side-pattern{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;transition:opacity .45s var(--ease)}
 .fx-side-pattern.is-hidden{opacity:0}
+.fx-side-pattern .fx-disc--l{width:150px;height:150px;left:-72px;top:44%}
 .fx-side-pattern .fx-disc--r{width:172px;height:172px;right:-82px;top:54%}
 @media (max-width:760px){.fx-side-pattern{display:none}}
 @media (max-width:760px){

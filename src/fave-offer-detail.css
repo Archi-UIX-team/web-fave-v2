@@ -60,7 +60,7 @@
 }
 .fx-od-ty i { font-style: normal; margin: 0 4px; }
 .fx-od-b h1 {
-  font: 700 var(--scale-24) / 32px var(--font-headline);
+  font: 700 var(--scale-28) / 36px var(--font-headline);
   letter-spacing: var(--ls-tight);
   color: var(--text-inverse);
 }
@@ -110,7 +110,7 @@
   position: relative;
   cursor: pointer;
   padding: 8px 21px;
-  font: 400 var(--scale-14) / 20px var(--font-body);
+  font: 400 var(--scale-16) / 22px var(--font-body);
   color: var(--text-muted);
   transition: color .3s;
 }
@@ -139,9 +139,9 @@
 }
 .fx-od-f:first-child { padding-top: 4px; }
 .fx-od-f span { font: 400 11px / 16px var(--font-body); letter-spacing: var(--ls-wide); color: var(--text-muted); }
-.fx-od-f b { font: 600 var(--scale-14) / 20px var(--font-body); color: var(--text-inverse); }
-.fx-od-pn p { padding: 12px 0 4px; font: 400 var(--scale-14) / 22px var(--font-body); color: var(--text-muted); }
-.fx-od-pn ol, .fx-od-pn ul { margin: 0; padding: 12px 0 0 18px; display: flex; flex-direction: column; gap: 10px; font: 400 13px / 20px var(--font-body); color: var(--text-muted); }
+.fx-od-f b { font: 600 var(--scale-16) / 22px var(--font-body); color: var(--text-inverse); }
+.fx-od-pn p { padding: 12px 0 4px; font: 400 var(--scale-18) / 26px var(--font-body); color: var(--text-muted); }
+.fx-od-pn ol, .fx-od-pn ul { margin: 0; padding: 12px 0 0 18px; display: flex; flex-direction: column; gap: 10px; font: 400 16px / 22px var(--font-body); color: var(--text-muted); }
 .fx-od-ov.is-clamped { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .fx-od-rm { all: unset; cursor: pointer; margin-top: 10px; font: 700 var(--scale-12) / 18px var(--font-body); letter-spacing: var(--ls-wide); color: var(--text-secondary); }
 .fx-od-rm:hover { color: var(--text-inverse); }
@@ -159,8 +159,10 @@
 /* ---- participating hotels (right) ---- */
 .fx-od-list { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--scale-20); }
 .fx-od-hd { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--scale-24); }
-.fx-od-hd h2 { font: 700 var(--scale-24) / 32px var(--font-headline); letter-spacing: var(--ls-tight); color: var(--text-inverse); }
-.fx-od-hd p { margin-top: 4px; font: 400 var(--scale-12) / 18px var(--font-body); color: var(--text-muted); }
+.fx-od-hd h2 { font: 700 var(--scale-28) / 36px var(--font-headline); letter-spacing: var(--ls-tight); color: var(--text-inverse); }
+.fx-od-hd p { margin-top: 4px; font: 400 var(--scale-14) / 20px var(--font-body); color: var(--text-muted); }
+/* solid background so the search field stays readable over the top pattern */
+.fx-od-hd .fx-search input { background: var(--surface-card); }
 
 .fx-od-g { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .fx-od-t {
@@ -177,10 +179,10 @@
 .fx-od-t .fx-media { aspect-ratio: 3 / 2; border-radius: 0; }
 .fx-od-tb { display: flex; flex-direction: column; gap: 12px; padding: 0 12px; flex: 1; }
 .fx-od-tn span { display: block; font: 400 11px / 16px var(--font-body); letter-spacing: var(--ls-wide); color: var(--text-muted); }
-.fx-od-tn p { margin-top: 4px; font: 400 var(--scale-14) / 20px var(--font-body); color: var(--text-inverse); transition: color .4s; }
+.fx-od-tn p { margin-top: 4px; font: 400 var(--scale-16) / 22px var(--font-body); color: var(--text-inverse); transition: color .4s; }
 .fx-od-pr del { display: block; font: 400 11px / 16px var(--font-body); color: var(--text-muted); }
 .fx-od-pr div { display: flex; align-items: baseline; gap: 6px; }
-.fx-od-pr b { font: 700 var(--scale-14) / 20px var(--font-body); color: var(--text-inverse); }
+.fx-od-pr b { font: 700 var(--scale-16) / 22px var(--font-body); color: var(--text-inverse); }
 .fx-od-pr span { font: 400 11px var(--font-body); color: var(--text-muted); }
 .fx-od-t:hover { transform: translateY(-6px); border-color: var(--border-subtle); box-shadow: 0 18px 40px rgb(50 11 30 / 35%); }
 .fx-od-t:hover .fx-od-tn p { color: var(--text-secondary); }
