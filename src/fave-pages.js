@@ -7,6 +7,7 @@ import "./fave-city.css";
 import "./fave-upcoming.css";
 import "./fave-offer-detail.css";
 import "./fave-article.css";
+import "./fave-press.css";
 import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");
