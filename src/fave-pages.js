@@ -6,6 +6,7 @@ import "./fave-view-cities.css";
 import "./fave-city.css";
 import "./fave-upcoming.css";
 import "./fave-offer-detail.css";
+import "./fave-article.css";
 import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");
@@ -365,6 +366,21 @@ document.querySelectorAll("[data-readmore]").forEach((btn) => {
     btn.textContent = clamped ? "read more" : "read less";
   });
 });
+
+/* ---------- article table of contents: highlight the section in view ---------- */
+const toc = document.querySelector("[data-toc]");
+if (toc && "IntersectionObserver" in window) {
+  const links = [...toc.querySelectorAll("a")];
+  const byId = new Map(links.map((a) => [a.getAttribute("href").slice(1), a]));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((a) => a.classList.remove("is-on"));
+      byId.get(e.target.id)?.classList.add("is-on");
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  links.forEach((a) => { const sec = document.getElementById(a.getAttribute("href").slice(1)); if (sec) spy.observe(sec); });
+}
 
 /* ---------- footer ---------- */
 const pillars = document.querySelector(".fx-foot__pillars");
