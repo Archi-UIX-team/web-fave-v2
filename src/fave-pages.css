@@ -327,12 +327,12 @@ h1,h2,h3,p,figure{margin:0}
 /* the two big corner discs (~2x the previous size) */
 .fx-foot__pattern .fx-disc--a{width:340px;height:340px;left:-80px;bottom:-130px}
 .fx-foot__pattern .fx-disc--b{width:340px;height:340px;right:-80px;bottom:-130px;animation-direction:reverse}
-/* top small discs, pulled toward the middle at asymmetric positions */
-.fx-foot__pattern .fx-disc--c{width:120px;height:120px;left:34%;top:16px;animation-duration:80s}
-.fx-foot__pattern .fx-disc--d{width:144px;height:144px;left:55%;top:78px;animation-direction:reverse;animation-duration:75s}
-/* small discs down the left and right edges */
-.fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:36px;top:46%}
-.fx-foot__pattern .fx-disc--f{width:66px;height:66px;right:58px;top:37%;animation-direction:reverse}
+/* the two larger discs peek in from the left/right edges at mid-height, asymmetric */
+.fx-foot__pattern .fx-disc--c{width:120px;height:120px;left:-48px;top:40%;animation-duration:80s}
+.fx-foot__pattern .fx-disc--d{width:144px;height:144px;right:-54px;top:55%;animation-direction:reverse;animation-duration:75s}
+/* small discs further up/down the edges so the sides don't cluster */
+.fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:28px;top:15%}
+.fx-foot__pattern .fx-disc--f{width:66px;height:66px;right:46px;top:72%;animation-direction:reverse}
 /* tiny discs set BESIDE the big corner discs, not stacked on them */
 .fx-foot__pattern .fx-disc--g{width:84px;height:84px;left:288px;bottom:28px;animation-duration:85s}
 .fx-foot__pattern .fx-disc--h{width:68px;height:68px;right:306px;bottom:66px;animation-direction:reverse}
