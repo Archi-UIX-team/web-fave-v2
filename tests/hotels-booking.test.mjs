@@ -381,7 +381,7 @@ test("booking bars use violet-500 and region borders use violet-400", async () =
   await page.close();
 });
 
-test("patterns: 3 discs per page, 8 in the footer, no gradient over them", async () => {
+test("patterns: 3 discs per page, 6 in the footer, no gradient over them", async () => {
   for (const name of ["hotels", "view", "cities", "city", "offers", "news"]) {
     const page = await openPage(name);
     const info = await page.evaluate(() => ({
@@ -391,7 +391,7 @@ test("patterns: 3 discs per page, 8 in the footer, no gradient over them", async
       footOverlay: getComputedStyle(document.querySelector(".fx-foot__pattern"), "::after").content,
     }));
     assert.equal(info.top, 3, `${name} top discs`);
-    assert.equal(info.foot, 8, `${name} footer discs`);
+    assert.equal(info.foot, 6, `${name} footer discs`);
     assert.equal(info.topOverlay, "none", `${name} pattern overlay`);
     assert.equal(info.footOverlay, "none", `${name} footer overlay`);
     await page.close();
@@ -405,7 +405,7 @@ test("footer corner discs sit in the bottom corners", async () => {
     const box = (sel) => { const x = document.querySelector(sel).getBoundingClientRect(); return { left: x.left < wrap.left + wrap.width / 2, bottomPast: x.bottom > wrap.bottom }; };
     return { count: document.querySelectorAll(".fx-foot__pattern .fx-disc").length, a: box(".fx-foot__pattern .fx-disc--a"), b: box(".fx-foot__pattern .fx-disc--b") };
   });
-  assert.equal(r.count, 8);
+  assert.equal(r.count, 6);
   assert.equal(r.a.left, true, "big disc a on the left");
   assert.equal(r.b.left, false, "big disc b on the right");
   assert.ok(r.a.bottomPast && r.b.bottomPast, "both big corner discs reach past the bottom edge");
