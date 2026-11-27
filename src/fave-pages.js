@@ -386,3 +386,14 @@ document.querySelector("[data-back-top]")?.addEventListener("click", (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// hide the fixed side discs as the footer (and its pattern) approaches, so the
+// two pattern sets never stack
+const sidePattern = document.querySelector(".fx-side-pattern");
+const footEl = document.querySelector(".fx-foot");
+if (sidePattern && footEl && "IntersectionObserver" in window) {
+  new IntersectionObserver(
+    (entries) => sidePattern.classList.toggle("is-hidden", entries.some((e) => e.isIntersecting)),
+    { rootMargin: "0px 0px 360px 0px" },
+  ).observe(footEl);
+}
