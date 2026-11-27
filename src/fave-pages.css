@@ -327,14 +327,15 @@ h1,h2,h3,p,figure{margin:0}
 /* the two big corner discs (~2x the previous size) */
 .fx-foot__pattern .fx-disc--a{width:340px;height:340px;left:-80px;bottom:-130px}
 .fx-foot__pattern .fx-disc--b{width:340px;height:340px;right:-80px;bottom:-130px;animation-direction:reverse}
-/* upper corners */
-.fx-foot__pattern .fx-disc--c{width:140px;height:140px;left:-55px;top:24px;animation-duration:80s}
-.fx-foot__pattern .fx-disc--d{width:160px;height:160px;right:-45px;top:40px;animation-direction:reverse;animation-duration:75s}
+/* top small discs, pulled toward the middle at asymmetric positions */
+.fx-foot__pattern .fx-disc--c{width:120px;height:120px;left:34%;top:16px;animation-duration:80s}
+.fx-foot__pattern .fx-disc--d{width:144px;height:144px;left:55%;top:78px;animation-direction:reverse;animation-duration:75s}
 /* small discs down the left and right edges */
-.fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:36px;top:45%}
-.fx-foot__pattern .fx-disc--f{width:66px;height:66px;right:58px;top:38%;animation-direction:reverse}
-.fx-foot__pattern .fx-disc--g{width:86px;height:86px;left:-26px;bottom:168px;animation-duration:85s}
-.fx-foot__pattern .fx-disc--h{width:72px;height:72px;right:-18px;bottom:188px;animation-direction:reverse}
+.fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:36px;top:46%}
+.fx-foot__pattern .fx-disc--f{width:66px;height:66px;right:58px;top:37%;animation-direction:reverse}
+/* tiny discs set BESIDE the big corner discs, not stacked on them */
+.fx-foot__pattern .fx-disc--g{width:84px;height:84px;left:288px;bottom:28px;animation-duration:85s}
+.fx-foot__pattern .fx-disc--h{width:68px;height:68px;right:306px;bottom:66px;animation-direction:reverse}
 @media (max-width:760px){
   .fx-foot__pattern{height:360px}
   .fx-foot__pattern .fx-disc--a,.fx-foot__pattern .fx-disc--b{width:220px;height:220px;bottom:-90px}
