@@ -87,7 +87,7 @@ h1,h2,h3,p,figure{margin:0}
 .fx-pattern-top{position:absolute;z-index:-1;top:0;right:0;width:min(900px,62vw);height:460px;pointer-events:none}
 .fx-disc{position:absolute;border-radius:50%;object-fit:cover;animation:fxSpin 60s linear infinite}
 .fx-pattern-top .fx-disc--a{width:250px;height:250px;top:-60px;right:120px}
-.fx-pattern-top .fx-disc--b{width:150px;height:150px;top:110px;right:-30px;animation-direction:reverse}
+.fx-pattern-top .fx-disc--b{display:none;width:150px;height:150px;top:110px;right:-30px;animation-direction:reverse}
 .fx-pattern-top .fx-disc--c{width:120px;height:120px;top:40px;right:400px;animation-duration:80s}
 .fx-pattern-top .fx-disc--d{width:200px;height:200px;top:230px;right:230px;animation-direction:reverse;animation-duration:70s}
 .fx-pattern-top .fx-disc--e{width:90px;height:90px;top:300px;right:520px}
@@ -101,14 +101,14 @@ h1,h2,h3,p,figure{margin:0}
 .fx-crumbs [aria-current]{color:var(--text-inverse)}
 
 /* booking bar */
-.fx-bar{display:flex;align-items:stretch;margin-top:var(--scale-12);border:1px solid var(--action-secondary);border-radius:var(--radius-container);background:var(--violet-500);overflow:hidden}
+.fx-bar{display:flex;align-items:stretch;margin-top:var(--scale-12);border:1px solid var(--action-secondary);border-radius:var(--radius-sm);background:var(--violet-500);overflow:hidden}
 .fx-fld{flex:1;min-width:1px;padding:var(--scale-18) var(--scale-28);display:flex;flex-direction:column;gap:6px;white-space:nowrap}
 .fx-fld + .fx-fld{border-left:1px solid var(--violet-400)}
 .fx-fld__l{font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary)}
 .fx-fld__v{font:600 var(--scale-18)/1.2 var(--font-body);color:var(--text-inverse)}
 .fx-fld__v select,.fx-fld__v input{width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;outline:none;appearance:none;cursor:pointer}
 .fx-fld__v option{color:var(--text-default)}
-.fx-bar .fx-btn{min-height:auto;margin:8px;padding:0 var(--scale-48);border-radius:var(--radius-round)}
+.fx-bar .fx-btn{min-height:auto;margin:0;padding:0 var(--scale-48);border-radius:0;align-self:stretch}
 
 /* ---------- sections ---------- */
 .fx-sec{position:relative;padding:var(--scale-72) var(--gx) 0;display:flex;flex-direction:column;gap:var(--scale-32)}
@@ -133,6 +133,21 @@ h1,h2,h3,p,figure{margin:0}
 .fx-rgrid .fx-media{aspect-ratio:3/2}
 .fx-crow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--scale-16)}
 .fx-crow .fx-media{aspect-ratio:230/280}
+
+/* view & room feature index: two columns of thumbnail + name + count rows */
+.fx-vf{display:grid;grid-template-columns:1fr 1fr;gap:var(--scale-40) var(--scale-64)}
+.fx-vf__col{display:flex;flex-direction:column}
+.fx-vf__head{font:700 var(--scale-12)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-secondary);padding-bottom:var(--scale-16);border-bottom:1px solid var(--border-subtle)}
+.fx-vf__row{display:flex;align-items:center;gap:var(--scale-20);padding:var(--scale-16) 0;border-bottom:1px solid var(--overlay-light);transition:gap .4s var(--ease)}
+.fx-vf__row:hover{gap:var(--scale-24)}
+.fx-vf__ph{flex:none;width:76px;height:56px;border-radius:var(--radius-xs);overflow:hidden;background:var(--surface-card)}
+.fx-vf__ph img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.fx-vf__row:hover .fx-vf__ph img{transform:scale(1.07)}
+.fx-vf__n{flex:1;min-width:0;font:400 var(--scale-20)/1.3 var(--font-headline);color:var(--text-inverse);transition:color .35s}
+.fx-vf__row:hover .fx-vf__n{color:var(--text-secondary)}
+.fx-vf__c{flex:none;font:400 var(--scale-14)/1 var(--font-body);color:var(--text-muted)}
+.fx-vf__c em{font-style:normal;color:var(--text-secondary)}
+@media (max-width:760px){.fx-vf{grid-template-columns:1fr;gap:var(--scale-32)}}
 
 /* ---------- filters ---------- */
 .fx-filters{display:flex;flex-direction:column;gap:var(--scale-20)}
@@ -308,10 +323,26 @@ h1,h2,h3,p,figure{margin:0}
 
 /* ---------- footer (aston layout, fave brand) ---------- */
 .fx-foot{position:relative;margin-top:120px;background:var(--violet-900)}
-.fx-foot__pattern{position:absolute;left:0;right:0;bottom:100%;height:120px;overflow:hidden;pointer-events:none}
-.fx-foot__pattern .fx-disc{bottom:-70px;width:170px;height:170px;scale:.8}
-.fx-foot__pattern .fx-disc--a{left:-40px}
-.fx-foot__pattern .fx-disc--b{right:-40px;animation-direction:reverse}
+.fx-foot__pattern{position:absolute;left:0;right:0;bottom:100%;height:520px;overflow:hidden;pointer-events:none;z-index:-1}
+/* the two big corner discs (~2x the previous size) */
+.fx-foot__pattern .fx-disc--a{width:340px;height:340px;left:-80px;bottom:-130px}
+.fx-foot__pattern .fx-disc--b{width:340px;height:340px;right:-80px;bottom:-130px;animation-direction:reverse}
+/* small discs further up/down the edges so the sides don't cluster */
+.fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:28px;top:15%}
+/* tiny discs set BESIDE the big corner discs, not stacked on them */
+.fx-foot__pattern .fx-disc--g{width:84px;height:84px;left:288px;bottom:28px;animation-duration:85s}
+.fx-foot__pattern .fx-disc--h{width:68px;height:68px;right:306px;bottom:66px;animation-direction:reverse}
+/* two discs pinned to the left/right edges at the vertical middle of the viewport */
+.fx-side-pattern{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;transition:opacity .45s var(--ease)}
+.fx-side-pattern.is-hidden{opacity:0}
+.fx-side-pattern .fx-disc--l{width:150px;height:150px;left:-72px;top:44%}
+.fx-side-pattern .fx-disc--r{width:172px;height:172px;right:-82px;top:54%}
+@media (max-width:760px){.fx-side-pattern{display:none}}
+@media (max-width:760px){
+  .fx-foot__pattern{height:360px}
+  .fx-foot__pattern .fx-disc--a,.fx-foot__pattern .fx-disc--b{width:220px;height:220px;bottom:-90px}
+  .fx-foot__pattern .fx-disc--c,.fx-foot__pattern .fx-disc--d{width:90px;height:90px}
+}
 .fx-foot__contact{position:relative;padding-block:var(--scale-88) var(--scale-60);display:flex;justify-content:space-between;align-items:flex-start;gap:var(--scale-24);border-bottom:1px solid var(--overlay-strong)}
 .fx-foot__contact>div{display:flex;flex-direction:column;gap:var(--scale-10)}
 .fx-foot__eyebrow{display:flex;gap:var(--scale-10);font:700 var(--scale-14)/1 var(--font-body);letter-spacing:var(--ls-wider);color:var(--text-muted)}
