@@ -329,14 +329,12 @@ h1,h2,h3,p,figure{margin:0}
 .fx-foot__pattern .fx-disc--b{width:340px;height:340px;right:-80px;bottom:-130px;animation-direction:reverse}
 /* small discs further up/down the edges so the sides don't cluster */
 .fx-foot__pattern .fx-disc--e{width:74px;height:74px;left:28px;top:15%}
-.fx-foot__pattern .fx-disc--f{width:66px;height:66px;right:46px;top:72%;animation-direction:reverse}
 /* tiny discs set BESIDE the big corner discs, not stacked on them */
 .fx-foot__pattern .fx-disc--g{width:84px;height:84px;left:288px;bottom:28px;animation-duration:85s}
 .fx-foot__pattern .fx-disc--h{width:68px;height:68px;right:306px;bottom:66px;animation-direction:reverse}
 /* two discs pinned to the left/right edges at the vertical middle of the viewport */
 .fx-side-pattern{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;transition:opacity .45s var(--ease)}
 .fx-side-pattern.is-hidden{opacity:0}
-.fx-side-pattern .fx-disc--l{width:150px;height:150px;left:-72px;top:44%}
 .fx-side-pattern .fx-disc--r{width:172px;height:172px;right:-82px;top:54%}
 @media (max-width:760px){.fx-side-pattern{display:none}}
 @media (max-width:760px){
