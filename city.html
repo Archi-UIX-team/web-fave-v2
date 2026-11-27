@@ -30,10 +30,9 @@
       <form class="fx-bar" data-booking-form>
         <input type="hidden" name="destination"><input type="hidden" name="checkin"><input type="hidden" name="checkout"><input type="hidden" name="guests">
         
-        <div class="fx-fld" data-field="checkin"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-in</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="checkin"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
-        <div class="fx-fld" data-field="checkout"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-out</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="checkout"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
+        <div class="fx-fld fx-fld--dates" data-field="dates"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-in / check-out</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="range"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
         <div class="fx-fld" data-field="guests"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-guests"><span class="fx-fld__l">guests</span><span class="fx-fld__v" data-out="guests">2 adults, 1 room</span></button></div>
-        <button class="fx-btn fx-btn--secondary" type="submit">book now</button>
+        <button class="fx-btn fx-btn--secondary" type="submit">search</button>
       </form>
       <!--#include booking-pickers-->
     </div>
@@ -51,8 +50,7 @@
       <form class="fx-bar" data-booking-form>
         <input type="hidden" name="destination"><input type="hidden" name="checkin"><input type="hidden" name="checkout"><input type="hidden" name="guests">
         
-        <div class="fx-fld" data-field="checkin"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-in</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="checkin"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
-        <div class="fx-fld" data-field="checkout"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-out</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="checkout"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
+        <div class="fx-fld fx-fld--dates" data-field="dates"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-dates"><span class="fx-fld__l">check-in / check-out</span><span class="fx-fld__row"><span class="fx-fld__v" data-out="range"></span><svg class="fx-ico" aria-hidden="true"><use href="#i-calendar"/></svg></span></button></div>
         <div class="fx-fld" data-field="guests"><button class="fx-fld__btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop-guests"><span class="fx-fld__l">guests</span><span class="fx-fld__v" data-out="guests">2 adults, 1 room</span></button></div>
         <button class="fx-btn fx-btn--secondary" type="submit">apply</button>
       </form>

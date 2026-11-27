@@ -5,6 +5,9 @@ import "./fave-hotels.css";
 import "./fave-view-cities.css";
 import "./fave-city.css";
 import "./fave-upcoming.css";
+import "./fave-offer-detail.css";
+import "./fave-article.css";
+import "./fave-press.css";
 import "./fave-hotels-mobile.css";
 
 document.documentElement.classList.add("js");
@@ -333,6 +336,53 @@ document.querySelectorAll("[data-pager]").forEach((pager) => {
   });
 });
 
+/* ---------- offer / detail page: tabs, copy code, read-more ---------- */
+document.querySelectorAll("[data-tabs]").forEach((wrap) => {
+  const tabs = [...wrap.querySelectorAll('[role="tab"]')];
+  const panels = [...wrap.querySelectorAll('[role="tabpanel"]')];
+  const select = (i) => {
+    tabs.forEach((t, n) => t.setAttribute("aria-selected", String(n === i)));
+    panels.forEach((p, n) => { p.hidden = n !== i; });
+  };
+  tabs.forEach((t, i) => t.addEventListener("click", () => select(i)));
+  select(tabs.findIndex((t) => t.getAttribute("aria-selected") === "true") < 0 ? 0 : tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"));
+});
+document.querySelectorAll("[data-copy]").forEach((btn) => {
+  const label = btn.querySelector("span");
+  const original = label?.textContent;
+  btn.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(btn.dataset.copy); } catch (e) { /* clipboard unavailable */ }
+    btn.classList.add("is-done");
+    if (label) label.textContent = "copied";
+    setTimeout(() => { btn.classList.remove("is-done"); if (label) label.textContent = original; }, 1600);
+  });
+});
+document.querySelectorAll("[data-readmore]").forEach((btn) => {
+  const target = document.getElementById(btn.getAttribute("aria-controls"));
+  if (!target) return;
+  target.classList.add("is-clamped");
+  btn.addEventListener("click", () => {
+    const clamped = target.classList.toggle("is-clamped");
+    btn.setAttribute("aria-expanded", String(!clamped));
+    btn.textContent = clamped ? "read more" : "read less";
+  });
+});
+
+/* ---------- article table of contents: highlight the section in view ---------- */
+const toc = document.querySelector("[data-toc]");
+if (toc && "IntersectionObserver" in window) {
+  const links = [...toc.querySelectorAll("a")];
+  const byId = new Map(links.map((a) => [a.getAttribute("href").slice(1), a]));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      links.forEach((a) => a.classList.remove("is-on"));
+      byId.get(e.target.id)?.classList.add("is-on");
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  links.forEach((a) => { const sec = document.getElementById(a.getAttribute("href").slice(1)); if (sec) spy.observe(sec); });
+}
+
 /* ---------- footer ---------- */
 const pillars = document.querySelector(".fx-foot__pillars");
 document.querySelector("[data-toggle-pillars]")?.addEventListener("click", (e) => {
@@ -353,3 +403,14 @@ document.querySelector("[data-back-top]")?.addEventListener("click", (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+// hide the fixed side discs as the footer (and its pattern) approaches, so the
+// two pattern sets never stack
+const sidePattern = document.querySelector(".fx-side-pattern");
+const footEl = document.querySelector(".fx-foot");
+if (sidePattern && footEl && "IntersectionObserver" in window) {
+  new IntersectionObserver(
+    (entries) => sidePattern.classList.toggle("is-hidden", entries.some((e) => e.isIntersecting)),
+    { rootMargin: "0px 0px 360px 0px" },
+  ).observe(footEl);
+}
